@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<BorderPane fx:id="orderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Order.OrderController">
+   <top>
+      <Label text="Digital Mobile Transaction" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <VBox alignment="CENTER" minHeight="400.0" minWidth="500.0" prefHeight="400.0" prefWidth="520.0" spacing="2.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <ComboBox fx:id="searchComboBox" prefWidth="150.0">
+                     <HBox.margin>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </padding>
+                  </ComboBox>
+                  <TextField fx:id="searchField" prefWidth="200.0" promptText="Item Info">
+                     <HBox.margin>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </padding></TextField>
+                  <ComboBox fx:id="quanityComboBox" prefWidth="50.0">
+                     <HBox.margin>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </padding>
+                  </ComboBox>
+                  <Button fx:id="searchButton" mnemonicParsing="false" prefWidth="60.0" text="Search">
+                     <HBox.margin>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </padding></Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </HBox>
+            <ScrollPane prefHeight="400.0" prefWidth="520.0">
+               <content>
+                  <TableView fx:id="orderTable" minHeight="400.0" minWidth="510.0" prefHeight="400.0" prefWidth="510.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </TableView>
+               </content>
+            </ScrollPane>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <right>
+      <GridPane hgap="2.0" vgap="2.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="refillButton" mnemonicParsing="false" onAction="#refillListener" prefHeight="50.0" prefWidth="100.0" text="Refill">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+            <Button fx:id="activationButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Activation" GridPane.columnIndex="1">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+            <Button fx:id="payBillButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="PayBill" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+            <Button fx:id="serviceButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Service" GridPane.columnIndex="2">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+            <Button fx:id="devicesButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Devices" GridPane.rowIndex="1">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+            <Button fx:id="accessoriesButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Accessories" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+            <Button fx:id="changeQuantityButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Change Quantity" GridPane.rowIndex="2">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+            <Button fx:id="changePriceButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Change Price" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+            <Button fx:id="removeButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Remove" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+            <Button fx:id="cashButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Cash" GridPane.rowIndex="3">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+            <Button fx:id="cardButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Credit/Debit Card" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+            <Button fx:id="unpaidButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Unpaid" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+            <Button fx:id="printButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Print Receipt" GridPane.rowIndex="4">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+            <Button fx:id="refundButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Refund" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+            <Button fx:id="cancelButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Cancel" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
+         </children>
+      </GridPane>
+   </right>
+   <bottom>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="412.0" minWidth="10.0" prefWidth="102.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="763.0" minWidth="10.0" prefWidth="215.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="763.0" minWidth="10.0" prefWidth="530.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="subtotalLabel" alignment="CENTER_RIGHT" prefWidth="100.0" text="\$ 10.00" GridPane.columnIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Label>
+            <Label prefWidth="80.0" text="Subtotal:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Label>
+            <Label prefWidth="80.0" text="Discount:" GridPane.rowIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Label>
+            <Label fx:id="discountLabel" alignment="CENTER_RIGHT" prefWidth="100.0" text="\$ 10.00" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Label>
+            <Label prefWidth="80.0" text="Tax 8.875 %:" GridPane.rowIndex="2">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Label>
+            <Label fx:id="taxLabel" alignment="CENTER_RIGHT" prefWidth="100.0" text="0.89" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Label>
+            <Label prefWidth="80.0" text="NYTax:" GridPane.rowIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Label>
+            <Label fx:id="NYTaxLabel" alignment="CENTER_RIGHT" prefWidth="100.0" text="\$ 1.20" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Label>
+            <Label prefWidth="80.0" text="Total:" GridPane.rowIndex="4">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Label>
+            <Label fx:id="totalLabel" alignment="CENTER_RIGHT" prefWidth="100.0" text="\$ 12.09" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Label>
+         </children>
+      </GridPane>
+   </bottom>
+</BorderPane>
