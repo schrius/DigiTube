@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="840.0" stylesheets="@bootstrap3.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.MainController">
+   <top>
+      <Label text="Digital Mobile" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font></Label>
+   </top>
+   <center>
+      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <TableView fx:id="tableView" prefHeight="480.0" prefWidth="520.0">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </TableView>
+         </content>
+      </ScrollPane>
+   </center>
+   <right>
+      <VBox prefHeight="380.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="500.0">
+               <children>
+                  <TextField fx:id="searchField" prefHeight="25.0" prefWidth="150.0" promptText="Phone Number">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </TextField>
+                  <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Search">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="orderButton" mnemonicParsing="false" onAction="#orderButtonListener" prefHeight="50.0" prefWidth="100.0" text="Order">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="toDoListButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="To-Do List">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="payBillListButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Pay Bill List">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </Button>
+               </children>
+            </HBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Prepaid List">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <CheckBox fx:id="refillBox" mnemonicParsing="false" text="Refill" />
+                        <CheckBox fx:id="swapBox" mnemonicParsing="false" text="Swap" />
+                        <CheckBox fx:id="swapFamilyBox" mnemonicParsing="false" text="Swap Family" />
+                     </children>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="61.0" prefHeight="30.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <CheckBox fx:id="flexBox" mnemonicParsing="false" text="Flex" />
+                        <CheckBox fx:id="flexMixBox" mnemonicParsing="false" text="Flex Mix" />
+                        <CheckBox fx:id="GVBox" mnemonicParsing="false" text="GV" />
+                        <CheckBox fx:id="GVFamilyBox" mnemonicParsing="false" text="GV Family" />
+                     </children>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Button fx:id="showListButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Show List">
+                     <VBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </Button>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER" layoutX="12.0" layoutY="312.0" prefHeight="100.0" prefWidth="500.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" spacing="5.0">
+                     <children>
+                        <Label text="Start Date" />
+                        <DatePicker fx:id="beginDate" />
+                     </children>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" spacing="5.0">
+                     <children>
+                        <Label text="End Date" />
+                        <DatePicker fx:id="endDate" />
+                     </children>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="12.0" layoutY="294.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="repairListButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Repair List">
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="unlockListButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Unlock List">
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="unpaidListButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Unpaid List">
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </VBox>
+   </right>
+   <bottom>
+      <VBox prefHeight="105.0" prefWidth="590.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label prefWidth="80.0" text="Operator:" />
+                  <Label fx:id="nameLabel" prefWidth="100.0" text="Jerry" />
+                  <Label fx:id="currentDateLabel" prefWidth="200.0" text="Sunday, February 25, 2018">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin></Label>
+               </children>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox fx:id="Total" layoutX="10.0" layoutY="144.0" prefHeight="80.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label prefWidth="50.0" text="Note:">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                  <TextArea fx:id="noteArea" prefHeight="200.0" prefWidth="500.0" promptText="Attention" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </HBox>
+         </children>
+         <opaqueInsets>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </VBox>
+   </bottom>
+</BorderPane>
