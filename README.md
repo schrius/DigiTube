@@ -1,6 +1,7 @@
 # DigiTube
 
 General Problem
+
 Many small mobile phone retailers do not have an application that be able to handle their daily transactions, 
 inventory, to-do list, customer information, and income and expense report, since such application does not 
 even exist and they are not able to offer one. Their to-do list is the most important function to the business. 
@@ -13,6 +14,7 @@ already changed, and forget a port in is not completed due the some system error
 to done on time.
 
 Proposed Solution
+
 This application should be able to handle all the daily transaction and generate a summary report for the day, 
 month and year; provide detail of the inventory of the store; print a receipt/invoice when a transaction is complete; 
 search and display customer information and transaction history; allow owner/manager to update the price, add/modify 
