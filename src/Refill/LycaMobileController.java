@@ -29,8 +29,8 @@ public class LycaMobileController {
 	public void plan19ButtonListener() throws IOException {
 		processBox  = FXMLLoader.load(getClass().getResource("RefillFX.fxml"));
 		MainController.getOrderController().getOrder().setPlan("$19");
+		MainController.getOrderController().getOrder().setPrice(19);
 		MainController.getOrderController().getOrder().setRegularPrice(19);
-		MainController.getOrderController().getOrder().setDiscountPrice(19);
 		MainController.getOrderController().getOrderPane().setRight(processBox);
 	}
 }

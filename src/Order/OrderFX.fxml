@@ -12,7 +12,7 @@
  	<fx:include source="OrderRightPaneFX.fxml" />
    </right>
    <bottom>
-  	 <fx:include source="SubtotalFX.fxml"/>
+	<fx:include source="SubtotalFX.fxml" />
    </bottom>
    <top>
       <VBox alignment="CENTER" prefHeight="50.0" prefWidth="520.0" spacing="2.0" BorderPane.alignment="CENTER">

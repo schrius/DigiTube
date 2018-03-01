@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -15,11 +16,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 
 public class OrderController {
 
 	OrderRightPaneController orderRightPaneController;
+	SubtotalController subtotalController;
 	
 	FXMLLoader	fxmlLoader;
 	private ObservableList<Order> orderList;
@@ -27,9 +28,11 @@ public class OrderController {
 	private BigDecimal tax;
 	private BigDecimal NYTax;
 	private BigDecimal subtotal;
-	private BigDecimal discoount;
+	private BigDecimal discount;
 	private BigDecimal total;
 	
+	Parent parent;
+
 	@FXML
 	private BorderPane orderPane;
 	
@@ -55,45 +58,26 @@ public class OrderController {
 		
 		orderList = FXCollections.observableArrayList();
 		order = new Order();
-		tax = new BigDecimal(0);
-		NYTax = new BigDecimal(0);
-		subtotal = new BigDecimal(0);
-		discoount = new BigDecimal(0);
-		total = new BigDecimal(0);
+
 	}
 	
-	public void processOrder(boolean refill) {
-		subtotal = subtotal.add(new BigDecimal(order.getRegularPrice()*order.getQuantity()));
-		tax = tax.add(new BigDecimal(subtotal.doubleValue()*MainController.TAXRATE));
-		if(refill)
-		NYTax = NYTax.add(new BigDecimal(order.getQuantity()*MainController.NYTAX));	
-		tax = tax.setScale(2, BigDecimal.ROUND_HALF_UP);
-		subtotal = subtotal.setScale(2, BigDecimal.ROUND_HALF_UP);
-		NYTax = NYTax.setScale(2, BigDecimal.ROUND_HALF_UP);
-		
-		if(order.getRegularPrice() > order.getDiscountPrice()) {
-			discoount = discoount.add(new BigDecimal((order.getRegularPrice() - order.getDiscountPrice()) *
-					order.getQuantity()));
-		}
+	public void processOrder() throws IOException{
+		order.setDescription(order.getCarrier() + order.getCategories() + order.getPlan());
+		orderList.add(order);
 
-		total = total.add(new BigDecimal(subtotal.doubleValue() + tax.doubleValue() + NYTax.doubleValue()));
-		total = total.setScale(2, BigDecimal.ROUND_HALF_UP);
 		updateTable();
+		updateTotal();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void updateTable() {
-		TableColumn<Order, String> phoneNumberColumn = new TableColumn<>("Phone Number");
-		phoneNumberColumn.setPrefWidth(80);
-		phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
+	public void updateTable() {	
+		TableColumn<Order, Double> PriceColumn = new TableColumn<>("Price");
+		PriceColumn.setPrefWidth(50);
+		PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 		
-		TableColumn<Order, Double> regularPriceColumn = new TableColumn<>("Reg.Price");
-		regularPriceColumn.setPrefWidth(50);
-		regularPriceColumn.setCellValueFactory(new PropertyValueFactory<>("regularPrice"));
-		
-		TableColumn<Order, Double> discountPriceColumn = new TableColumn<>("Dis.Price");
-		discountPriceColumn.setPrefWidth(50);
-		discountPriceColumn.setCellValueFactory(new PropertyValueFactory<>("discountPrice"));
+		TableColumn<Order, Double> discountColumn = new TableColumn<>("Dis.");
+		discountColumn.setPrefWidth(50);
+		discountColumn.setCellValueFactory(new PropertyValueFactory<>("discount"));
 		
 		TableColumn<Order, Integer> quantityColumn = new TableColumn<>("Qty");
 		quantityColumn.setPrefWidth(30);
@@ -107,24 +91,11 @@ public class OrderController {
 		descriptionColumn.setMinWidth(100);
 		descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
 		
-		TableView<Order> table = new TableView<>();
+		TableView<Order> table = new TableView<>(orderList);
 
-		orderList.add(new Order(order.getOrderID(),order.getCustomerID(),order.getEmployeeID(),order.getQuantity(),
-				order.getRegularPrice(), order.getDiscountPrice(), order.getCustomerPhone(), order.getCategories(),
-				order.getCarrier(), order.getPlan(), order.getDescription(), order.getOrderDate()));
-		table.setItems(orderList);
-		table.getColumns().addAll(phoneNumberColumn, quantityColumn ,regularPriceColumn, discountPriceColumn, 
-				categoriesColumn,descriptionColumn);
-		orderTable = table;
-		
+		table.getColumns().addAll(categoriesColumn, descriptionColumn,quantityColumn ,PriceColumn, discountColumn);
+		orderTable = table;	
 		orderPane.setCenter(orderTable);
-	}
-	
-	public void refillListener() throws IOException {
-		order = new Order();
-		order.setCategories(MainController.refill);
-		GridPane carrierPane = FXMLLoader.load(getClass().getResource("../Refill/CarrierFX.fxml"));
-		orderPane.setRight(carrierPane);
 	}
 	
 	public ObservableList<Order> getOrderList() {
@@ -181,12 +152,12 @@ public class OrderController {
 		this.subtotal = subtotal;
 	}
 
-	public BigDecimal getDiscoount() {
-		return discoount;
+	public BigDecimal getDiscount() {
+		return discount;
 	}
 
-	public void setDiscoount(BigDecimal discoount) {
-		this.discoount = discoount;
+	public void setDiscount(BigDecimal discoount) {
+		this.discount = discoount;
 	}
 
 	public BigDecimal getTotal() {
@@ -196,6 +167,37 @@ public class OrderController {
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
+	public void removeTableItem(Order removeOrder) {
+		if(orderTable.getItems().remove(removeOrder))
+			System.out.println("Removed");
+	}
+	
+	public void updateTotal() throws IOException {
+		tax = new BigDecimal(0);
+		NYTax = new BigDecimal(0);
+		subtotal = new BigDecimal(0);
+		discount = new BigDecimal(0);
+		total = new BigDecimal(0);
+		
+		for(Order currentOrder : orderList ) {
+			subtotal = subtotal.add(new BigDecimal(currentOrder.getPrice()*currentOrder.getQuantity()));
+			tax = tax.add(new BigDecimal(subtotal.doubleValue()*MainController.TAXRATE));
+			if(currentOrder.getCategories().equals(MainController.refill))
+			NYTax = NYTax.add(new BigDecimal(currentOrder.getQuantity()*MainController.NYTAX));	
+			tax = tax.setScale(2, BigDecimal.ROUND_HALF_UP);
+			subtotal = subtotal.setScale(2, BigDecimal.ROUND_HALF_UP);
+			NYTax = NYTax.setScale(2, BigDecimal.ROUND_HALF_UP);
+			discount = discount.add(new BigDecimal((currentOrder.getDiscount() * currentOrder.getQuantity()))); 		
+		}
 
-
+		total = total.add(new BigDecimal(subtotal.doubleValue() + tax.doubleValue() + NYTax.doubleValue()));
+		total = total.setScale(2, BigDecimal.ROUND_HALF_UP);
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Order/SubtotalFX.fxml"));
+		SubtotalController subtotalController = new SubtotalController();
+		fxmlLoader.setController(subtotalController);
+		parent = fxmlLoader.load();
+		subtotalController.updateSubtotal();
+		orderPane.setBottom(parent);
+	}
 }

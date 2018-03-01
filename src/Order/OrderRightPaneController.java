@@ -2,6 +2,8 @@ package Order;
 
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import Main.MainController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,11 +53,54 @@ public class OrderRightPaneController {
 		Button cancelButton;
 		
 		public void refillListener() throws IOException {
-			carrierPane  = FXMLLoader.load(getClass().getResource("../Refill/CarrierFX.fxml"));
 			
+			carrierPane  = FXMLLoader.load(getClass().getResource("../Refill/CarrierFX.fxml"));
+			MainController.getOrderController().getOrderPane().setRight(carrierPane);
+			MainController.getOrderController().setOrder(new Order());
+			MainController.getOrderController().getOrder().setCategories(MainController.refill);
+		}
+		
+		public void serviceListener() throws IOException {
+			//order = new Order();
+			//order.setCategories(MainController.refill);
+		}
+		
+		public void AcitivationListener() throws IOException {
+			carrierPane  = FXMLLoader.load(getClass().getResource("../Activation/ActivationCarrierFX.fxml"));
 			MainController.getOrderController().getOrderPane().setRight(carrierPane);
 		}
 		
+		public void removeListener() throws IOException{
+			if(MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem() != null) {
+			Order removeOrder = MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem();
+			MainController.getOrderController().removeTableItem(removeOrder);
+			MainController.getOrderController().updateTable();
+			MainController.getOrderController().updateTotal();
+			}
+		}
+		
+		public void changeQuantityListener() throws IOException {
+			if(MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem() != null){
+				int quantity = Integer.parseInt((JOptionPane.showInputDialog("Enter new quantity")));
+			MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem().setQuantity(quantity);
+			}
+			MainController.getOrderController().updateTable();
+			MainController.getOrderController().updateTotal();
+		}
+		
+		public void changePriceListener() throws IOException{
+			if(MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem() != null){
 
+				String newPrice = JOptionPane.showInputDialog("Enter New Price");
+				if(newPrice != null) {
+			MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem().setPrice(Double.parseDouble(newPrice));
+			MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem().setDiscount(
+					MainController.getOrderController().getOrderTable().getSelectionModel()
+					.getSelectedItem().getRegularPrice() - Double.parseDouble(newPrice));
+			MainController.getOrderController().updateTable();
+			MainController.getOrderController().updateTotal();
+			}
+		}
+		}
 }
 

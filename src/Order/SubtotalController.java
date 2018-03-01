@@ -60,15 +60,10 @@ public class SubtotalController {
 		this.totalLabel = totalLabel;
 	}
 	
-	@FXML
-	public void initialize(){	
-		
-	}
-	
 	public void updateSubtotal() {
 		subtotalLabel.setText("$" + MainController.getOrderController().getSubtotal());
 		taxLabel.setText("$" + MainController.getOrderController().getTax());
-		discountLabel.setText("$ -" + MainController.getOrderController().getDiscoount());
+		discountLabel.setText("$ -" + MainController.getOrderController().getDiscount());
 		NYTaxLabel.setText("$" + MainController.getOrderController().getNYtax());
 		totalLabel.setText("$" + MainController.getOrderController().getTotal());
 	}

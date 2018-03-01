@@ -38,11 +38,9 @@ public class RefillController {
 		orderRightPane = FXMLLoader.load(getClass().getResource("../Order/OrderRightPaneFX.fxml"));
 		
 		MainController.getOrderController().getOrder().setCustomerPhone(phoneNumberField.getText());
-		System.out.println(quanityBox.getValue());
 		MainController.getOrderController().getOrder().setQuantity(quanityBox.getValue());
 		MainController.getOrderController().getOrderPane().setRight(orderRightPane);
-		
-		MainController.getOrderController().processOrder(true);
+		MainController.getOrderController().processOrder();
 		
 		UpdateSubtotalPane();
 		}

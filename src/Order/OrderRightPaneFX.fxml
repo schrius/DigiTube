@@ -13,7 +13,7 @@
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </Button>
-      <Button fx:id="activationButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Activation" GridPane.columnIndex="1">
+      <Button fx:id="activationButton" mnemonicParsing="false" onAction="#AcitivationListener" prefHeight="50.0" prefWidth="100.0" text="Activation" GridPane.columnIndex="1">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
@@ -23,7 +23,7 @@
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </Button>
-      <Button fx:id="serviceButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Service" GridPane.columnIndex="2">
+      <Button fx:id="serviceButton" mnemonicParsing="false" onAction="#serviceListener" prefHeight="50.0" prefWidth="100.0" text="Service" GridPane.columnIndex="2">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
@@ -38,17 +38,17 @@
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </Button>
-      <Button fx:id="changeQuantityButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Change Quantity" GridPane.rowIndex="2">
+      <Button fx:id="changeQuantityButton" mnemonicParsing="false" onAction="#changeQuantityListener" prefHeight="50.0" prefWidth="100.0" text="Change Quantity" GridPane.rowIndex="2">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </Button>
-      <Button fx:id="changePriceButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Change Price" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <Button fx:id="changePriceButton" mnemonicParsing="false" onAction="#changePriceListener" prefHeight="50.0" prefWidth="100.0" text="Change Price" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </Button>
-      <Button fx:id="removeButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Remove" GridPane.columnIndex="2" GridPane.rowIndex="2">
+      <Button fx:id="removeButton" mnemonicParsing="false" onAction="#removeListener" prefHeight="50.0" prefWidth="100.0" text="Remove" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>

@@ -5,7 +5,15 @@ public class Order{
 	int customerID;
 	int employeeID;
 	int quantity;
+	double price;
 	double regularPrice;
+	public double getRegularPrice() {
+		return regularPrice;
+	}
+	public void setRegularPrice(double regularPrice) {
+		this.regularPrice = regularPrice;
+	}
+	double discount;
 	double discountPrice;
 	String customerPhone;
 	String categories;
@@ -24,8 +32,8 @@ public class Order{
 		this.customerID = customerID;
 		this.employeeID = employeeID;
 		this.quantity = quantity;
-		this.regularPrice = regularPrice;
-		this.discountPrice = discountPrice;
+		this.price = regularPrice;
+		this.discount = discountPrice;
 		this.customerPhone = customerPhone;
 		this.categories = categories;
 		this.plan = plan;
@@ -53,8 +61,8 @@ public class Order{
 	public String getDescription() {
 		return description;
 	}
-	public double getDiscountPrice() {
-		return discountPrice;
+	public double getDiscount() {
+		return discount;
 	}
 	public int getEmployeeID() {
 		return employeeID;
@@ -65,8 +73,8 @@ public class Order{
 	public int getOrderID() {
 		return orderID;
 	}
-	public double getRegularPrice() {
-		return regularPrice;
+	public double getPrice() {
+		return price;
 	}
 	public String getPlan() {
 		return plan;
@@ -89,8 +97,8 @@ public class Order{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public void setDiscountPrice(double discountPrice) {
-		this.discountPrice = discountPrice;
+	public void setDiscoun(double discount) {
+		this.discount = discount;
 	}
 	public void setEmployeeID(int employeeID) {
 		this.employeeID = employeeID;
@@ -101,8 +109,17 @@ public class Order{
 	public void setOrderID(int orderID) {
 		this.orderID = orderID;
 	}
-	public void setRegularPrice(double regularPrice) {
-		this.regularPrice = regularPrice;
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	public double getDiscountPrice() {
+		return discountPrice;
+	}
+	public void setDiscountPrice(double discountPrice) {
+		this.discountPrice = discountPrice;
+	}
+	public void setDiscount(double discount) {
+		this.discount = discount;
 	}
 	public void setPlan(String plan) {
 		this.plan = plan;
