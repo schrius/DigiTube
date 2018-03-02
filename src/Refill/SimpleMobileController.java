@@ -2,16 +2,16 @@ package Refill;
 
 import java.io.IOException;
 
+import Main.MainController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 public class SimpleMobileController {
 	Parent parent;
-	BorderPane orderPane;
-	BorderPane refillPane;
+	VBox processBox;
 	
 	// plans choice
 	@FXML
@@ -26,9 +26,10 @@ public class SimpleMobileController {
 	Button plan60Button;
 	
 	public void plan25ButtonListener() throws IOException {
-		parent = plan25Button.getScene().getRoot();
-		orderPane = (BorderPane)parent;
-		refillPane  = FXMLLoader.load(getClass().getResource("RefillFX.fxml"));
-		orderPane.setRight(refillPane);
+		processBox  = FXMLLoader.load(getClass().getResource("RefillFX.fxml"));
+		MainController.getOrderController().getOrder().setPlan("$25");
+		MainController.getOrderController().getOrder().setPrice(25);
+		MainController.getOrderController().getOrder().setPrice(25);
+		MainController.getOrderController().getOrderPane().setRight(processBox);
 	}
 }

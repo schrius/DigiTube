@@ -3,7 +3,6 @@ package Order;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
-
 import Main.MainController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,7 +56,7 @@ public class OrderRightPaneController {
 			carrierPane  = FXMLLoader.load(getClass().getResource("../Refill/CarrierFX.fxml"));
 			MainController.getOrderController().getOrderPane().setRight(carrierPane);
 			MainController.getOrderController().setOrder(new Order());
-			MainController.getOrderController().getOrder().setCategories(MainController.refill);
+			MainController.getOrderController().getOrder().setCategories(MainController.REFILL);
 		}
 		
 		public void serviceListener() throws IOException {
@@ -68,6 +67,8 @@ public class OrderRightPaneController {
 		public void AcitivationListener() throws IOException {
 			carrierPane  = FXMLLoader.load(getClass().getResource("../Activation/ActivationCarrierFX.fxml"));
 			MainController.getOrderController().getOrderPane().setRight(carrierPane);
+			MainController.getOrderController().setOrder(new Order());
+			MainController.getOrderController().getOrder().setCategories(MainController.ACTIVATION);
 		}
 		
 		public void removeListener() throws IOException{

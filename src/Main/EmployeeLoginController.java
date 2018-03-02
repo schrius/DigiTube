@@ -48,10 +48,10 @@ public class EmployeeLoginController {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainFX.fxml"));
 		parent = (Parent)fxmlLoader.load();
 		MainController mainController = fxmlLoader.<MainController>getController();
-		mainController.setEmployee(new Employee(1112, "Jrfry", "3473303324", 8888, "2018-05-07"));
+		mainController.setEmployee(new Employee());
+		mainController.getEmployee().setName("Jerry");
 
 		Scene scene = new Scene(parent);
-	//	scene.getStylesheets().add(getClass().getResource("bootstrap3.css").toExternalForm());
 		
 		stage.setTitle("Digital Mobile");
 		stage.setScene(scene);

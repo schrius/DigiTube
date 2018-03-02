@@ -19,26 +19,37 @@ import javafx.stage.Stage;
 public class MainController {
 	final static public double TAXRATE = 0.08875;
 	final static public double NYTAX = 1.2;
-	final static public String refill = "Refill";
+	final static public String REFILL = "Refill";
+	final static public String ACTIVATION = "Activation";
+	final static public String SERVICE = "Service";
+	final static public String DEVICE = "Device";
+	final static public String ACCESSORIES = "Accessories";
+	final static public String PAYBILL = "PayBill";
+	
+	final static public String LYCA = "LycaMobile";
+	final static public String ULTRA = "Ultra Mobile";
+	final static public String SIMPLE = "Simple Mobile";
+	final static public String H2O = "H2O";
+	final static public String TM = "T-Mobile";
+	final static public String ATT = "AT&T";
+	final static public String ROK = "ROK Mobile";
+	final static public String TELLCELL = "TellCell";
+	final static public String GOSMART = "GoSmart";
+	final static public String EASYGO = "EasyGo";
+	final static public String NET10 = "Net10";
+	final static public String CT = "CT Mobile";
+	final static public String EOT = "EOT";
+	
+	final static public String NEWACTIVATION = "New Activation";
+	final static public String SWAP = "Swap";
+	final static public String SWAPF = "Swap Family";
+	final static public String FLEX = "Flex";
+	final static public String FLEXM = "Flex Mix";
+	final static public String GV = "GV";
+	final static public String GVF = "GV Family";
 	
 	private static Employee employee;
 	private static OrderController orderController;
-	
-	public static Employee getEmloyee() {
-		return employee;
-	}
-
-	public static Employee getEmployee() {
-		return employee;
-	}
-
-	public static OrderController getOrderController() {
-		return orderController;
-	}
-	public static void setOrderController(OrderController orderController) {
-		MainController.orderController = orderController;
-	}
-	
 	
 	Parent parent;
 	// search date picker
@@ -112,8 +123,18 @@ public class MainController {
 		stage.showAndWait();
 	}
 	public void setEmployee(Employee employee) {
-		MainController.employee = new Employee(employee.getEmployeeID(), employee.getName(), employee.getPhoneNumber(),
-				employee.getSalary() ,employee.getHiredate());
-		 nameLabel.setText(employee.getName());
+		MainController.employee = employee;
+		nameLabel.setText(employee.getName());
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public static OrderController getOrderController() {
+		return orderController;
+	}
+	public static void setOrderController(OrderController orderController) {
+		MainController.orderController = orderController;
 	}
 }

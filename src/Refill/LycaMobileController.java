@@ -6,10 +6,10 @@ import Main.MainController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 public class LycaMobileController {
-	BorderPane processBox;
+	VBox processBox;
 	// plans choice
 	@FXML
 	Button plan19Button;

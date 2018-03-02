@@ -58,7 +58,6 @@ public class OrderController {
 		
 		orderList = FXCollections.observableArrayList();
 		order = new Order();
-
 	}
 	
 	public void processOrder() throws IOException{
@@ -97,6 +96,36 @@ public class OrderController {
 		orderTable = table;	
 		orderPane.setCenter(orderTable);
 	}
+	
+	public void updateTotal() throws IOException {
+		tax = new BigDecimal(0);
+		NYTax = new BigDecimal(0);
+		subtotal = new BigDecimal(0);
+		discount = new BigDecimal(0);
+		total = new BigDecimal(0);
+		
+		for(Order currentOrder : orderList ) {
+			subtotal = subtotal.add(new BigDecimal(currentOrder.getPrice()*currentOrder.getQuantity()));
+			tax = tax.add(new BigDecimal(subtotal.doubleValue()*MainController.TAXRATE));
+			if(currentOrder.getCategories().equals(MainController.REFILL))
+			NYTax = NYTax.add(new BigDecimal(currentOrder.getQuantity()*MainController.NYTAX));	
+			tax = tax.setScale(2, BigDecimal.ROUND_HALF_UP);
+			subtotal = subtotal.setScale(2, BigDecimal.ROUND_HALF_UP);
+			NYTax = NYTax.setScale(2, BigDecimal.ROUND_HALF_UP);
+			discount = discount.add(new BigDecimal((currentOrder.getDiscount() * currentOrder.getQuantity()))); 		
+		}
+
+		total = total.add(new BigDecimal(subtotal.doubleValue() + tax.doubleValue() + NYTax.doubleValue()));
+		total = total.setScale(2, BigDecimal.ROUND_HALF_UP);
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Order/SubtotalFX.fxml"));
+		SubtotalController subtotalController = new SubtotalController();
+		fxmlLoader.setController(subtotalController);
+		parent = fxmlLoader.load();
+		subtotalController.updateSubtotal();
+		orderPane.setBottom(parent);
+	}
+	
 	
 	public ObservableList<Order> getOrderList() {
 		return orderList;
@@ -170,34 +199,5 @@ public class OrderController {
 	public void removeTableItem(Order removeOrder) {
 		if(orderTable.getItems().remove(removeOrder))
 			System.out.println("Removed");
-	}
-	
-	public void updateTotal() throws IOException {
-		tax = new BigDecimal(0);
-		NYTax = new BigDecimal(0);
-		subtotal = new BigDecimal(0);
-		discount = new BigDecimal(0);
-		total = new BigDecimal(0);
-		
-		for(Order currentOrder : orderList ) {
-			subtotal = subtotal.add(new BigDecimal(currentOrder.getPrice()*currentOrder.getQuantity()));
-			tax = tax.add(new BigDecimal(subtotal.doubleValue()*MainController.TAXRATE));
-			if(currentOrder.getCategories().equals(MainController.refill))
-			NYTax = NYTax.add(new BigDecimal(currentOrder.getQuantity()*MainController.NYTAX));	
-			tax = tax.setScale(2, BigDecimal.ROUND_HALF_UP);
-			subtotal = subtotal.setScale(2, BigDecimal.ROUND_HALF_UP);
-			NYTax = NYTax.setScale(2, BigDecimal.ROUND_HALF_UP);
-			discount = discount.add(new BigDecimal((currentOrder.getDiscount() * currentOrder.getQuantity()))); 		
-		}
-
-		total = total.add(new BigDecimal(subtotal.doubleValue() + tax.doubleValue() + NYTax.doubleValue()));
-		total = total.setScale(2, BigDecimal.ROUND_HALF_UP);
-		
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Order/SubtotalFX.fxml"));
-		SubtotalController subtotalController = new SubtotalController();
-		fxmlLoader.setController(subtotalController);
-		parent = fxmlLoader.load();
-		subtotalController.updateSubtotal();
-		orderPane.setBottom(parent);
 	}
 }

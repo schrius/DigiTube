@@ -13,7 +13,7 @@
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../College%20Information/Brooklyn%20College/2018%20Spring/CISC4900/CarrierImage/simplemobile-200_0.png" />
+                  <Image url="@../Main/SimpleMobile.png" />
                </image>
             </ImageView>
          </children>

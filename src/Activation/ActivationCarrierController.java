@@ -43,21 +43,21 @@ public class ActivationCarrierController {
 
 		
 	public void lycaMobileButtonListener() throws IOException {
-		planBox  = FXMLLoader.load(getClass().getResource("../Activation/LycaMobileFX.fxml"));
-		MainController.getOrderController().getOrder().setCarrier("Lyca");
+		planBox  = FXMLLoader.load(getClass().getResource("../Activation/LycaMobileActivationFX.fxml"));
+		MainController.getOrderController().getOrder().setCarrier(MainController.LYCA);
 		MainController.getOrderController().getOrderPane().setRight(planBox);
 
 }
 		
 	public void ultraMobileButtonListener() throws IOException {
-		planBox  = FXMLLoader.load(getClass().getResource("../Activation/UltraMobileFX.fxml"));
-		MainController.getOrderController().getOrder().setCarrier("Ultra");
+		planBox  = FXMLLoader.load(getClass().getResource("../Activation/UltraMobileActivationFX.fxml"));
+		MainController.getOrderController().getOrder().setCarrier(MainController.ULTRA);
 		MainController.getOrderController().getOrderPane().setRight(planBox);
 	}
 		
 	public void simpleMobileButtonListener() throws IOException {
-		planBox  = FXMLLoader.load(getClass().getResource("../Activation/SimpleMobileFX.fxml"));
-		MainController.getOrderController().getOrder().setCarrier("Simple");
+		planBox  = FXMLLoader.load(getClass().getResource("../Activation/SimpleMobileActivationFX.fxml"));
+		MainController.getOrderController().getOrder().setCarrier(MainController.SIMPLE);
 		MainController.getOrderController().getOrderPane().setRight(planBox);
 	}
 }

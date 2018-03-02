@@ -8,42 +8,29 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Refill.RefillController">
-   <top>
-      <ImageView fx:id="refillImage" fitHeight="85.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-   </top>
-   <left>
-      <TextField fx:id="phoneNumberField" prefHeight="30.0" prefWidth="150.0" promptText="Phone Number" BorderPane.alignment="CENTER_RIGHT">
-         <BorderPane.margin>
-            <Insets left="10.0" />
-         </BorderPane.margin></TextField>
-   </left>
-   <center>
-      <ComboBox fx:id="quanityBox" prefHeight="25.0" prefWidth="18.0" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-         </BorderPane.margin>
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Refill.RefillController">
+   <children>
+      <ImageView fx:id="carrierImage" fitHeight="85.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+         <children>
+            <TextField fx:id="phoneNumberField" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" promptText="Phone Number" />
+            <ComboBox fx:id="quanityBox" prefHeight="25.0" prefWidth="25.0">
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </ComboBox>
+         </children>
          <padding>
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-         </padding></ComboBox>
-   </center>
-   <right>
-      <Label text="Months" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets right="10.0" />
-         </BorderPane.margin></Label>
-   </right>
-   <bottom>
-      <Button fx:id="processButton" mnemonicParsing="false" onAction="#processButtonListener" prefHeight="50.0" prefWidth="100.0" text="Process" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-         </BorderPane.margin>
+         </padding>
+         <VBox.margin>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </VBox.margin>
+      </HBox>
+      <Button fx:id="processButton" mnemonicParsing="false" onAction="#processButtonListener" prefHeight="50.0" prefWidth="100.0" text="Process">
          <padding>
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
          </padding>
       </Button>
-   </bottom>
-   <padding>
-      <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-   </padding>
-</BorderPane>
+   </children>
+</VBox>

@@ -25,7 +25,7 @@ public class RefillController {
 	@FXML
 	private TextField phoneNumberField;
 	@FXML
-	private ImageView refillImage;
+	private ImageView carrierImage;
 	
 	@FXML
 	public void initialize() {
@@ -37,7 +37,7 @@ public class RefillController {
 		if(phoneNumberField.getText().length() == 10) {	
 		orderRightPane = FXMLLoader.load(getClass().getResource("../Order/OrderRightPaneFX.fxml"));
 		
-		MainController.getOrderController().getOrder().setCustomerPhone(phoneNumberField.getText());
+		MainController.getOrderController().getOrder().setPhoneNumber(phoneNumberField.getText());
 		MainController.getOrderController().getOrder().setQuantity(quanityBox.getValue());
 		MainController.getOrderController().getOrderPane().setRight(orderRightPane);
 		MainController.getOrderController().processOrder();
