@@ -15,5 +15,8 @@ public class Customer {
 	String expireDate;
 	String groupNumber;
 	String note;
+<<<<<<< HEAD
+=======
+>>>>>>> 3bc1482311c95f3334bf42ee6495c63394001877
 	
 }
