@@ -9,14 +9,10 @@
 
 <BorderPane fx:id="orderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="840.0" stylesheets="@../Main/bootstrap3.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
    <right>
-   <fx:define>
- 	<fx:include source="OrderRightPaneFX.fxml" />
-   </fx:define />
+ 	<fx:include fx:id="orderRightPane" source="OrderRightPaneFX.fxml" />
    </right>
    <bottom>
-   </fx:define>
-	<fx:include source="SubtotalFX.fxml" />
-	</fx:define />
+	<fx:include fx:id="subtotalPane" source="SubtotalFX.fxml" />
    </bottom>
    <top>
       <VBox alignment="CENTER" prefHeight="50.0" prefWidth="520.0" spacing="2.0" BorderPane.alignment="CENTER">

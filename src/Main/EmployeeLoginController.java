@@ -49,7 +49,7 @@ public class EmployeeLoginController {
 		parent = (Parent)fxmlLoader.load();
 		MainController mainController = fxmlLoader.<MainController>getController();
 		mainController.setEmployee(new Employee());
-		mainController.getEmployee().setName("Jerry");
+		mainController.getEmployee().setFirstName("Jerry");
 
 		Scene scene = new Scene(parent);
 		

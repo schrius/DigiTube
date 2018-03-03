@@ -1,6 +1,13 @@
 package Order;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Order{
+	@Id
+	@GeneratedValue
 	long orderID;
 	String productID;
 	int customerID;
@@ -12,7 +19,7 @@ public class Order{
 	String IMEI;
 	String serialNumber;
 	String invoice;
-	String prepaylist;
+	String group;
 	String phoneNumber;
 	String categories;
 	String plan;
@@ -20,13 +27,16 @@ public class Order{
 	String description;
 	String orderDate;
 	String simcard;
+	String PUK;
+	String status;
 	public Order() {
 		
 	}
+
 	public Order(long orderID, String productID, int customerID, int employeeID, int quantity, double price,
-			double regularPrice, double discount, String iMEI, String serialNumber, String invoice, String prepaylist,
+			double regularPrice, double discount, String iMEI, String serialNumber, String invoice, String group,
 			String phoneNumber, String categories, String plan, String carrier, String description, String orderDate,
-			String simcard) {
+			String simcard, String pUK, String status) {
 		super();
 		this.orderID = orderID;
 		this.productID = productID;
@@ -39,7 +49,7 @@ public class Order{
 		IMEI = iMEI;
 		this.serialNumber = serialNumber;
 		this.invoice = invoice;
-		this.prepaylist = prepaylist;
+		this.group = group;
 		this.phoneNumber = phoneNumber;
 		this.categories = categories;
 		this.plan = plan;
@@ -47,7 +57,10 @@ public class Order{
 		this.description = description;
 		this.orderDate = orderDate;
 		this.simcard = simcard;
+		PUK = pUK;
+		this.status = status;
 	}
+
 	public long getOrderID() {
 		return orderID;
 	}
@@ -114,11 +127,11 @@ public class Order{
 	public void setInvoice(String invoice) {
 		this.invoice = invoice;
 	}
-	public String getPrepaylist() {
-		return prepaylist;
+	public String getGroup() {
+		return group;
 	}
-	public void setPrepaylist(String prepaylist) {
-		this.prepaylist = prepaylist;
+	public void setGroup(String group) {
+		this.group = group;
 	}
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -161,6 +174,21 @@ public class Order{
 	}
 	public void setSimcard(String simcard) {
 		this.simcard = simcard;
+	}
+	public String getPUK() {
+		return PUK;
+	}
+	public void setPUK(String pUK) {
+		PUK = pUK;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public void setOrderID(long orderID) {
+		this.orderID = orderID;
 	}
 
 }

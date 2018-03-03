@@ -124,7 +124,7 @@ public class MainController {
 	}
 	public void setEmployee(Employee employee) {
 		MainController.employee = employee;
-		nameLabel.setText(employee.getName());
+		nameLabel.setText(employee.getFirstName());
 	}
 
 	public Employee getEmployee() {

@@ -1,23 +1,33 @@
 package Main;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Employee {
-	int employeeID;
-	String name;
-	String phoneNumber;
-	double salary;
-	String Hiredate;
-	String loginTime;
-	String logoutTime;
-	String hours;
-	String position;
+	@Id
+	@GeneratedValue
+	private int employeeID;
+	private String firstName;
+	private String lastName;
+	private String phoneNumber;
+	private double salary;
+	private String Hiredate;
+	private String loginTime;
+	private String logoutTime;
+	private String hours;
+	private String position;
+	private String SSN;
 	public Employee() {
 
 	}
-	public Employee(int employeeID, String name, String phoneNumber, double salary, String hiredate, String loginTime,
-			String logoutTime, String hours, String position) {
+	public Employee(int employeeID, String firstName, String lastName, String phoneNumber, double salary,
+			String hiredate, String loginTime, String logoutTime, String hours, String position, String sSN) {
 		super();
 		this.employeeID = employeeID;
-		this.name = name;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
 		this.salary = salary;
 		Hiredate = hiredate;
@@ -25,6 +35,7 @@ public class Employee {
 		this.logoutTime = logoutTime;
 		this.hours = hours;
 		this.position = position;
+		SSN = sSN;
 	}
 	public int getEmployeeID() {
 		return employeeID;
@@ -32,11 +43,17 @@ public class Employee {
 	public void setEmployeeID(int employeeID) {
 		this.employeeID = employeeID;
 	}
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -80,5 +97,11 @@ public class Employee {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	
+	public String getSSN() {
+		return SSN;
+	}
+	public void setSSN(String sSN) {
+		SSN = sSN;
+	}
+
 }

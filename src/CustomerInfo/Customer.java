@@ -1,43 +1,90 @@
-package Main;
+package CustomerInfo;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Customer {
-	int customerID;
-	int pin;
-	String carrier;
-	String newCarrier;
-	String preCarrier;
-	String language;
-	String LTEdata;
-	String PUK;
-	String plan;
-	String newPlan;
-	String newsimcard;
-	String simcard;
-	String prepaylist;
-	String group;
-	String phoneNumber;
-	String device;
-	String newExpireDate;
-	String expireDate;
-	String portDate;
-	String groupNumber;
-	String groupTitle;
-	String account;
-	String status;
-	String firstName;
-	String lastName;
-	String address;
-	String city;
-	String states;
-	String zipcode;
-	String offerPrice;
-	String note;
-<<<<<<< HEAD
-=======
+	@Id
+	@GeneratedValue
+	private int customerID;
+	private int pin;
+	private String phoneNumber;
+	private String language;
+	private String carrier;
+	private String newCarrier;
+	private String preCarrier;
+	private String newExpireDate;
+	private String expireDate;
+	private String portDate;
+	private String LTEdata;
+	private String newPlan;
+	private String plan;
+	private String newsimcard;
+	private String simcard;
+	private String PUK;
+	private String device;
+	private String group;
+	private String groupNumber;
+	private String groupTitle;
+	private String account;
+	private String status;
+	private String firstName;
+	private String lastName;
+	private String address;
+	private String city;
+	private String states;
+	private String zipcode;
+	private String offerPrice;
+	private String comment;
+
 	public Customer() {
 
 	}
 	
+	public Customer(int customerID, int pin, String phoneNumber, String language, String carrier, String newCarrier,
+			String preCarrier, String newExpireDate, String expireDate, String portDate, String lTEdata, String newPlan,
+			String plan, String newsimcard, String simcard, String pUK, String device, String group, String groupNumber,
+			String groupTitle, String account, String status, String firstName, String lastName, String address,
+			String city, String states, String zipcode, String offerPrice, String comment) {
+		super();
+		this.customerID = customerID;
+		this.pin = pin;
+		this.phoneNumber = phoneNumber;
+		this.language = language;
+		this.carrier = carrier;
+		this.newCarrier = newCarrier;
+		this.preCarrier = preCarrier;
+		this.newExpireDate = newExpireDate;
+		this.expireDate = expireDate;
+		this.portDate = portDate;
+		LTEdata = lTEdata;
+		this.newPlan = newPlan;
+		this.plan = plan;
+		this.newsimcard = newsimcard;
+		this.simcard = simcard;
+		PUK = pUK;
+		this.device = device;
+		this.group = group;
+		this.groupNumber = groupNumber;
+		this.groupTitle = groupTitle;
+		this.account = account;
+		this.status = status;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.city = city;
+		this.states = states;
+		this.zipcode = zipcode;
+		this.offerPrice = offerPrice;
+		this.comment = comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 	public int getCustomerID() {
 		return customerID;
 	}
@@ -182,12 +229,48 @@ public class Customer {
 	public void setOfferPrice(String offerPrice) {
 		this.offerPrice = offerPrice;
 	}
-	public String getNote() {
-		return note;
+	public String getComment() {
+		return comment;
 	}
-	public void setNote(String note) {
-		this.note = note;
+
+	public int getPin() {
+		return pin;
 	}
->>>>>>> 3bc1482311c95f3334bf42ee6495c63394001877
+
+	public void setPin(int pin) {
+		this.pin = pin;
+	}
+
+	public String getPortDate() {
+		return portDate;
+	}
+
+	public void setPortDate(String portDate) {
+		this.portDate = portDate;
+	}
+
+	public String getPUK() {
+		return PUK;
+	}
+
+	public void setPUK(String pUK) {
+		PUK = pUK;
+	}
+
+	public String getGroup() {
+		return group;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
 	
 }

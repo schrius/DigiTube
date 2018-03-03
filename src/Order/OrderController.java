@@ -16,11 +16,18 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 
-public class OrderController {
+public class OrderController{
 
+	@FXML
 	OrderRightPaneController orderRightPaneController;
+	@FXML
 	SubtotalController subtotalController;
+	@FXML
+	GridPane orderRightPane;
+	@FXML
+	GridPane subtotalPane;
 	
 	FXMLLoader	fxmlLoader;
 	private ObservableList<Order> orderList;

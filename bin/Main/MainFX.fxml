@@ -87,7 +87,7 @@
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" spacing="5.0">
                      <children>
                         <CheckBox fx:id="refillBox" mnemonicParsing="false" text="Refill" />
-                        <CheckBox fx:id="newActivation" layoutX="64.0" layoutY="12.0" mnemonicParsing="false" text="New Activation" />
+                        <CheckBox fx:id="Activation" layoutX="64.0" layoutY="12.0" mnemonicParsing="false" text="Activation" />
                         <CheckBox fx:id="swapBox" mnemonicParsing="false" text="Swap" />
                         <CheckBox fx:id="swapFamilyBox" mnemonicParsing="false" text="Swap Family" />
                      </children>
