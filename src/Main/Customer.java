@@ -15,4 +15,5 @@ public class Customer {
 	String expireDate;
 	String groupNumber;
 	String note;
+	
 }
