@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane alignment="CENTER" hgap="2.0" vgap="2.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Order.ServiceController">
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+   </rowConstraints>
+   <columnConstraints>
+      <ColumnConstraints minWidth="100.0" prefWidth="100.0" />
+      <ColumnConstraints fillWidth="false" halignment="CENTER" minWidth="180.0" prefWidth="200.0" />
+   </columnConstraints>
+   <children>
+      <ComboBox fx:id="serviceBox" prefWidth="150.0" GridPane.columnIndex="1" />
+      <Label text="Service Fee:" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+         </GridPane.margin></Label>
+      <TextField fx:id="serviceFeeField" alignment="CENTER" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label text="Complete Date:" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+         </GridPane.margin></Label>
+      <DatePicker fx:id="completeDate" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button fx:id="processButton" mnemonicParsing="false" onAction="#processButtonListener" prefWidth="100.0" text="Process" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label text="Service Type:">
+         <GridPane.margin>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+         </GridPane.margin></Label>
+      <Label text="Contact Info:" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+         </GridPane.margin></Label>
+      <TextField fx:id="contactInfo" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+   </children>
+   <padding>
+      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+   </padding>
+</GridPane>

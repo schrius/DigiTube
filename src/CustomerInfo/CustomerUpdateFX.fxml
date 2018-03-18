@@ -90,9 +90,9 @@
       <Label text="Address:" GridPane.columnIndex="4" GridPane.rowIndex="8" />
       <Label text="ZipCode:" GridPane.columnIndex="4" GridPane.rowIndex="9" />
       <TextField fx:id="zipCodeField" prefHeight="25.0" prefWidth="100.0" promptText="ex: 11220" GridPane.columnIndex="5" GridPane.rowIndex="9" />
-      <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="10">
+      <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="10">
          <font>
-            <Font size="18.0" />
+            <Font size="14.0" />
          </font>
       </Button>
       <Button fx:id="submitButton" mnemonicParsing="false" text="Submit Update" textFill="#0055ff" GridPane.columnIndex="5" GridPane.rowIndex="10">
@@ -100,6 +100,8 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <Label text="Owe Amount:" GridPane.rowIndex="10" />
+      <TextField fx:id="oweAmountField" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
    </children>
    <padding>
       <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />

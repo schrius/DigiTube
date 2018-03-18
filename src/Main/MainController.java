@@ -18,7 +18,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 public class MainController {
 	final static public double TAXRATE = 0.08875;
-	final static public double NYTAX = 1.2;
+	final static public double PSCSTAX = 1.2;
 	final static public String REFILL = "Refill";
 	final static public String ACTIVATION = "Activation";
 	final static public String SERVICE = "Service";

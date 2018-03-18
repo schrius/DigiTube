@@ -1,6 +1,5 @@
 package Order;
 
-import Main.MainController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -18,6 +17,12 @@ public class SubtotalController {
 
 	@FXML
 	Label totalLabel;
+	@FXML
+	Label receiveLabel;
+	@FXML
+	Label returnBalanceLabel;
+	@FXML
+	Label serviceFeeLabel;
 
 	public Label getDiscountLabel() {
 		return discountLabel;
@@ -59,12 +64,19 @@ public class SubtotalController {
 	public void setTotalLabel(Label totalLabel) {
 		this.totalLabel = totalLabel;
 	}
-	
+	/*
 	public void updateSubtotal() {
 		subtotalLabel.setText("$" + MainController.getOrderController().getSubtotal());
 		taxLabel.setText("$" + MainController.getOrderController().getTax());
 		discountLabel.setText("$ -" + MainController.getOrderController().getDiscount());
 		NYTaxLabel.setText("$" + MainController.getOrderController().getNYtax());
 		totalLabel.setText("$" + MainController.getOrderController().getTotal());
+		
+		if(MainController.getOrderController().getReceiveAmount()!=null) {
+		receiveLabel.setText("$" + MainController.getOrderController().getReceiveAmount());
+		returnBalanceLabel.setText("$" + (MainController.getOrderController().getTotal()
+				.subtract(MainController.getOrderController().getReceiveAmount())));
+		}
 	}
+	*/
 }

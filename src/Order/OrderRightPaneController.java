@@ -1,11 +1,12 @@
 package Order;
 
 import java.io.IOException;
-
 import javax.swing.JOptionPane;
+
 import Main.MainController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -13,7 +14,12 @@ import javafx.scene.layout.GridPane;
 public class OrderRightPaneController {
 		BorderPane orderPane;
 		GridPane carrierPane;
+		GridPane rightPane;
 		GridPane subtotalPane;
+		FXMLLoader fxmlLoader;
+		Parent parent;
+		
+		double input;
 		
 		// Orders buttons
 		@FXML
@@ -52,31 +58,43 @@ public class OrderRightPaneController {
 		Button cancelButton;
 		
 		public void refillListener() throws IOException {
-			
-			carrierPane  = FXMLLoader.load(getClass().getResource("../Refill/CarrierFX.fxml"));
-			MainController.getOrderController().getOrderPane().setRight(carrierPane);
-			MainController.getOrderController().setOrder(new Order());
-			MainController.getOrderController().getOrder().setCategories(MainController.REFILL);
+			MainController.getOrderController().processTransaction(TransactionEnum.REFILL);
 		}
 		
 		public void serviceListener() throws IOException {
-			//order = new Order();
-			//order.setCategories(MainController.refill);
+			MainController.getOrderController().processTransaction(TransactionEnum.SERIVCE);
 		}
 		
 		public void AcitivationListener() throws IOException {
-			carrierPane  = FXMLLoader.load(getClass().getResource("../Activation/ActivationCarrierFX.fxml"));
-			MainController.getOrderController().getOrderPane().setRight(carrierPane);
-			MainController.getOrderController().setOrder(new Order());
-			MainController.getOrderController().getOrder().setCategories(MainController.ACTIVATION);
+			MainController.getOrderController().processTransaction(TransactionEnum.ACTIVATION);
 		}
+		
+		public void cashButtonListener() throws IOException {
+			MainController.getOrderController().processTransaction(TransactionEnum.CASH);
+		}
+		public void devicesButtonListener() {
+			
+		}
+		public void accessoriesButtonListener() {
+			
+		}
+		public void payBillButtonListener() {
+			
+		}
+		
+		public void cardButtonListener() {
+			
+		}
+		public void refundButtonListener() {
+			
+		}
+
 		
 		public void removeListener() throws IOException{
 			if(MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem() != null) {
 			Order removeOrder = MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem();
 			MainController.getOrderController().removeTableItem(removeOrder);
 			MainController.getOrderController().updateTable();
-			MainController.getOrderController().updateTotal();
 			}
 		}
 		
@@ -86,7 +104,6 @@ public class OrderRightPaneController {
 			MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem().setQuantity(quantity);
 			}
 			MainController.getOrderController().updateTable();
-			MainController.getOrderController().updateTotal();
 		}
 		
 		public void changePriceListener() throws IOException{
@@ -99,9 +116,19 @@ public class OrderRightPaneController {
 					MainController.getOrderController().getOrderTable().getSelectionModel()
 					.getSelectedItem().getRegularPrice() - Double.parseDouble(newPrice));
 			MainController.getOrderController().updateTable();
-			MainController.getOrderController().updateTotal();
 			}
 		}
+		}
+		
+		public void printButtonListener() {
+			
+		}
+		public void cancelButtonListener() {
+			
+		}
+		
+		public void processButtonListener() {
+			
 		}
 }
 

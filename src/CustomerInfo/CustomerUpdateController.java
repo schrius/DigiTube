@@ -1,6 +1,7 @@
 package CustomerInfo;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -10,6 +11,8 @@ public class CustomerUpdateController {
 	TextField customerIDField;
 	@FXML
 	TextField phoneField;
+	@FXML
+	TextField oweAmountField;
 	@FXML
 	TextField deviceField;
 	@FXML
@@ -66,5 +69,10 @@ public class CustomerUpdateController {
 	ComboBox<String> plan;
 	@FXML
 	ComboBox<String> state;
+	
+	@FXML
+	Button cancelButton;
+	@FXML
+	Button submitButton;
 	
 }

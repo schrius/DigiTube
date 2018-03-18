@@ -3,9 +3,7 @@ package Refill;
 import java.io.IOException;
 
 import Main.MainController;
-import Order.SubtotalController;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -35,23 +33,9 @@ public class RefillController {
 	
 	public void processButtonListener() throws IOException {
 		if(phoneNumberField.getText().length() == 10) {	
-		orderRightPane = FXMLLoader.load(getClass().getResource("../Order/OrderRightPaneFX.fxml"));
-		
 		MainController.getOrderController().getOrder().setPhoneNumber(phoneNumberField.getText());
 		MainController.getOrderController().getOrder().setQuantity(quanityBox.getValue());
-		MainController.getOrderController().getOrderPane().setRight(orderRightPane);
 		MainController.getOrderController().processOrder();
-		
-		UpdateSubtotalPane();
 		}
-	}
-	
-	public void UpdateSubtotalPane() throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Order/SubtotalFX.fxml"));
-		SubtotalController subtotalController = new SubtotalController();
-		fxmlLoader.setController(subtotalController);
-		parent = fxmlLoader.load();
-		subtotalController.updateSubtotal();
-		MainController.getOrderController().getOrderPane().setBottom(parent);
 	}
 }

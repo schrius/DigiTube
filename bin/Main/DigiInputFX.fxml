@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.DigiInputPaneController">
+   <children>
+      <TextField fx:id="inputField" editable="false" minHeight="38.0" prefHeight="38.0" />
+      <GridPane alignment="CENTER" hgap="2.0" vgap="2.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="button7" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#button7Listener" prefHeight="30.0" prefWidth="80.0" text="7" GridPane.rowIndex="1" />
+            <Button fx:id="button8" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#button8Listener" prefHeight="30.0" prefWidth="80.0" text="8" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button fx:id="button9" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#button9Listener" prefHeight="30.0" prefWidth="80.0" text="9" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="button4" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#button4Listener" prefHeight="30.0" prefWidth="80.0" text="4" GridPane.rowIndex="2" />
+            <Button fx:id="button5" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#button5Listener" prefHeight="30.0" prefWidth="80.0" text="5" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="button6" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#button6Listener" prefHeight="30.0" prefWidth="80.0" text="6" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Button fx:id="button1" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#button1Listener" prefHeight="30.0" prefWidth="80.0" text="1" GridPane.rowIndex="3" />
+            <Button fx:id="button2" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#button2Listener" prefHeight="30.0" prefWidth="80.0" text="2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Button fx:id="button3" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#button3Listener" prefHeight="30.0" prefWidth="80.0" text="3" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Button fx:id="dotButton" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#dotButtonListener" prefHeight="30.0" prefWidth="80.0" text="." GridPane.rowIndex="4" />
+            <Button fx:id="button0" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#button0Listener" prefHeight="30.0" prefWidth="80.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Button fx:id="enterButton" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#enterButtonListener" prefHeight="30.0" prefWidth="80.0" text="Enter" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Button fx:id="eraseButton" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#eraseButtonListener" prefHeight="30.0" prefWidth="80.0" text="C" />
+            <Button fx:id="backButton" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#backButtonListener" prefHeight="30.0" prefWidth="80.0" text="&lt;--" GridPane.columnIndex="2" />
+            <Label fx:id="centerLabel" textFill="#3b9a00" GridPane.columnIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </GridPane>
+   </children>
+</VBox>

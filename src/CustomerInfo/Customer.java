@@ -10,6 +10,7 @@ public class Customer {
 	@GeneratedValue
 	private int customerID;
 	private int pin;
+	private double oweAmount;
 	private String phoneNumber;
 	private String language;
 	private String carrier;
@@ -42,15 +43,17 @@ public class Customer {
 	public Customer() {
 
 	}
-	
-	public Customer(int customerID, int pin, String phoneNumber, String language, String carrier, String newCarrier,
-			String preCarrier, String newExpireDate, String expireDate, String portDate, String lTEdata, String newPlan,
-			String plan, String newsimcard, String simcard, String pUK, String device, String group, String groupNumber,
-			String groupTitle, String account, String status, String firstName, String lastName, String address,
-			String city, String states, String zipcode, String offerPrice, String comment) {
+
+	public Customer(int customerID, int pin, double oweAmount, String phoneNumber, String language, String carrier,
+			String newCarrier, String preCarrier, String newExpireDate, String expireDate, String portDate,
+			String lTEdata, String newPlan, String plan, String newsimcard, String simcard, String pUK, String device,
+			String group, String groupNumber, String groupTitle, String account, String status, String firstName,
+			String lastName, String address, String city, String states, String zipcode, String offerPrice,
+			String comment) {
 		super();
 		this.customerID = customerID;
 		this.pin = pin;
+		this.oweAmount = oweAmount;
 		this.phoneNumber = phoneNumber;
 		this.language = language;
 		this.carrier = carrier;
@@ -80,6 +83,8 @@ public class Customer {
 		this.offerPrice = offerPrice;
 		this.comment = comment;
 	}
+
+
 
 	public void setComment(String comment) {
 		this.comment = comment;
@@ -271,6 +276,14 @@ public class Customer {
 
 	public void setAccount(String account) {
 		this.account = account;
+	}
+
+	public double getOweAmount() {
+		return oweAmount;
+	}
+
+	public void setOweAmount(double oweAmount) {
+		this.oweAmount = oweAmount;
 	}
 	
 }

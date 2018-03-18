@@ -12,7 +12,153 @@
  	<fx:include fx:id="orderRightPane" source="OrderRightPaneFX.fxml" />
    </right>
    <bottom>
-	<fx:include fx:id="subtotalPane" source="SubtotalFX.fxml" />
+<GridPane prefWidth="640.0" >
+   <children>
+      <Label fx:id="subtotalLabel" alignment="CENTER_RIGHT" prefWidth="100.0" GridPane.columnIndex="1">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label minWidth="100.0" prefWidth="100.0" text="Subtotal: ">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label minWidth="100.0" prefWidth="100.0" text="Discount:" GridPane.rowIndex="1">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label fx:id="discountLabel" alignment="CENTER_RIGHT" prefWidth="100.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label minWidth="100.0" prefWidth="100.0" text="Tax 8.875 %:" GridPane.rowIndex="2">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label fx:id="taxLabel" alignment="CENTER_RIGHT" prefWidth="100.0" textFill="#0009ff" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label minWidth="100.0" prefWidth="100.0" text="NY PWCS:" GridPane.rowIndex="3">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label fx:id="PSCSLabel" alignment="CENTER_RIGHT" prefWidth="100.0" textFill="#0014ff" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label minWidth="100.0" prefWidth="100.0" text="Total:" GridPane.rowIndex="5">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label fx:id="totalLabel" alignment="CENTER_RIGHT" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label minWidth="100.0" prefWidth="100.0" text="Service Fee:" GridPane.rowIndex="4">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label fx:id="serviceFeeLabel" alignment="CENTER_RIGHT" prefWidth="100.0" textFill="#0014ff" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label minWidth="100.0" prefWidth="100.0" text="Received: " GridPane.columnIndex="2">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label minWidth="100.0" prefWidth="100.0" text="Return Balance:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label fx:id="receiveLabel" alignment="CENTER_RIGHT" prefWidth="100.0" GridPane.columnIndex="3">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+      <Label fx:id="returnBalanceLabel" alignment="CENTER_RIGHT" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </Label>
+   </children>
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="412.0" minWidth="100.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="763.0" minWidth="100.0" prefWidth="120.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="763.0" minWidth="100.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="763.0" minWidth="100.0" prefWidth="120.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="763.0" minWidth="100.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+</GridPane>
    </bottom>
    <top>
       <VBox alignment="CENTER" prefHeight="50.0" prefWidth="520.0" spacing="2.0" BorderPane.alignment="CENTER">
@@ -73,9 +219,9 @@
       </VBox>
    </top>
    <center>
-      <ScrollPane prefHeight="400.0" prefWidth="520.0" BorderPane.alignment="CENTER">
+      <ScrollPane minWidth="400.0" minHeight="400.0" prefHeight="400.0" prefWidth="520.0" BorderPane.alignment="CENTER">
          <content>
-            <TableView fx:id="orderTable" prefHeight="420.0" prefWidth="520.0">
+            <TableView fx:id="orderTable" minWidth="400.0" minHeight="400.0" prefHeight="420.0" prefWidth="520.0">
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
