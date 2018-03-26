@@ -18,7 +18,7 @@
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </Button>
-      <Button fx:id="payBillButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="PayBill" GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <Button fx:id="payBillButton" mnemonicParsing="false" onAction="#payBillButtonListener" prefHeight="50.0" prefWidth="100.0" text="PayBill" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
@@ -28,12 +28,12 @@
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </Button>
-      <Button fx:id="devicesButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Devices" GridPane.rowIndex="1">
+      <Button fx:id="devicesButton" mnemonicParsing="false" onAction="#devicesButtonListener" prefHeight="50.0" prefWidth="100.0" text="Devices" GridPane.rowIndex="1">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </Button>
-      <Button fx:id="accessoriesButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Accessories" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <Button fx:id="accessoriesButton" mnemonicParsing="false" onAction="#accessoriesButtonListener" prefHeight="50.0" prefWidth="100.0" text="Accessories" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
@@ -58,32 +58,32 @@
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </Button>
-      <Button fx:id="cardButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Credit/Debit Card" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <Button fx:id="cardButton" mnemonicParsing="false" onAction="#cardButtonListener" prefHeight="50.0" prefWidth="100.0" text="Credit/Debit Card" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </Button>
-      <Button fx:id="unpaidButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Unpaid" GridPane.columnIndex="2" GridPane.rowIndex="3">
+      <Button fx:id="unpaidButton" mnemonicParsing="false" onAction="#unpaidButtonListener" prefHeight="50.0" prefWidth="100.0" text="Unpaid" GridPane.columnIndex="2" GridPane.rowIndex="3">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </Button>
-      <Button fx:id="printButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Print Receipt" GridPane.rowIndex="4">
+      <Button fx:id="printButton" mnemonicParsing="false" onAction="#printButtonListener" prefHeight="50.0" prefWidth="100.0" text="Print Receipt" GridPane.rowIndex="4">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </Button>
-      <Button fx:id="refundButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Refund" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <Button fx:id="refundButton" mnemonicParsing="false" onAction="#refundButtonListener" prefHeight="50.0" prefWidth="100.0" text="Refund" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </Button>
-      <Button fx:id="cancelButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Cancel" GridPane.columnIndex="2" GridPane.rowIndex="4">
+      <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonListener" prefHeight="50.0" prefWidth="100.0" text="Cancel" GridPane.columnIndex="2" GridPane.rowIndex="4">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </Button>
-      <Button fx:id="processButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Process Order" GridPane.columnIndex="2" GridPane.rowIndex="5">
+      <Button fx:id="processButton" mnemonicParsing="false" onAction="#processButtonListener" prefHeight="50.0" prefWidth="100.0" text="Process Order" GridPane.columnIndex="2" GridPane.rowIndex="5">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>

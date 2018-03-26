@@ -3,15 +3,10 @@ package Refill;
 import java.io.IOException;
 
 import Main.MainController;
+import Order.CarrierNum;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
-
 public class CarrierController {
-
-	VBox planBox;
-	FXMLLoader fxmlLoader;
 
 	// Carrier choice
 	@FXML
@@ -27,7 +22,7 @@ public class CarrierController {
 	@FXML
 	Button H2OButton;
 	@FXML
-	Button tellcellButton;
+	Button telcelButton;
 	@FXML
 	Button goSmartButton;
 	@FXML
@@ -43,21 +38,14 @@ public class CarrierController {
 
 	
 	public void lycaMobileButtonListener() throws IOException {
-		planBox  = FXMLLoader.load(getClass().getResource("../Refill/LycaMobileFX.fxml"));
-		MainController.getOrderController().getOrder().setCarrier("Lyca");
-		MainController.getOrderController().getOrderPane().setRight(planBox);
-
+		MainController.getOrderController().setCarrierPane(CarrierNum.LYCA);
 	}
 	
 	public void ultraMobileButtonListener() throws IOException {
-		planBox  = FXMLLoader.load(getClass().getResource("../Refill/UltraMobileFX.fxml"));
-		MainController.getOrderController().getOrder().setCarrier("Ultra");
-		MainController.getOrderController().getOrderPane().setRight(planBox);
+		MainController.getOrderController().setCarrierPane(CarrierNum.ULTRA);
 	}
 	
-	public void simpleMobileButtonListener() throws IOException {
-		planBox  = FXMLLoader.load(getClass().getResource("../Refill/SimpleMobileFX.fxml"));
-		MainController.getOrderController().getOrder().setCarrier("Simple");
-		MainController.getOrderController().getOrderPane().setRight(planBox);
+	public void simpleMobileButtonListener() throws IOException {		
+		MainController.getOrderController().setCarrierPane(CarrierNum.SIMPLE);
 	}
 }

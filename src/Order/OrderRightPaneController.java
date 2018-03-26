@@ -1,26 +1,17 @@
 package Order;
 
 import java.io.IOException;
-import javax.swing.JOptionPane;
-
+import java.math.BigDecimal;
+import Main.FixedElements;
 import Main.MainController;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class OrderRightPaneController {
-		BorderPane orderPane;
-		GridPane carrierPane;
-		GridPane rightPane;
-		GridPane subtotalPane;
-		FXMLLoader fxmlLoader;
-		Parent parent;
-		
-		double input;
-		
+
+		boolean paid;
+		String payment;
 		// Orders buttons
 		@FXML
 		Button refillButton;
@@ -56,6 +47,13 @@ public class OrderRightPaneController {
 		Button refundButton;
 		@FXML
 		Button cancelButton;
+		@FXML
+		Button processButton;
+		
+		@FXML
+		public void initialize() {
+			paid = false;
+		}
 		
 		public void refillListener() throws IOException {
 			MainController.getOrderController().processTransaction(TransactionEnum.REFILL);
@@ -71,64 +69,57 @@ public class OrderRightPaneController {
 		
 		public void cashButtonListener() throws IOException {
 			MainController.getOrderController().processTransaction(TransactionEnum.CASH);
+			paid = true;
+			this.payment = FixedElements.CASH;
 		}
-		public void devicesButtonListener() {
-			
+		public void devicesButtonListener() throws IOException {
+			MainController.getOrderController().processTransaction(TransactionEnum.DEVICE);
 		}
-		public void accessoriesButtonListener() {
-			
+		public void accessoriesButtonListener() throws IOException {
+			MainController.getOrderController().processTransaction(TransactionEnum.ACCESSORIES);
 		}
-		public void payBillButtonListener() {
-			
+		public void payBillButtonListener() throws IOException {
+			MainController.getOrderController().processTransaction(TransactionEnum.PAYBILL);
 		}
 		
 		public void cardButtonListener() {
-			
+			paid = true;
+			this.payment = FixedElements.CREDIT;
 		}
 		public void refundButtonListener() {
 			
 		}
+		public void unpaidButtonListener() {
+			MainController.getOrderController().receiveCash(new BigDecimal(0));
+			paid = true;
+			this.payment = FixedElements.UNPAID;
+		}
 
 		
 		public void removeListener() throws IOException{
-			if(MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem() != null) {
-			Order removeOrder = MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem();
-			MainController.getOrderController().removeTableItem(removeOrder);
-			MainController.getOrderController().updateTable();
-			}
+			MainController.getOrderController().removeItem();
 		}
 		
 		public void changeQuantityListener() throws IOException {
-			if(MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem() != null){
-				int quantity = Integer.parseInt((JOptionPane.showInputDialog("Enter new quantity")));
-			MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem().setQuantity(quantity);
-			}
-			MainController.getOrderController().updateTable();
+			MainController.getOrderController().changeQuantity();
 		}
 		
 		public void changePriceListener() throws IOException{
-			if(MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem() != null){
-
-				String newPrice = JOptionPane.showInputDialog("Enter New Price");
-				if(newPrice != null) {
-			MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem().setPrice(Double.parseDouble(newPrice));
-			MainController.getOrderController().getOrderTable().getSelectionModel().getSelectedItem().setDiscount(
-					MainController.getOrderController().getOrderTable().getSelectionModel()
-					.getSelectedItem().getRegularPrice() - Double.parseDouble(newPrice));
-			MainController.getOrderController().updateTable();
-			}
-		}
+			MainController.getOrderController().changePrice();
 		}
 		
 		public void printButtonListener() {
 			
 		}
 		public void cancelButtonListener() {
-			
+			Stage stage = (Stage) cancelButton.getScene().getWindow();
+			stage.close();
 		}
 		
-		public void processButtonListener() {
-			
-		}
+		public void processButtonListener() throws IOException {
+			if(paid) {
+				MainController.getOrderController().completeOrder(payment);
+				}
+			}
 }
 

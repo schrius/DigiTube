@@ -1,11 +1,17 @@
 package Order;
 
+import java.io.IOException;
+import Main.FixedElements;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class OrderUpdateController {
+	@FXML
+	TextField searchField;
 	@FXML
 	TextField orderIDField;
 	@FXML
@@ -36,18 +42,46 @@ public class OrderUpdateController {
 	TextField employeeIDField;
 
 	@FXML
-	ComboBox<Integer> quanityBox;
+	TextField quanityField;
 	@FXML
-	ComboBox<String> categoriesBox;
+	TextField categories;
 	@FXML
 	ComboBox<String> groupBox;
 	@FXML
 	ComboBox<String> carrierBox;
 	@FXML
-	ComboBox<String> planBox;
+	TextField planField;
 	@FXML
-	ComboBox<String> statusBox;
+	TextField statusField;
 	@FXML
-	DatePicker orderDatePicker;
+	TextField paymentField;
+	@FXML
+	TextField orderDateField;
+	@FXML
+	Label lastUpdateLabel;
+
+	@FXML
+	Button cancelButton;
+	@FXML
+	Button submitButton;
+	@FXML
+	Button searchButton;
+	@FXML
+	private void initialize() {
+		groupBox.getItems().addAll(FixedElements.GROUP);
+		carrierBox.getItems().addAll(FixedElements.CARRIERS);
+	}
+	
+	public void searchButtonListener() {
+		
+	}
+	
+	public void cancelButtonListener() throws IOException {
+		Stage stage = (Stage) cancelButton.getScene().getWindow();
+		stage.close();
+	}
+	public void submitButtonListener() {
+		
+	}
 
 }

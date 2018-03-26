@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane alignment="CENTER" minHeight="300.0" minWidth="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Order.AccessoriesController">
+   <children>
+      <ComboBox fx:id="accessoriesBox" prefWidth="150.0" GridPane.columnIndex="1" />
+      <Label text="Accessories:">
+         <GridPane.margin>
+            <Insets left="5.0" />
+         </GridPane.margin>
+      </Label>
+      <Label text="Price:" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="5.0" />
+         </GridPane.margin></Label>
+      <Label text="Product Description:" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="5.0" />
+         </GridPane.margin></Label>
+      <TextField fx:id="priceField" promptText="ex : $ 1.99" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="productName" promptText=" If &quot;Other&quot;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label text="Phone:" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets left="5.0" />
+         </GridPane.margin></Label>
+      <TextField fx:id="phoneField" promptText="ex : 718-208-xxxx" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonListener" text="Cancel" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+      <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonListener" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <TextField fx:id="description" promptText=" If &quot;Other&quot;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label text="Product Name:" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="5.0" />
+         </GridPane.margin>
+      </Label>
+   </children>
+   <columnConstraints>
+      <ColumnConstraints minWidth="150.0" prefWidth="150.0" />
+      <ColumnConstraints halignment="CENTER" minWidth="120.0" prefWidth="150.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" />
+   </rowConstraints>
+</GridPane>

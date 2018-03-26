@@ -13,10 +13,16 @@ public class ActivationController {
 	@FXML
 	private Button processButton;
 	@FXML
+	private Button cancelButton;
+	@FXML
 	private ComboBox<Integer> quanityBox;
 
 	@FXML
 	private TextField phoneNumberField;
+	@FXML
+	private TextField simField;
+	@FXML
+	private TextField pukField;
 	@FXML
 	private ImageView carrierImage;
 	@FXML
@@ -29,10 +35,13 @@ public class ActivationController {
 		categoriesBox.getItems().addAll("Swap", "New Activation");
 		categoriesBox.getSelectionModel().selectFirst();
 	}
+	public void cancelButtonListener() throws IOException {
+		MainController.getOrderController().updateRightPane();
+	}
 	
 	public void processButtonListener() throws IOException {
 		if(phoneNumberField.getText().length() == 10) {	
-		MainController.getOrderController().getOrder().setPhoneNumber(phoneNumberField.getText());
+		MainController.getOrderController().getOrder().getPlan().setPhoneNumber(phoneNumberField.getText());
 		MainController.getOrderController().getOrder().setQuantity(quanityBox.getValue());
 		MainController.getOrderController().processOrder();
 		}

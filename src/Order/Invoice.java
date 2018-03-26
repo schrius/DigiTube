@@ -1,75 +1,123 @@
 package Order;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Invoice {
 	@Id
-	@GeneratedValue
-	private long orderID;
-	private String productID;
-	private String description;
-	private double regularPrice;
-	private double price;
-	private String orderDate;
-	private int employeeID;
+	@SequenceGenerator(name="invoice_seq", sequenceName="invoice_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "invoice_seq")
+	@Column(name="INVOICE_ID")
+	private long invoiceID;
+	@OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Orders> order = new ArrayList<>();
+	private double total;
+	private double subtotal;
+	private double PSCS;
+	private double NYTax;
+	private double discount;
+	private double serviceFee;
+	private double receiveAmount;
+	private LocalDateTime orderDate;
 	public Invoice() {
 
 	}
-	public Invoice(long orderID, String productID, String description, double regularPrice, double price,
-			String orderDate, int employeeID) {
+
+	public Invoice(long invoiceID, List<Orders> order, LocalDateTime orderDate) {
 		super();
-		this.orderID = orderID;
-		this.productID = productID;
-		this.description = description;
-		this.regularPrice = regularPrice;
-		this.price = price;
+		this.invoiceID = invoiceID;
+		this.order = order;
 		this.orderDate = orderDate;
-		this.employeeID = employeeID;
 	}
-	public long getOrderID() {
-		return orderID;
+
+	public double getTotal() {
+		return total;
 	}
-	public void setOrderID(long orderID) {
-		this.orderID = orderID;
+
+	public void setTotal(double total) {
+		this.total = total;
 	}
-	public String getProductID() {
-		return productID;
+
+	public double getSubtotal() {
+		return subtotal;
 	}
-	public void setProductID(String productID) {
-		this.productID = productID;
+
+	public void setSubtotal(double subtotal) {
+		this.subtotal = subtotal;
 	}
-	public String getDescription() {
-		return description;
+
+	public double getPSCS() {
+		return PSCS;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+
+	public void setPSCS(double pSCS) {
+		PSCS = pSCS;
 	}
-	public double getRegularPrice() {
-		return regularPrice;
+
+	public double getNYTax() {
+		return NYTax;
 	}
-	public void setRegularPrice(double regularPrice) {
-		this.regularPrice = regularPrice;
+
+	public void setNYTax(double nYTax) {
+		NYTax = nYTax;
 	}
-	public double getPrice() {
-		return price;
+
+	public double getDiscount() {
+		return discount;
 	}
-	public void setPrice(double price) {
-		this.price = price;
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
 	}
-	public String getOrderDate() {
+
+	public double getServiceFee() {
+		return serviceFee;
+	}
+
+	public void setServiceFee(double serviceFee) {
+		this.serviceFee = serviceFee;
+	}
+
+	public double getReceiveAmount() {
+		return receiveAmount;
+	}
+
+	public void setReceiveAmount(double receiveAmount) {
+		this.receiveAmount = receiveAmount;
+	}
+
+	public long getInvoiceID() {
+		return invoiceID;
+	}
+
+	public void setInvoiceID(long invoiceID) {
+		this.invoiceID = invoiceID;
+	}
+
+	public List<Orders> getOrder() {
+		return order;
+	}
+
+	public void setOrder(List<Orders> order) {
+		this.order = order;
+	}
+
+	public LocalDateTime getOrderDate() {
 		return orderDate;
 	}
-	public void setOrderDate(String orderDate) {
+
+	public void setOrderDate(LocalDateTime orderDate) {
 		this.orderDate = orderDate;
-	}
-	public int getEmployeeID() {
-		return employeeID;
-	}
-	public void setEmployeeID(int employeeID) {
-		this.employeeID = employeeID;
 	}
 	
 }

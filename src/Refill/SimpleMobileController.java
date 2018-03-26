@@ -4,15 +4,9 @@ import java.io.IOException;
 
 import Main.MainController;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 
 public class SimpleMobileController {
-	Parent parent;
-	VBox processBox;
-	
 	// plans choice
 	@FXML
 	Button plan25Button;
@@ -25,11 +19,19 @@ public class SimpleMobileController {
 	@FXML
 	Button plan60Button;
 	
-	public void plan25ButtonListener() throws IOException {
-		processBox  = FXMLLoader.load(getClass().getResource("RefillFX.fxml"));
-		MainController.getOrderController().getOrder().setPlan("$25");
-		MainController.getOrderController().getOrder().setPrice(25);
-		MainController.getOrderController().getOrder().setPrice(25);
-		MainController.getOrderController().getOrderPane().setRight(processBox);
+	public void plan25ButtonListener() throws IOException {		
+		MainController.getOrderController().setPlan(25);
+	}
+	public void plan30ButtonListener() throws IOException {		
+		MainController.getOrderController().setPlan(30);
+	}
+	public void plan40ButtonListener() throws IOException {		
+		MainController.getOrderController().setPlan(40);
+	}
+	public void plan50ButtonListener() throws IOException {		
+		MainController.getOrderController().setPlan(50);
+	}
+	public void plan60ButtonListener() throws IOException {		
+		MainController.getOrderController().setPlan(60);
 	}
 }

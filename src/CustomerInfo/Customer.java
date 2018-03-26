@@ -1,99 +1,108 @@
 package CustomerInfo;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.ForeignKey;
+import Employee.Employee;
 @Entity
+@Table(name = "CUSTOMER")
 public class Customer {
 	@Id
-	@GeneratedValue
-	private int customerID;
+	@Column(name = "CUSTOMER_ID")
+	private long customerID;
 	private int pin;
 	private double oweAmount;
+	@Column(name = "ACTION", length = 32)
+	private String action;
+	@Column(unique = true, nullable = false, length = 16)
 	private String phoneNumber;
+	@Column(length = 32)
 	private String language;
+	@Column(length = 32)
 	private String carrier;
+	@Column(length = 32)
 	private String newCarrier;
+	@Column(length = 32)
 	private String preCarrier;
-	private String newExpireDate;
-	private String expireDate;
-	private String portDate;
+	@Column(length = 32)
+	private LocalDate newExpireDate;
+	@Column(length = 32)
+	private LocalDate expireDate;
+	@Column(length = 32)
+	private LocalDate portDate;
+	@Column(length = 16)
 	private String LTEdata;
+	@Column(length = 16)
 	private String newPlan;
+	@Column(length = 16)
 	private String plan;
+	@Column(length = 32)
 	private String newsimcard;
+	@Column(length = 32)
 	private String simcard;
+	@Column(length = 16)
 	private String PUK;
+	@Column(length = 16)
 	private String device;
-	private String group;
-	private String groupNumber;
+	@ManyToOne
+    @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "GROUP_ID_FK"))
+	private CustomerGroup groupNumber;
+	@Column(length = 16)
 	private String groupTitle;
+	@Column(length = 16)
 	private String account;
+	@Column(length = 16)
 	private String status;
+	@Column(length = 32)
 	private String firstName;
+	@Column(length = 32)
 	private String lastName;
+	@Column(length = 100)
 	private String address;
+	@Column(length = 32)
 	private String city;
+	@Column(length = 32)
 	private String states;
+	@Column(length = 16)
 	private String zipcode;
+	@Column(length = 32)
 	private String offerPrice;
 	private String comment;
+	private int customerCredit;
+	@ManyToOne
+	@JoinColumn(name="EMPLOYEE_ID", foreignKey = @ForeignKey(name = "GROUP_ID_FK"))
+	private Employee employee;
+	@Column(length = 32)
+	private LocalDateTime lastUpdate;
 
 	public Customer() {
 
 	}
-
-	public Customer(int customerID, int pin, double oweAmount, String phoneNumber, String language, String carrier,
-			String newCarrier, String preCarrier, String newExpireDate, String expireDate, String portDate,
-			String lTEdata, String newPlan, String plan, String newsimcard, String simcard, String pUK, String device,
-			String group, String groupNumber, String groupTitle, String account, String status, String firstName,
-			String lastName, String address, String city, String states, String zipcode, String offerPrice,
-			String comment) {
-		super();
-		this.customerID = customerID;
-		this.pin = pin;
-		this.oweAmount = oweAmount;
-		this.phoneNumber = phoneNumber;
-		this.language = language;
-		this.carrier = carrier;
-		this.newCarrier = newCarrier;
-		this.preCarrier = preCarrier;
-		this.newExpireDate = newExpireDate;
-		this.expireDate = expireDate;
-		this.portDate = portDate;
-		LTEdata = lTEdata;
-		this.newPlan = newPlan;
-		this.plan = plan;
-		this.newsimcard = newsimcard;
-		this.simcard = simcard;
-		PUK = pUK;
-		this.device = device;
-		this.group = group;
-		this.groupNumber = groupNumber;
-		this.groupTitle = groupTitle;
-		this.account = account;
-		this.status = status;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.address = address;
-		this.city = city;
-		this.states = states;
-		this.zipcode = zipcode;
-		this.offerPrice = offerPrice;
-		this.comment = comment;
+	
+	public int getCustomerCredit() {
+		return customerCredit;
 	}
 
+
+	public void setCustomerCredit(int customerCredit) {
+		this.customerCredit = customerCredit;
+	}
 
 
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
-	public int getCustomerID() {
+	public long getCustomerID() {
 		return customerID;
 	}
-	public void setCustomerID(int customerID) {
+	public void setCustomerID(long customerID) {
 		this.customerID = customerID;
 	}
 	public String getCarrier() {
@@ -162,23 +171,17 @@ public class Customer {
 	public void setDevice(String device) {
 		this.device = device;
 	}
-	public String getNewExpireDate() {
+	public LocalDate getNewExpireDate() {
 		return newExpireDate;
 	}
-	public void setNewExpireDate(String newExpireDate) {
+	public void setNewExpireDate(LocalDate newExpireDate) {
 		this.newExpireDate = newExpireDate;
 	}
-	public String getExpireDate() {
+	public LocalDate getExpireDate() {
 		return expireDate;
 	}
-	public void setExpireDate(String expireDate) {
+	public void setExpireDate(LocalDate expireDate) {
 		this.expireDate = expireDate;
-	}
-	public String getGroupNumber() {
-		return groupNumber;
-	}
-	public void setGroupNumber(String groupNumber) {
-		this.groupNumber = groupNumber;
 	}
 	public String getGroupTitle() {
 		return groupTitle;
@@ -246,11 +249,11 @@ public class Customer {
 		this.pin = pin;
 	}
 
-	public String getPortDate() {
+	public LocalDate getPortDate() {
 		return portDate;
 	}
 
-	public void setPortDate(String portDate) {
+	public void setPortDate(LocalDate portDate) {
 		this.portDate = portDate;
 	}
 
@@ -260,14 +263,6 @@ public class Customer {
 
 	public void setPUK(String pUK) {
 		PUK = pUK;
-	}
-
-	public String getGroup() {
-		return group;
-	}
-
-	public void setGroup(String group) {
-		this.group = group;
 	}
 
 	public String getAccount() {
@@ -285,5 +280,37 @@ public class Customer {
 	public void setOweAmount(double oweAmount) {
 		this.oweAmount = oweAmount;
 	}
-	
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	public LocalDateTime getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(LocalDateTime lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	public CustomerGroup getGroupNumber() {
+		return groupNumber;
+	}
+
+	public void setGroupNumber(CustomerGroup groupNumber) {
+		this.groupNumber = groupNumber;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
 }

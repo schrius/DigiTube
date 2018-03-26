@@ -27,10 +27,19 @@
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
          </VBox.margin>
       </HBox>
-      <Button fx:id="processButton" mnemonicParsing="false" onAction="#processButtonListener" prefHeight="50.0" prefWidth="100.0" text="Process">
-         <padding>
-            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-         </padding>
-      </Button>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonListener" prefHeight="50.0" prefWidth="100.0" styleClass="danger" text="Cancel">
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Button>
+            <Button fx:id="processButton" mnemonicParsing="false" onAction="#processButtonListener" prefHeight="50.0" prefWidth="100.0" styleClass="success" text="Process">
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </VBox>

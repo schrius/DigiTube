@@ -4,12 +4,9 @@ import java.io.IOException;
 
 import Main.MainController;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 
 public class LycaMobileController {
-	VBox processBox;
 	// plans choice
 	@FXML
 	Button plan19Button;
@@ -27,10 +24,24 @@ public class LycaMobileController {
 	Button payAsYouGoButton;
 
 	public void plan19ButtonListener() throws IOException {
-		processBox  = FXMLLoader.load(getClass().getResource("RefillFX.fxml"));
-		MainController.getOrderController().getOrder().setPlan("$19");
-		MainController.getOrderController().getOrder().setPrice(19);
-		MainController.getOrderController().getOrder().setRegularPrice(19);
-		MainController.getOrderController().getOrderPane().setRight(processBox);
+		MainController.getOrderController().setPlan(19);
+	}
+	public void plan23ButtonListener() throws IOException {
+		MainController.getOrderController().setPlan(23);
+	}
+	public void plan29ButtonListener() throws IOException {
+		MainController.getOrderController().setPlan(29);
+	}
+	public void plan35ButtonListener() throws IOException {
+		MainController.getOrderController().setPlan(35);
+	}
+	public void plan45ButtonListener() throws IOException {
+		MainController.getOrderController().setPlan(45);
+	}
+	public void plan50ButtonListener() throws IOException {
+		MainController.getOrderController().setPlan(50);
+	}
+	public void payAsYouGoButtonListener() throws IOException {
+		MainController.getOrderController().setPlan(0);
 	}
 }

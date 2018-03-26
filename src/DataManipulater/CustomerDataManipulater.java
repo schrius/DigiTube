@@ -2,13 +2,11 @@ package DataManipulater;
 
 import java.util.Iterator;
 import java.util.List;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-
 import CustomerInfo.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,27 +19,31 @@ public class CustomerDataManipulater {
     
     public CustomerDataManipulater() {
         try {
-        	hibernateFactory = new Configuration().configure().buildSessionFactory();
+    		hibernateFactory = new Configuration().configure().buildSessionFactory();
          } catch (Throwable ex) { 
             System.err.println("Failed to create sessionFactory object." + ex);
             throw new ExceptionInInitializerError(ex); 
          }
     }
-    public void addCustomer(Customer customer) {
+    public boolean addCustomer(Customer customer) {
     	session = hibernateFactory.openSession();
     	transaction = null;
+
     	try {
     		transaction = session.beginTransaction();
     		session.persist(customer);
     		transaction.commit();
+    		System.out.print("Registered Success!");
+    		return true;
     	}catch (HibernateException e) {
     		if (transaction!=null) transaction.rollback();
             e.printStackTrace(); 
 		}finally {
 			session.close();
 		}
+		return false;
 	}
-    public Customer searchCustomer(Integer customerID) {
+    public Customer searchCustomer(Long customerID) {
         session = hibernateFactory.openSession();
         transaction = null;
         Customer customer = null;
@@ -85,17 +87,15 @@ public class CustomerDataManipulater {
         return customerList;
      }
     
-    public boolean updateCustomer(Integer CustomerID, Customer customer){
+    public boolean updateCustomer(Customer customer){
         session = hibernateFactory.openSession();
         transaction = null;
-        
         try {
         	transaction = session.beginTransaction();
-           if(session.get(Customer.class, CustomerID)!=null)
-           session.update(customer);
-           else addCustomer(customer);
-           transaction.commit();
-           return transaction != null;
+                session.update(customer);
+            transaction.commit();
+    		System.out.print("Update Success!");
+    		return true;
         } catch (HibernateException e) {
            if (transaction!=null) transaction.rollback();
            e.printStackTrace(); 
@@ -105,7 +105,7 @@ public class CustomerDataManipulater {
         return transaction != null;
      }
     
-    public void deleteCustomer(Integer CustomerID){
+    public void deleteCustomer(Long CustomerID){
         session = hibernateFactory.openSession();
         transaction = null;
         Customer customer = null;

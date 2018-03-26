@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane alignment="CENTER" minHeight="300.0" minWidth="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Order.PayBillController">
+   <children>
+      <ComboBox fx:id="carrierBox" prefWidth="150.0" GridPane.columnIndex="1" />
+      <Label text="Carrier:">
+         <GridPane.margin>
+            <Insets bottom="3.0" left="5.0" right="3.0" top="3.0" />
+         </GridPane.margin>
+      </Label>
+      <Label text="Due Balance:" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="5.0" />
+         </GridPane.margin></Label>
+      <TextField fx:id="balanceField" promptText="ex : $ 33" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="accountField" promptText="ex: 20263-xxxxx" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label text="Phone:" GridPane.rowIndex="5">
+         <GridPane.margin>
+            <Insets left="5.0" />
+         </GridPane.margin></Label>
+      <TextField fx:id="phoneField" promptText=" 718-208-xxxx" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonListener" text="Cancel" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+      <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonListener" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <TextField fx:id="serviceFeeField" promptText="ex : $ 3" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label text="Service Fee:" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets left="5.0" />
+         </GridPane.margin></Label>
+      <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonListener" text="Search Account:" GridPane.rowIndex="2" />
+      <Label text="Other Carrier:" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="5.0" />
+         </GridPane.margin>
+      </Label>
+      <TextField fx:id="otherCarrier" promptText="Carrier Not in the List" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   </children>
+   <columnConstraints>
+      <ColumnConstraints minWidth="150.0" prefWidth="150.0" />
+      <ColumnConstraints halignment="CENTER" minWidth="10.0" prefWidth="150.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="35.0" />
+      <RowConstraints minHeight="10.0" prefHeight="35.0" />
+      <RowConstraints minHeight="10.0" prefHeight="35.0" />
+      <RowConstraints minHeight="10.0" prefHeight="35.0" />
+      <RowConstraints minHeight="10.0" prefHeight="35.0" />
+      <RowConstraints minHeight="10.0" prefHeight="35.0" />
+      <RowConstraints minHeight="10.0" prefHeight="35.0" valignment="CENTER" />
+   </rowConstraints>
+</GridPane>

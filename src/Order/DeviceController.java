@@ -1,5 +1,8 @@
 package Order;
 
+import java.io.IOException;
+
+import Main.MainController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -9,7 +12,7 @@ public class DeviceController {
 	@FXML
 	ComboBox<String> deviceBox;
 	@FXML
-	TextField productID;
+	TextField productName;
 	@FXML
 	TextField priceField;
 	@FXML
@@ -24,11 +27,16 @@ public class DeviceController {
 	Button submitButton;
 	@FXML
 	Button searchButton;
+	@FXML
+	private void initialize() {
+		deviceBox.getItems().addAll("iPhone", "Samsung", "iPad", "Other");
+	}
+	
 	public void searchButtonListener() {
 		
 	}
-	public void cancelButtonListener() {
-		
+	public void cancelButtonListener() throws IOException {
+		MainController.getOrderController().updateRightPane();
 	}
 	public void submitButtonListener() {
 		

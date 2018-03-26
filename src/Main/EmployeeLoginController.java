@@ -5,6 +5,9 @@ package Main;
  */
 import java.io.IOException;
 import java.sql.SQLException;
+
+import DataManipulater.EmployeeDataManipulater;
+import Employee.Employee;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +22,8 @@ import javafx.stage.Stage;
 
 
 public class EmployeeLoginController {
+	private EmployeeDataManipulater employeeDataManipulater;
+	private Employee employee;
 	Parent parent;
 	
 	@FXML
@@ -44,19 +49,27 @@ public class EmployeeLoginController {
 	
 	
 	public void loginListener() throws IOException, SQLException {
-		Stage stage = new Stage();
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainFX.fxml"));
-		parent = (Parent)fxmlLoader.load();
-		MainController mainController = fxmlLoader.<MainController>getController();
-		mainController.setEmployee(new Employee());
-		mainController.getEmployee().setFirstName("Jerry");
+		if(employeeRadioButton.isSelected()) {
+			if(usernameField.getText()!=null && passwordField.getText()!=null) {
+				employeeDataManipulater = new EmployeeDataManipulater();
+				employee = employeeDataManipulater.searchEmployee(Integer.parseInt(usernameField.getText()));
+				if(employee!=null && employee.getPassowrd().equals(passwordField.getText())) {
+					Stage stage = new Stage();
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Main/MainFX.fxml"));
+					parent = (Parent)fxmlLoader.load();
+					MainController mainController = fxmlLoader.<MainController>getController();
+					mainController.setEmployee(employee);
 
-		Scene scene = new Scene(parent);
-		
-		stage.setTitle("Digital Mobile");
-		stage.setScene(scene);
-		((Stage)loginButton.getScene().getWindow()).close();
-		stage.show();
+					Scene scene = new Scene(parent);
+					
+					stage.setTitle("Digital Mobile");
+					stage.setScene(scene);
+					((Stage)loginButton.getScene().getWindow()).close();
+					stage.show();
+				}
+			}
+		}
+
 		
 		/*		if(username.getText()!=null && password.getText()!=null) {
 		String sql = "SELECT StudentID, Password FROM Student WHERE StudentID ='"

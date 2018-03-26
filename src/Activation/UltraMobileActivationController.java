@@ -2,14 +2,15 @@ package Activation;
 
 import java.io.IOException;
 
+import Main.FixedElements;
 import Main.MainController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 public class UltraMobileActivationController {
-	BorderPane processBox;
+	VBox processBox;
 	// plans choice
 	@FXML
 	Button plan19Button;
@@ -33,11 +34,7 @@ public class UltraMobileActivationController {
 	Button plan35X2Button;
 
 	public void plan19ButtonListener() throws IOException {
-		processBox  = FXMLLoader.load(getClass().getResource("ActivationFX.fxml"));
-		MainController.getOrderController().getOrder().setPlan("$19");
-		MainController.getOrderController().getOrder().setPrice(19);
-		MainController.getOrderController().getOrder().setRegularPrice(19);
-		MainController.getOrderController().getOrderPane().setRight(processBox);
+		process(19, FixedElements.P$19);
 	}
 	
 	public void plan23ButtonListener() throws IOException {
@@ -58,5 +55,12 @@ public class UltraMobileActivationController {
 	}
 	public void plan35X2ButtonListener() throws IOException {
 		
+	}
+	public void process(int price, String plan) throws IOException {
+		processBox  = FXMLLoader.load(getClass().getResource("ActivationFX.fxml"));
+		MainController.getOrderController().getOrder().getPlan().setPlanType(plan);
+		MainController.getOrderController().getOrder().setPrice(price);
+		MainController.getOrderController().getOrder().setRegularPrice(price);
+		MainController.getOrderController().getOrderPane().setRight(processBox);
 	}
 }

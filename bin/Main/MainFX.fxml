@@ -8,47 +8,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="840.0" stylesheets="@bootstrap3.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.MainController">
-   <top>
-      <Label text="Digital Mobile" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="System Bold Italic" size="18.0" />
-         </font></Label>
-   </top>
-   <center>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <content>
-            <TableView fx:id="tableView" prefHeight="480.0" prefWidth="520.0">
-               <padding>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </padding>
-            </TableView>
-         </content>
-      </ScrollPane>
-   </center>
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="840.0" stylesheets="@bootstrap3.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.MainController">
    <right>
-      <VBox prefHeight="380.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="450.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="500.0">
-               <children>
-                  <TextField fx:id="searchField" prefHeight="25.0" prefWidth="150.0" promptText="Phone Number">
-                     <HBox.margin>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </padding>
-                  </TextField>
-                  <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Search">
-                     <HBox.margin>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </padding>
-                  </Button>
-               </children>
-            </HBox>
             <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Button fx:id="orderButton" mnemonicParsing="false" onAction="#orderButtonListener" prefHeight="50.0" prefWidth="100.0" text="Order">
@@ -184,50 +147,90 @@
          </padding>
       </VBox>
    </right>
-   <bottom>
-      <VBox prefHeight="105.0" prefWidth="590.0" BorderPane.alignment="CENTER">
+   <top>
+      <VBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+            <Label alignment="CENTER" text="Digital Mobile">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="500.0" spacing="10.0">
                <children>
-                  <Label prefWidth="80.0" text="Operator:" />
-                  <Label fx:id="nameLabel" prefWidth="100.0" text="Jerry" />
-                  <Label fx:id="currentDateLabel" prefWidth="200.0" text="Sunday, February 25, 2018">
+                  <ComboBox fx:id="searchBox" prefWidth="120.0" />
+                  <TextField fx:id="searchField" prefHeight="25.0" prefWidth="200.0" promptText="Customer Info">
                      <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </HBox.margin></Label>
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </TextField>
+                  <Button fx:id="searchButton" defaultButton="true" mnemonicParsing="false" onAction="#searchButtonListener" prefHeight="25.0" prefWidth="100.0" text="Search">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </Button>
+                  <Label fx:id="searchLabel" textFill="RED" />
                </children>
-               <padding>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
             </HBox>
-            <HBox fx:id="Total" layoutX="10.0" layoutY="144.0" prefHeight="80.0" prefWidth="200.0" spacing="10.0">
+         </children>
+      </VBox>
+   </top>
+   <bottom>
+      <GridPane prefHeight="150.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="532.0" minWidth="10.0" prefWidth="520.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="415.0" minWidth="10.0" prefWidth="300.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <HBox prefHeight="80.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="1">
                <children>
                   <Label prefWidth="50.0" text="Note:">
                      <font>
                         <Font size="18.0" />
-                     </font></Label>
-                  <TextArea fx:id="noteArea" prefHeight="200.0" prefWidth="500.0" promptText="Attention" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="noteArea" prefHeight="80.0" prefWidth="420.0" promptText="Attention" />
                </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
             </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+               <children>
+                  <Label prefWidth="80.0" text="Operator:" />
+                  <Label fx:id="nameLabel" alignment="CENTER" prefWidth="100.0" text="Jerry" />
+                  <Label fx:id="currentDateLabel" prefWidth="200.0" text="Sunday, February 25, 2018" />
+                  <Button fx:id="updateStatusButton" mnemonicParsing="false" onAction="#updateStatusButtonListener" styleClass="warning" text="Update Status" />
+               </children>
+            </HBox>
+            <Button fx:id="updateButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#updateButtonListener" styleClass="info" text="Update Customer" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Button fx:id="updateOrderButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#updateOrderButtonListener" styleClass="info" text="Update Order" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="punchInButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#punchInButtonListener" styleClass="success" text="Punch In" />
+                        <Button fx:id="punchOutButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#punchOutButtonListener" styleClass="warning" text="Punch Out" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </children>
-         <opaqueInsets>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </opaqueInsets>
-         <BorderPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </BorderPane.margin>
-         <padding>
-            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-         </padding>
-      </VBox>
+      </GridPane>
    </bottom>
+   <center>
+      <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>

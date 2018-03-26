@@ -1,42 +1,39 @@
-package Main;
+package Employee;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Employee {
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name="employee_seq", sequenceName="employee_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq")
+	@Column(name="EMPLOYEE_ID")
 	private int employeeID;
+	@Column(length = 32)
 	private String firstName;
+	@Column(length = 32)
 	private String lastName;
+	@Column(length = 16)
 	private String phoneNumber;
 	private double salary;
+	@Column(length = 32)
 	private String Hiredate;
-	private String loginTime;
-	private String logoutTime;
-	private String hours;
+	private int hours;
+	@Column(length = 32)
 	private String position;
+	@Column(length = 32)
 	private String SSN;
+	@Column(length = 32)
+	private String passowrd;
 	public Employee() {
 
 	}
-	public Employee(int employeeID, String firstName, String lastName, String phoneNumber, double salary,
-			String hiredate, String loginTime, String logoutTime, String hours, String position, String sSN) {
-		super();
-		this.employeeID = employeeID;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.salary = salary;
-		Hiredate = hiredate;
-		this.loginTime = loginTime;
-		this.logoutTime = logoutTime;
-		this.hours = hours;
-		this.position = position;
-		SSN = sSN;
-	}
+
 	public int getEmployeeID() {
 		return employeeID;
 	}
@@ -73,22 +70,10 @@ public class Employee {
 	public void setHiredate(String hiredate) {
 		Hiredate = hiredate;
 	}
-	public String getLoginTime() {
-		return loginTime;
-	}
-	public void setLoginTime(String loginTime) {
-		this.loginTime = loginTime;
-	}
-	public String getLogoutTime() {
-		return logoutTime;
-	}
-	public void setLogoutTime(String logoutTime) {
-		this.logoutTime = logoutTime;
-	}
-	public String getHours() {
+	public int getHours() {
 		return hours;
 	}
-	public void setHours(String hours) {
+	public void setHours(int hours) {
 		this.hours = hours;
 	}
 	public String getPosition() {
@@ -102,6 +87,14 @@ public class Employee {
 	}
 	public void setSSN(String sSN) {
 		SSN = sSN;
+	}
+
+	public String getPassowrd() {
+		return passowrd;
+	}
+
+	public void setPassowrd(String passowrd) {
+		this.passowrd = passowrd;
 	}
 
 }

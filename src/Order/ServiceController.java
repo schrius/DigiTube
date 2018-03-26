@@ -14,6 +14,8 @@ public class ServiceController {
 	@FXML
 	Button processButton;
 	@FXML
+	Button cancelButton;
+	@FXML
 	DatePicker completeDate;
 	@FXML
 	ComboBox<String> serviceBox;
@@ -21,6 +23,8 @@ public class ServiceController {
 	TextField serviceFeeField;
 	@FXML
 	TextField contactInfo;
+	@FXML
+	TextField deviceField;
 	
 	@FXML
 	public void initialize() {
@@ -28,11 +32,15 @@ public class ServiceController {
 		serviceBox.getSelectionModel().selectFirst();
 	}
 	
+	public void cancelButtonListener() throws IOException {
+		MainController.getOrderController().updateRightPane();
+	}
+	
 	public void processButtonListener() throws IOException {
 		MainController.getOrderController().getOrder().setQuantity(1);
 		MainController.getOrderController().getOrder().setPrice(Double.parseDouble(serviceFeeField.getText()));
 		MainController.getOrderController().processOrder();
-		MainController.getOrderController().addService(serviceBox.getValue(), contactInfo.getText(), 
+		MainController.getOrderController().addService(serviceBox.getValue(), deviceField.getText(), contactInfo.getText(), 
 				completeDate.getValue(), Double.parseDouble(serviceFeeField.getText()));
 	}
 	

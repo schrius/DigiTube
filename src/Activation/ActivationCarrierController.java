@@ -2,6 +2,7 @@ package Activation;
 
 import java.io.IOException;
 
+import Main.FixedElements;
 import Main.MainController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,20 +45,20 @@ public class ActivationCarrierController {
 		
 	public void lycaMobileButtonListener() throws IOException {
 		planBox  = FXMLLoader.load(getClass().getResource("../Activation/LycaMobileActivationFX.fxml"));
-		MainController.getOrderController().getOrder().setCarrier(MainController.LYCA);
+		MainController.getOrderController().getOrder().getPlan().setCarrier(FixedElements.LYCA);
 		MainController.getOrderController().getOrderPane().setRight(planBox);
 
 }
 		
 	public void ultraMobileButtonListener() throws IOException {
 		planBox  = FXMLLoader.load(getClass().getResource("../Activation/UltraMobileActivationFX.fxml"));
-		MainController.getOrderController().getOrder().setCarrier(MainController.ULTRA);
+		MainController.getOrderController().getOrder().getPlan().setCarrier(FixedElements.ULTRA);
 		MainController.getOrderController().getOrderPane().setRight(planBox);
 	}
 		
 	public void simpleMobileButtonListener() throws IOException {
 		planBox  = FXMLLoader.load(getClass().getResource("../Activation/SimpleMobileActivationFX.fxml"));
-		MainController.getOrderController().getOrder().setCarrier(MainController.SIMPLE);
+		MainController.getOrderController().getOrder().getPlan().setCarrier(FixedElements.SIMPLE);
 		MainController.getOrderController().getOrderPane().setRight(planBox);
 	}
 }

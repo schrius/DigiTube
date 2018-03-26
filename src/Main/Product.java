@@ -1,39 +1,38 @@
 package Main;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Product {
 	@Id
-	@GeneratedValue
-	private String productID;
+	@SequenceGenerator(name="product_seq", sequenceName="product_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
+	@Column(name="PRODUCT_ID")
+	private int productID;
+	@Column(length = 32)
+	private String productName;
+	@Column(length = 32)
 	private String description;
-	private String price;
+	private double regularPrice;
+	@Column(length = 32)
 	private String barcode;
+	@Column(length = 32)
 	private String IMEI;
+	@Column(length = 32)
 	private String serialNumber;
-	private String sim;
-	private String PUK;
+
 	public Product() {
 	}
-	public Product(String productID, String description, String price, String barcode, String iMEI, String serialNumber,
-			String sim, String pUK) {
-		super();
-		this.productID = productID;
-		this.description = description;
-		this.price = price;
-		this.barcode = barcode;
-		IMEI = iMEI;
-		this.serialNumber = serialNumber;
-		this.sim = sim;
-		PUK = pUK;
-	}
-	public String getProductID() {
+
+	public int getProductID() {
 		return productID;
 	}
-	public void setProductID(String productID) {
+	public void setProductID(int productID) {
 		this.productID = productID;
 	}
 	public String getDescription() {
@@ -42,11 +41,11 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getPrice() {
-		return price;
+	public double getPrice() {
+		return regularPrice;
 	}
-	public void setPrice(String price) {
-		this.price = price;
+	public void setPrice(double regularPrice) {
+		this.regularPrice = regularPrice;
 	}
 	public String getBarcode() {
 		return barcode;
@@ -66,17 +65,13 @@ public class Product {
 	public void setSerialNumber(String serialNumber) {
 		this.serialNumber = serialNumber;
 	}
-	public String getSim() {
-		return sim;
+
+	public String getProductName() {
+		return productName;
 	}
-	public void setSim(String sim) {
-		this.sim = sim;
-	}
-	public String getPUK() {
-		return PUK;
-	}
-	public void setPUK(String pUK) {
-		PUK = pUK;
+
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 	
 }
