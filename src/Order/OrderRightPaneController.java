@@ -119,6 +119,7 @@ public class OrderRightPaneController {
 		public void processButtonListener() throws IOException {
 			if(paid) {
 				MainController.getOrderController().completeOrder(payment);
+				paid = false;
 				}
 			}
 }

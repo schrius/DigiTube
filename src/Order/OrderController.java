@@ -6,10 +6,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+
+import CustomerInfo.Customer;
+import CustomerInfo.CustomerGenerater;
+import DataManipulater.CustomerDataManipulater;
+import DataManipulater.CustomerGroupDataManipulater;
 import DataManipulater.InvoiceDataManipulater;
 import DataManipulater.OrderDataManipulater;
 import Employee.Employee;
 import Main.FixedElements;
+import Main.Plan;
+import Main.Product;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -38,8 +45,13 @@ import javafx.stage.Stage;
 public class OrderController {
 
 	Employee employee;
+	Customer customer;
 	OrderDataManipulater orderDataManipulater;
 	InvoiceDataManipulater invoiceDataManipulater;
+	CustomerGroupDataManipulater customerGroupDataManipulater;
+	CustomerDataManipulater customerDataManipulater;
+	CustomerGenerater customerGenerater;
+	
 	@FXML
 	OrderRightPaneController orderRightPaneController;
 	@FXML
@@ -49,6 +61,7 @@ public class OrderController {
 	private ObservableList<Orders> orderList;
 	private Orders order;
 	private Map<Orders, Service> serviceList;
+	private Map<Orders, LocalDate> 	expireDate;
 	private BigDecimal PSCS;
 	private BigDecimal NYTax;
 	private BigDecimal subtotal;
@@ -56,7 +69,7 @@ public class OrderController {
 	private BigDecimal total;
 	private BigDecimal serviceFee;
 	private BigDecimal receiveAmount;
-//	private BigDecimal returnBalance;
+	private BigDecimal returnBalance;
 	private StringProperty PSCSProperty;
 	private StringProperty NYTaxProperty;
 	private StringProperty subtotalProperty;
@@ -130,6 +143,16 @@ public class OrderController {
 		returnBalanceLabel.textProperty().bind(returnBalanceProperty);
 		serviceFeeLabel.textProperty().bind(serviceFeeProperty);
 		
+		PSCS = new BigDecimal(0);
+		NYTax = new BigDecimal(0);
+		subtotal = new BigDecimal(0);
+		discount = new BigDecimal(0);
+		serviceFee = new BigDecimal(0);
+		total = new BigDecimal(0);
+		receiveAmount = new BigDecimal(0);
+		returnBalance = new BigDecimal(0);
+		
+		this.expireDate = new HashMap<>();
 		serviceList = new HashMap<Orders, Service>();
 		orderList = FXCollections.observableArrayList();
 	}
@@ -239,36 +262,42 @@ public class OrderController {
 			gridPane  = FXMLLoader.load(getClass().getResource("../Refill/CarrierFX.fxml"));
 			orderPane.setRight(gridPane);
 			order = new Orders();
+			order.setPlan(new Plan());
 			order.setCategories(FixedElements.REFILL);
 			break;
 		case ACTIVATION:
 			gridPane  = FXMLLoader.load(getClass().getResource("../Activation/ActivationCarrierFX.fxml"));
 			orderPane.setRight(gridPane);
 			order = new Orders();
+			order.setPlan(new Plan());
 			order.setCategories(FixedElements.ACTIVATION);
 			break;
 		case SERIVCE:
 			gridPane  = FXMLLoader.load(getClass().getResource("./ServiceFX.fxml"));
 			orderPane.setRight(gridPane);
 			order = new Orders();
+			order.setService(new Service());
 			order.setCategories(FixedElements.SERVICE);
 			break;
 		case DEVICE:
 			gridPane  = FXMLLoader.load(getClass().getResource("./DeviceFX.fxml"));
 			orderPane.setRight(gridPane);
 			order = new Orders();
+			order.setProduct(new Product());
 			order.setCategories(FixedElements.DEVICE);
 			break;
 		case ACCESSORIES:
 			gridPane  = FXMLLoader.load(getClass().getResource("./AccessoriesFX.fxml"));
 			orderPane.setRight(gridPane);
 			order = new Orders();
+			order.setProduct(new Product());
 			order.setCategories(FixedElements.ACCESSORIES);
 			break;
 		case PAYBILL:
 			gridPane  = FXMLLoader.load(getClass().getResource("./PayBillFX.fxml"));
 			orderPane.setRight(gridPane);
 			order = new Orders();
+			order.setBill(new PayBill());
 			order.setCategories(FixedElements.PAYBILL);
 			break;
 		case CASH:
@@ -345,20 +374,35 @@ public class OrderController {
 		order.getPlan().setPlanType(plan);
 		order.setPrice(price);
 		order.getPlan().setRegularPrice(price);
+		order.setRegularPrice(price);
 		orderPane.setRight(processBox);
 	}
 	
-	public void processRefill(String phoneNumber, int quantity) throws IOException {
+	public void processActivation(String phoneNumber, int quantity, String sim, String puk, 
+			LocalDate portdate, String categories) throws IOException {
 		order.getPlan().setPhoneNumber(phoneNumber);
 		order.setQuantity(quantity);
+		order.getPlan().setPhoneNumber(phoneNumber);
+		order.getPlan().setPUK(puk);
+		order.getPlan().setSim(sim);
+		order.setDescription(categories);
+		this.expireDate.put(order, portdate);
+		processOrder();
+	}
+	
+	public void processRefill(String phoneNumber, int quantity, LocalDate expiredate) throws IOException {
+		order.getPlan().setPhoneNumber(phoneNumber);
+		order.setQuantity(quantity);
+		this.expireDate.put(order, expiredate);
 		processOrder();
 	}
 	
 	public void receiveCash(BigDecimal receiveAmount) {
 		if(total!=null) {
 		this.receiveAmount = receiveAmount;
+		this.returnBalance = total.subtract(receiveAmount);
 		receiveAmountProperty.set("$" + this.receiveAmount);
-		returnBalanceProperty.set("$" + (this.receiveAmount.subtract(total)));
+		returnBalanceProperty.set("$" + (this.returnBalance));
 		}
 	}
 	
@@ -446,13 +490,72 @@ public class OrderController {
 		Invoice invoice = new Invoice();
 		if(invoiceDataManipulater == null)
 			invoiceDataManipulater = new InvoiceDataManipulater();
+		if(customerDataManipulater == null)
+			customerDataManipulater = new CustomerDataManipulater();
+		if(customerGroupDataManipulater == null)
+			customerGroupDataManipulater = new CustomerGroupDataManipulater();
 		invoice.setOrderDate(LocalDateTime.now());
+		invoice.setDiscount(discount.doubleValue());
+		invoice.setNYTax(NYTax.doubleValue());
+		invoice.setSubtotal(subtotal.doubleValue());
+		invoice.setTotal(total.doubleValue());
+		invoice.setServiceFee(serviceFee.doubleValue());
+		invoice.setReceiveCash(receiveAmount.doubleValue());
+		invoice.setReturnBalance(returnBalance.doubleValue());
 		for(Orders orders : orderList) {
+			if(orders.getCategories().equals(FixedElements.REFILL)) {
+				customer = customerDataManipulater.searchCustomer(Long.parseLong(orders.getPlan().getPhoneNumber()));
+				if(customer == null) {
+					customerGenerater = new CustomerGenerater();
+					customer = customerGenerater.generateCustomerRefill(orders, employee);
+					if(expireDate.get(orders)!=null)
+						customer.setExpireDate(expireDate.get(orders));
+					else customer.setExpireDate(LocalDate.now());
+					
+					customerGroupDataManipulater.addCustomerGroup(customer.getGroupNumber());
+					customerDataManipulater.addCustomer(customer);
+				}
+				else {
+					customer.setCustomerCredit(customer.getCustomerCredit() + orders.getQuantity());
+					customerDataManipulater.updateCustomer(customer);
+					orders.setCustomer(customer);
+				}
+			}
+			else if(orders.getCategories().equals(FixedElements.ACTIVATION)) {
+				customer = customerDataManipulater.searchCustomer(Long.parseLong(orders.getPlan().getPhoneNumber()));
+				if(customer == null) {
+					customerGenerater = new CustomerGenerater();
+					customer = customerGenerater.generateCustomerActivation(orders, employee);
+					if(expireDate.get(orders)!=null)
+						customer.setPortDate(expireDate.get(orders));
+					else customer.setPortDate(LocalDate.now());
+					
+					customerGroupDataManipulater.addCustomerGroup(customer.getGroupNumber());
+					customerDataManipulater.addCustomer(customer);
+				}
+				else {
+					customer.setCustomerCredit(customer.getCustomerCredit() + orders.getQuantity());
+					customerDataManipulater.updateCustomer(customer);
+					orders.setCustomer(customer);
+				}
+			}
+			else if(orders.getCategories().equals(FixedElements.SERVICE)) {
+				
+			}
+			else if(orders.getCategories().equals(FixedElements.PAYBILL)) {
+				
+			}
+			else if(orders.getCategories().equals(FixedElements.DEVICE)) {
+				
+			}
+			else if(orders.getCategories().equals(FixedElements.ACCESSORIES)) {
+				
+			}
 			invoice.getOrder().add(orders);
-		}
-
+	}
 		invoiceDataManipulater.addInvoice(invoice);
 	}
+
 	
 	public void updateRightPane() throws IOException {
 		this.getOrderPane().setRight(orderRightPane);

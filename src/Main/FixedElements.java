@@ -30,14 +30,20 @@ public class FixedElements {
 	final static public String[] CARRIERS= {LYCA, ULTRA, SIMPLE, H2O, TM, ATT, ROK, TELCEL, GOSMART, EASYGO, NET10, CT, EOT};
 	
 	// group
-	final static public String NEWACTIVATION = "New Activation";
+	final static public String NORMAL = "Normal";
 	final static public String SWAP = "Swap";
 	final static public String SWAPF = "Swap Family";
 	final static public String FLEX = "Flex";
 	final static public String FLEXM = "Flex Mix";
 	final static public String GV = "GV";
 	final static public String GVF = "GV Family";
-	final static public String[] GROUP = {NEWACTIVATION, SWAP, SWAPF, FLEX, FLEXM, GV, GVF}; 
+	final static public String[] GROUP = {NORMAL, SWAP, SWAPF, FLEX, FLEXM, GV, GVF}; 
+	
+	// group title
+	final static public String PRIME = "Prime";
+	final static public String PARENT = "Parent";
+	final static public String CHILD = "Child";
+	final static public String[] GROUPTITLE = {PRIME, PARENT, CHILD}; 
 	
 	// plan
 	final static public String P$19 = "$19";

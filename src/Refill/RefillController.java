@@ -6,6 +6,7 @@ import Main.MainController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 public class RefillController {
@@ -21,6 +22,8 @@ public class RefillController {
 	private TextField phoneNumberField;
 	@FXML
 	private ImageView carrierImage;
+	@FXML
+	private DatePicker expireDate;
 	
 	@FXML
 	public void initialize() {
@@ -33,7 +36,7 @@ public class RefillController {
 	
 	public void processButtonListener() throws IOException {
 		if(phoneNumberField.getText().length() == 10) {	
-			MainController.getOrderController().processRefill(phoneNumberField.getText(), quanityBox.getValue());
+			MainController.getOrderController().processRefill(phoneNumberField.getText(), quanityBox.getValue(), expireDate.getValue());
 		}
 	}
 }

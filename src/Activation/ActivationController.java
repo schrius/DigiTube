@@ -2,10 +2,12 @@ package Activation;
 
 import java.io.IOException;
 
+import Main.FixedElements;
 import Main.MainController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 public class ActivationController {
@@ -27,12 +29,14 @@ public class ActivationController {
 	private ImageView carrierImage;
 	@FXML
 	private ComboBox<String> categoriesBox;
+	@FXML
+	private DatePicker portDate;
 	
 	@FXML
 	public void initialize() {
 		quanityBox.getItems().addAll(1,2,3,4,5,6,7,8,9);
 		quanityBox.getSelectionModel().selectFirst();
-		categoriesBox.getItems().addAll("Swap", "New Activation");
+		categoriesBox.getItems().addAll(FixedElements.ACTIVATION, FixedElements.SWAP);
 		categoriesBox.getSelectionModel().selectFirst();
 	}
 	public void cancelButtonListener() throws IOException {
@@ -41,9 +45,8 @@ public class ActivationController {
 	
 	public void processButtonListener() throws IOException {
 		if(phoneNumberField.getText().length() == 10) {	
-		MainController.getOrderController().getOrder().getPlan().setPhoneNumber(phoneNumberField.getText());
-		MainController.getOrderController().getOrder().setQuantity(quanityBox.getValue());
-		MainController.getOrderController().processOrder();
+		MainController.getOrderController().processActivation(phoneNumberField.getText(), quanityBox.getValue(), 
+				simField.getText(), pukField.getText(), portDate.getValue(), categoriesBox.getValue());
 		}
 	}
 

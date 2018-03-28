@@ -74,6 +74,7 @@ public class LycaMobileActivationController {
 		processBox  = FXMLLoader.load(getClass().getResource("ActivationFX.fxml"));
 		MainController.getOrderController().getOrder().getPlan().setPlanType(plan);
 		MainController.getOrderController().getOrder().setPrice(price);
+		MainController.getOrderController().getOrder().getPlan().setRegularPrice(price);
 		MainController.getOrderController().getOrder().setRegularPrice(price);
 		MainController.getOrderController().getOrderPane().setRight(processBox);
 	}

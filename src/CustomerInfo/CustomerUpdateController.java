@@ -119,7 +119,7 @@ public class CustomerUpdateController {
 		carrier.getItems().addAll(FixedElements.CARRIERS);
 		preCarrier.getItems().addAll(FixedElements.CARRIERS);
 		group.getItems().addAll(FixedElements.GROUP);
-		groupTitle.getItems().addAll("Prime", "Parent", "Child");
+		groupTitle.getItems().addAll(FixedElements.GROUPTITLE);
 		status.getItems().addAll(FixedElements.ACTIVATIONSTATUS);
 		newPlan.getItems().addAll(FixedElements.PLAN);
 		plan.getItems().addAll(FixedElements.PLAN);

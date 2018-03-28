@@ -15,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 @Entity
 public class Invoice {
 	@Id
-	@SequenceGenerator(name="invoice_seq", sequenceName="invoice_id_seq")
+	@SequenceGenerator(name="invoice_seq", sequenceName="invoice_id_seq", allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "invoice_seq")
 	@Column(name="INVOICE_ID")
 	private long invoiceID;
@@ -27,7 +27,8 @@ public class Invoice {
 	private double NYTax;
 	private double discount;
 	private double serviceFee;
-	private double receiveAmount;
+	private double receiveCash;
+	private double returnBalance;
 	private LocalDateTime orderDate;
 	public Invoice() {
 
@@ -38,6 +39,23 @@ public class Invoice {
 		this.invoiceID = invoiceID;
 		this.order = order;
 		this.orderDate = orderDate;
+	}
+
+	
+	public double getReceiveCash() {
+		return receiveCash;
+	}
+
+	public void setReceiveCash(double receiveCash) {
+		this.receiveCash = receiveCash;
+	}
+
+	public double getReturnBalance() {
+		return returnBalance;
+	}
+
+	public void setReturnBalance(double returnBalance) {
+		this.returnBalance = returnBalance;
 	}
 
 	public double getTotal() {
@@ -86,14 +104,6 @@ public class Invoice {
 
 	public void setServiceFee(double serviceFee) {
 		this.serviceFee = serviceFee;
-	}
-
-	public double getReceiveAmount() {
-		return receiveAmount;
-	}
-
-	public void setReceiveAmount(double receiveAmount) {
-		this.receiveAmount = receiveAmount;
 	}
 
 	public long getInvoiceID() {

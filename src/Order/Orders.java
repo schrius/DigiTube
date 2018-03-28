@@ -24,7 +24,7 @@ import Main.Plan;
 @Table(name="Orders")
 public class Orders{
 	@Id
-	@SequenceGenerator(name="orders_seq", sequenceName="orders_id_seq")
+	@SequenceGenerator(name="orders_seq", sequenceName="orders_id_seq", allocationSize=3)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_seq")
 	@Column(name="ORDER_ID")
 	long orderID;
@@ -62,9 +62,9 @@ public class Orders{
 	private LocalDateTime orderDate;
 	private LocalDateTime lastUpdate;
 	public Orders() {
-		service = new Service();
-		bill = new PayBill();
-		plan = new Plan();
+	//	service = new Service();
+	//	bill = new PayBill();
+	//	plan = new Plan();
 	}
 	
 	public Plan getPlan() {
