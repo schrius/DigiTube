@@ -13,6 +13,7 @@ public class Plan {
 	@GeneratedValue
 	@Column(name="PLAN_ID")
 	private long planID;
+	
 	@Column(length = 16)
 	private String phoneNumber;
 	@Column(length = 32)
@@ -39,7 +40,7 @@ public class Plan {
 		this.carrier = carrier;
 		this.planType = planType;
 		this.sim = sim;
-		PUK = pUK;
+		this.PUK = pUK;
 		this.regularPrice = regularPrice;
 	}
 	
@@ -80,7 +81,7 @@ public class Plan {
 	}
 
 	public void setPUK(String pUK) {
-		PUK = pUK;
+		this.PUK = pUK;
 	}
 
 	public double getRegularPrice() {

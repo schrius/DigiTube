@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane fx:id="orderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="840.0" stylesheets="@../Main/bootstrap3.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+<BorderPane fx:id="orderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="840.0" stylesheets="@../Main/bootstrap3.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <right>
- 	<fx:include fx:id="orderRightPane" source="OrderRightPaneFX.fxml" />
+ 		<fx:include fx:id="orderRightPane" source="OrderRightPaneFX.fxml" />
    </right>
    <bottom>
-<GridPane prefWidth="640.0" >
+<GridPane prefWidth="640.0">
    <children>
       <Label fx:id="subtotalLabel" alignment="CENTER_RIGHT" prefWidth="100.0" GridPane.columnIndex="1">
          <font>
@@ -190,7 +190,7 @@
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                      </padding>
                   </ComboBox>
-                  <Button fx:id="searchButton" mnemonicParsing="false" prefWidth="60.0" text="Search">
+                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonListener" prefWidth="60.0" text="Search">
                      <HBox.margin>
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                      </HBox.margin>
@@ -219,9 +219,9 @@
       </VBox>
    </top>
    <center>
-      <ScrollPane minWidth="400.0" minHeight="400.0" prefHeight="400.0" prefWidth="520.0" BorderPane.alignment="CENTER">
+      <ScrollPane minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="520.0" BorderPane.alignment="CENTER">
          <content>
-            <TableView fx:id="orderTable" minWidth="400.0" minHeight="400.0" prefHeight="420.0" prefWidth="520.0">
+            <TableView fx:id="orderTable" minHeight="400.0" minWidth="400.0" prefHeight="420.0" prefWidth="520.0">
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>

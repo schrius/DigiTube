@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import CustomerInfo.Customer;
@@ -158,7 +159,7 @@ public class OrderController {
 	}
 	
 	public void processOrder() throws IOException{
-	//	order.setDescription(order.getProduct().getDescription());
+		order.setDescription(order.getStatus());
 		orderList.add(order);
 
 		updateRightPane();
@@ -193,7 +194,7 @@ public class OrderController {
 		table.getColumns().addAll(categoriesColumn, descriptionColumn,quantityColumn ,PriceColumn, discountColumn);
 		orderTable = table;	
 		orderPane.setCenter(orderTable);
-		updateTotal();
+	//	updateTotal();
 	}
 	
 	public void updateTotal() throws IOException {
@@ -229,15 +230,15 @@ public class OrderController {
 		discountProperty.setValue("$" + discount);
 		totalProperty.setValue("$" + total);
 		serviceFeeProperty.setValue("$" + serviceFee);
-		if(receiveAmount!=null)
+		if(receiveAmount.intValue() != 0)
 			returnBalanceProperty.set("$" + (this.receiveAmount.subtract(total)));
 	}
 
 	public void removeTableItem(Orders removeOrder) {
 		if(orderTable.getItems().remove(removeOrder))
 			System.out.println("Removed");
-		if(removeOrder.getCategories().equals(FixedElements.SERVICE))
-			serviceList.remove(removeOrder);
+	//	if(removeOrder.getCategories().equals(FixedElements.SERVICE))
+	//		serviceList.remove(removeOrder);
 
 	}
 	
@@ -503,6 +504,8 @@ public class OrderController {
 		invoice.setReceiveCash(receiveAmount.doubleValue());
 		invoice.setReturnBalance(returnBalance.doubleValue());
 		for(Orders orders : orderList) {
+			orders.setEmployee(employee);
+			orders.setInvoice(invoice);
 			if(orders.getCategories().equals(FixedElements.REFILL)) {
 				customer = customerDataManipulater.searchCustomer(Long.parseLong(orders.getPlan().getPhoneNumber()));
 				if(customer == null) {
@@ -554,6 +557,24 @@ public class OrderController {
 			invoice.getOrder().add(orders);
 	}
 		invoiceDataManipulater.addInvoice(invoice);
+	}
+	
+	public void searchButtonListener() throws IOException {
+		String choice = searchComboBox.getValue();
+		if(choice.equals("Invoice")) {
+			if(invoiceDataManipulater==null) {
+				invoiceDataManipulater = new InvoiceDataManipulater();
+			}
+			Invoice invoice = invoiceDataManipulater.searchInvoice(Long.valueOf(searchField.getText()));
+			
+			List<Orders> InvoiceOrderList = invoice.getOrder();
+			
+			orderList = FXCollections.observableArrayList();
+			for(Orders orders : InvoiceOrderList)
+				orderList.add(orders);
+			
+			updateTable();
+		}
 	}
 
 	
@@ -607,4 +628,13 @@ public class OrderController {
 	public Employee getEmployee() {
 		return employee;
 	}
+
+	public Map<Orders, LocalDate> getExpireDate() {
+		return expireDate;
+	}
+
+	public void setExpireDate(Map<Orders, LocalDate> expireDate) {
+		this.expireDate = expireDate;
+	}
+	
 }

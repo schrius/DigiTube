@@ -38,8 +38,11 @@ public class Orders{
 	@ManyToOne
 	@JoinColumn(name="EMPLOYEE_ID", foreignKey = @ForeignKey(name = "EMPLOYEE_ID_FK"))
 	private Employee employee;
+	
 	@ManyToOne
+	@JoinColumn(name="INVOICE_ID", nullable=false)
 	private Invoice invoice;
+	
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "SERVICE_ID")
 	private Service service;
@@ -62,9 +65,7 @@ public class Orders{
 	private LocalDateTime orderDate;
 	private LocalDateTime lastUpdate;
 	public Orders() {
-	//	service = new Service();
-	//	bill = new PayBill();
-	//	plan = new Plan();
+
 	}
 	
 	public Plan getPlan() {

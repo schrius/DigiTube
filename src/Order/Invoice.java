@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +20,7 @@ public class Invoice {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "invoice_seq")
 	@Column(name="INVOICE_ID")
 	private long invoiceID;
-	@OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "invoice", cascade = CascadeType.ALL)
 	private List<Orders> order = new ArrayList<>();
 	private double total;
 	private double subtotal;
