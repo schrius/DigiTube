@@ -20,7 +20,7 @@
          </GridPane.margin></Label>
       <TextField fx:id="balanceField" promptText="ex : $ 33" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <TextField fx:id="accountField" promptText="ex: 20263-xxxxx" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Label text="Phone:" GridPane.rowIndex="5">
+      <Label text="Contact Info:" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets left="5.0" />
          </GridPane.margin></Label>
@@ -32,13 +32,13 @@
          <GridPane.margin>
             <Insets left="5.0" />
          </GridPane.margin></Label>
-      <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonListener" text="Search Account:" GridPane.rowIndex="2" />
       <Label text="Other Carrier:" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="5.0" />
          </GridPane.margin>
       </Label>
       <TextField fx:id="otherCarrier" promptText="Carrier Not in the List" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label text="Account:" GridPane.rowIndex="2" />
    </children>
    <columnConstraints>
       <ColumnConstraints minWidth="150.0" prefWidth="150.0" />

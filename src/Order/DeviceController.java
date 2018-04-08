@@ -32,13 +32,25 @@ public class DeviceController {
 		deviceBox.getItems().addAll("iPhone", "Samsung", "iPad", "Other");
 	}
 	
-	public void searchButtonListener() {
-		
-	}
 	public void cancelButtonListener() throws IOException {
 		MainController.getOrderController().updateRightPane();
 	}
-	public void submitButtonListener() {
+	public void submitButtonListener() throws IOException {
+		Product product = new Product();
+		if(deviceBox.getValue().equals("Other"))
+			product.setProductName(productName.getText());
+		else product.setProductName(deviceBox.getValue());
+	
+		product.setPrice(Double.parseDouble(priceField.getText()));
+		product.setIMEI(IMEIField.getText());
+		product.setSerialNumber(serialField.getText());
+		product.setDescription(phoneField.getText());
 		
+		MainController.getOrderController().getOrder().setQuantity(1);
+		MainController.getOrderController().getOrder().setPrice(product.getPrice());
+		MainController.getOrderController().getOrder().setRegularPrice(product.getPrice());
+		MainController.getOrderController().getOrder().setProduct(product);
+		
+		MainController.getOrderController().processOrder();
 	}
 }

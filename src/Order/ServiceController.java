@@ -1,7 +1,9 @@
 package Order;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
+import Main.FixedElements;
 import Main.MainController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -37,11 +39,23 @@ public class ServiceController {
 	}
 	
 	public void processButtonListener() throws IOException {
+
+		
+		Service service = new Service();
+		service.setAcceptDate(LocalDate.now());
+		service.setCompleteDate(completeDate.getValue());
+		service.setServiceType(serviceBox.getValue());
+		service.setDevice(deviceField.getText());
+		service.setServiceFee(Double.parseDouble(serviceFeeField.getText()));
+		service.setContactInfo(contactInfo.getText());
+		service.setStatus(FixedElements.WAITING);
+		
 		MainController.getOrderController().getOrder().setQuantity(1);
-		MainController.getOrderController().getOrder().setPrice(Double.parseDouble(serviceFeeField.getText()));
+		MainController.getOrderController().getOrder().setService(service);
+		
+		MainController.getOrderController().getOrder().setPrice(service.getServiceFee());
+
 		MainController.getOrderController().processOrder();
-		MainController.getOrderController().addService(serviceBox.getValue(), deviceField.getText(), contactInfo.getText(), 
-				completeDate.getValue(), Double.parseDouble(serviceFeeField.getText()));
 	}
 	
 }

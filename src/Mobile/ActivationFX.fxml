@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="300.0" prefHeight="380.0" prefWidth="300.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Mobile.ActivationController">
+   <children>
+      <ImageView fx:id="carrierImage" fitHeight="85.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="20.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="35.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="35.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="35.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="35.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="35.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="phoneNumberField" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" promptText="Phone Number" />
+            <ComboBox fx:id="quanityBox" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </ComboBox>
+            <TextField fx:id="simField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="pukField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="categoriesBox" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </ComboBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="5.0" GridPane.rowIndex="1">
+               <children>
+                  <Label text="Categories:">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonListener" prefHeight="50.0" prefWidth="100.0" text="Cancel" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Button>
+            <Button fx:id="processButton" mnemonicParsing="false" onAction="#processButtonListener" prefHeight="50.0" prefWidth="100.0" text="Process" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Button>
+            <Label text="Sim Number:" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="PUK:" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="Port Date" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <DatePicker fx:id="portDate" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+   </children>
+</VBox>

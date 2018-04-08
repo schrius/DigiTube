@@ -17,13 +17,11 @@ public class CustomerGenerater {
 	public Customer generateCustomerRefill(Orders orders, Employee employee) {
 		customer.setPhoneNumber(orders.getPlan().getPhoneNumber());
 		customer.setCustomerID(Long.parseLong(orders.getPlan().getPhoneNumber()));
-		customer.setCarrier(orders.getPlan().getCarrier());
 		customer.setAction(FixedElements.REFILL);
 		customer.setCustomerCredit(orders.getQuantity());
 		customer.setEmployee(employee);
 		customer.setGroupNumber(new CustomerGroup(Long.parseLong(orders.getPlan().getPhoneNumber()), 
 				Long.parseLong(orders.getPlan().getPhoneNumber()), FixedElements.NORMAL));
-		customer.setPlan(orders.getPlan().getPlanType());
 		customer.setGroupTitle(FixedElements.PRIME);
 		customer.setLastUpdate(LocalDateTime.now());
 		customer.setStatus(FixedElements.WAITING);
@@ -32,20 +30,14 @@ public class CustomerGenerater {
 	public Customer generateCustomerActivation(Orders orders, Employee employee) {
 		customer.setPhoneNumber(orders.getPlan().getPhoneNumber());
 		customer.setCustomerID(Long.parseLong(orders.getPlan().getPhoneNumber()));
-		customer.setCarrier(orders.getPlan().getCarrier());
 		customer.setAction(FixedElements.ACTIVATION);
 		customer.setCustomerCredit(orders.getQuantity());
 		customer.setEmployee(employee);
 		customer.setGroupNumber(new CustomerGroup(Long.parseLong(orders.getPlan().getPhoneNumber()), 
 				Long.parseLong(orders.getPlan().getPhoneNumber()), FixedElements.NORMAL));
-		customer.setPlan(orders.getPlan().getPlanType());
 		customer.setGroupTitle(FixedElements.PRIME);
 		customer.setLastUpdate(LocalDateTime.now());
 		customer.setStatus(FixedElements.WAITING);
-		customer.setNewCarrier(orders.getPlan().getCarrier());
-		customer.setNewPlan(orders.getPlan().getPlanType());
-		customer.setNewsimcard(orders.getPlan().getSim());
-		customer.setPUK(orders.getPlan().getPUK());
 		customer.setAction(orders.getDescription());
 		return customer;
 	}

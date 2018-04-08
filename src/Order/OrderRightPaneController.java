@@ -69,8 +69,10 @@ public class OrderRightPaneController {
 		
 		public void cashButtonListener() throws IOException {
 			MainController.getOrderController().processTransaction(TransactionEnum.CASH);
-			paid = true;
+
 			this.payment = FixedElements.CASH;
+			MainController.getOrderController().getInvoice().setPaymentMethod(FixedElements.CREDIT);
+			paid = true;
 		}
 		public void devicesButtonListener() throws IOException {
 			MainController.getOrderController().processTransaction(TransactionEnum.DEVICE);
@@ -83,18 +85,21 @@ public class OrderRightPaneController {
 		}
 		
 		public void cardButtonListener() {
-			paid = true;
+			MainController.getOrderController().getInvoice().setPaymentMethod(FixedElements.CREDIT);
+			MainController.getOrderController().receiveCash(new BigDecimal(0));
 			this.payment = FixedElements.CREDIT;
+			paid = true;
 		}
 		public void refundButtonListener() {
 			
 		}
 		public void unpaidButtonListener() {
 			MainController.getOrderController().receiveCash(new BigDecimal(0));
-			paid = true;
-			this.payment = FixedElements.UNPAID;
-		}
 
+			this.payment = FixedElements.UNPAID;
+			MainController.getOrderController().getInvoice().setPaymentMethod(FixedElements.UNPAID);
+			paid = true;
+		}
 		
 		public void removeListener() throws IOException{
 			MainController.getOrderController().removeItem();

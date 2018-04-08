@@ -5,7 +5,6 @@ package Main;
  */
 import java.io.IOException;
 import java.sql.SQLException;
-
 import DataManipulater.EmployeeDataManipulater;
 import Employee.Employee;
 import javafx.fxml.FXML;
@@ -47,11 +46,16 @@ public class EmployeeLoginController {
 	@FXML
 	private RadioButton managerRadioButton;
 	
+	@FXML
+	private void initialize() {
+		employeeDataManipulater = new EmployeeDataManipulater();
+	}
+	
 	
 	public void loginListener() throws IOException, SQLException {
 		if(employeeRadioButton.isSelected()) {
 			if(usernameField.getText()!=null && passwordField.getText()!=null) {
-				employeeDataManipulater = new EmployeeDataManipulater();
+			//	employeeDataManipulater = new EmployeeDataManipulater();
 				employee = employeeDataManipulater.searchEmployee(Integer.parseInt(usernameField.getText()));
 				if(employee!=null && employee.getPassowrd().equals(passwordField.getText())) {
 					Stage stage = new Stage();

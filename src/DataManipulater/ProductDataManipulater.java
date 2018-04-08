@@ -7,7 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import Main.Product;
+
+import Order.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -33,7 +34,7 @@ public class ProductDataManipulater {
     		transaction = session.beginTransaction();
     		session.persist(product);
     		transaction.commit();
-    		System.out.print("Registered Success!");
+    		System.out.print("Product Save!");
     		return true;
     	}catch (HibernateException e) {
     		if (transaction!=null) transaction.rollback();
@@ -94,7 +95,7 @@ public class ProductDataManipulater {
         	transaction = session.beginTransaction();
                 session.update(product);
             transaction.commit();
-    		System.out.print("Update Success!");
+    		System.out.print("Product Update Success!");
     		return true;
         } catch (HibernateException e) {
            if (transaction!=null) transaction.rollback();
@@ -127,6 +128,6 @@ public class ProductDataManipulater {
     
     public String closeSession() {
         session.close();
-        return "Session is Close.";
+        return "Product Session is Close.";
     }
 }

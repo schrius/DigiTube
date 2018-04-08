@@ -12,26 +12,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
 import CustomerInfo.Customer;
 import Employee.Employee;
-import Main.Product;
-import Main.Plan;
 
 @Entity
 @Table(name="Orders")
 public class Orders{
 	@Id
-	@SequenceGenerator(name="orders_seq", sequenceName="orders_id_seq", allocationSize=3)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_seq")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ORDER_ID")
-	long orderID;
-	
-	@ManyToOne
-	@JoinColumn(name="PRODUCT_ID", foreignKey = @ForeignKey(name = "PRODUCT_ID_FK"))
-	Product product;
+	private long orderID;
+
 	@ManyToOne
 	@JoinColumn(name="CUSTOMER_ID", foreignKey = @ForeignKey(name = "CUSTOMER_ID_FK"))
 	private Customer customer;
@@ -48,20 +40,25 @@ public class Orders{
 	private Service service;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "BILL_ID")
-	private PayBill bill;
+	private Bill bill;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "PLAN_ID")
 	private Plan plan;
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name="PRODUCT_ID")
+	private Product product;
 	
 	private int quantity;
 	private double price;
 	private double discount;
 	private double regularPrice;
 	
+	@Column(length = 32)
 	private String categories;
-	private String description;
+	@Column(length = 32)
 	private String status;
-	private String paymentMethod;
+	private String description;
+	
 	private LocalDateTime orderDate;
 	private LocalDateTime lastUpdate;
 	public Orders() {
@@ -150,12 +147,6 @@ public class Orders{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getPaymentMethod() {
-		return paymentMethod;
-	}
-	public void setPaymentMethod(String paymentMethod) {
-		this.paymentMethod = paymentMethod;
-	}
 	public LocalDateTime getOrderDate() {
 		return orderDate;
 	}
@@ -169,11 +160,11 @@ public class Orders{
 		this.lastUpdate = lastUpdate;
 	}
 
-	public PayBill getBill() {
+	public Bill getBill() {
 		return bill;
 	}
 
-	public void setBill(PayBill bill) {
+	public void setBill(Bill bill) {
 		this.bill = bill;
 	}
 

@@ -21,31 +21,6 @@
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </VBox.margin>
       </HBox>
-      <HBox alignment="CENTER" layoutX="14.0" layoutY="109.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-         <children>
-            <Button fx:id="plan23X2Button" mnemonicParsing="false" onAction="#plan23X2ButtonListener" prefHeight="50.0" prefWidth="100.0" text="\$23 X 2">
-               <padding>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="plan29X2Button" mnemonicParsing="false" onAction="#plan29X2ButtonListener" prefHeight="50.0" prefWidth="100.0" text="\$29 X 2">
-               <padding>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </padding>
-            </Button>
-            <Button fx:id="plan35X2Button" mnemonicParsing="false" onAction="#plan35X2ButtonListener" prefHeight="50.0" prefWidth="100.0" text="\$35 X 2">
-               <padding>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
             <Button fx:id="plan19Button" mnemonicParsing="false" onAction="#plan19ButtonListener" prefHeight="50.0" prefWidth="100.0" text="\$19 500MB LTE">

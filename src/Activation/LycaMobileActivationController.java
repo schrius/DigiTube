@@ -6,6 +6,7 @@ import Main.MainController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
 
 public class LycaMobileActivationController {
@@ -26,11 +27,6 @@ public class LycaMobileActivationController {
 	@FXML
 	Button payAsYouGoButton;
 	
-	Button plan23X2Button;
-	@FXML
-	Button plan29X2Button;
-	@FXML
-	Button plan35X2Button;
 
 	public void plan19ButtonListener() throws IOException {
 		process(19, FixedElements.P$19);
@@ -40,36 +36,37 @@ public class LycaMobileActivationController {
 	}
 	
 	public void plan29ButtonListener() throws IOException {
-		
+		process(29, FixedElements.P$29);
 	}
 	
 	public void plan35ButtonListener() throws IOException {
-		
+		process(35, FixedElements.P$35);
 	}
 
 	public void plan45ButtonListener() throws IOException {
-		
+		process(45, FixedElements.P$45);
 	}
 	
 	public void plan50ButtonListener() throws IOException {
-		
+		process(50, FixedElements.P$50);
 	}
 	
 	public void payAsYouGoButtonListener() throws IOException {
-		
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setTitle("Pay As You Go");
+		dialog.setHeaderText(null);
+		dialog.setContentText("Please enter refill amount:");
+		dialog.showAndWait().ifPresent( plan -> {
+			if(!plan.isEmpty()) {
+				try {
+					process(Integer.parseInt(plan), FixedElements.PSYG);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
-	
-	public void plan23X2ButtonListener() throws IOException {
-		
-	}
-	
-	public void plan29X2ButtonListener() throws IOException {
-		
-	}
-	
-	public void plan35X2ButtonListener() throws IOException {
-		
-	}
+
 	public void process(int price, String plan) throws IOException {
 		processBox  = FXMLLoader.load(getClass().getResource("ActivationFX.fxml"));
 		MainController.getOrderController().getOrder().getPlan().setPlanType(plan);

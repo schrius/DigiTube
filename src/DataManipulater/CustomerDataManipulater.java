@@ -33,7 +33,7 @@ public class CustomerDataManipulater {
     		transaction = session.beginTransaction();
     		session.persist(customer);
     		transaction.commit();
-    		System.out.print("Registered Success!");
+    		System.out.print("New Cusotmer Save Success!");
     		return true;
     	}catch (HibernateException e) {
     		if (transaction!=null) transaction.rollback();
@@ -94,7 +94,7 @@ public class CustomerDataManipulater {
         	transaction = session.beginTransaction();
                 session.update(customer);
             transaction.commit();
-    		System.out.print("Update Success!");
+    		System.out.print("Customer Update Success!");
     		return true;
         } catch (HibernateException e) {
            if (transaction!=null) transaction.rollback();
@@ -127,6 +127,6 @@ public class CustomerDataManipulater {
     
     public String closeSession() {
         session.close();
-        return "Session is Close.";
+        return "Customer Session is Close.";
     }
 }

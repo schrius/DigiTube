@@ -127,6 +127,6 @@ public class EmployeeDataManipulater {
 	    
 	    public String closeSession() {
 	        session.close();
-	        return "Session is Close.";
+	        return "Employee Session is Close.";
 	    }
 }

@@ -4,8 +4,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import DataManipulater.CustomerDataManipulater;
 import DataManipulater.CustomerGroupDataManipulater;
+import DataManipulater.PlanDataManipulater;
 import Employee.Employee;
 import Main.FixedElements;
+import Order.Plan;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -23,6 +25,7 @@ public class CustomerUpdateController {
 	Customer customer;
 	CustomerDataManipulater customerDataManipulater;
 	CustomerGroupDataManipulater customerGroupDataManipulater;
+	PlanDataManipulater planDataManipulater;
 	
 	@FXML
 	TextField searchField;
@@ -144,51 +147,45 @@ public class CustomerUpdateController {
 					customerIDField.setText(Long.toString(customer.getCustomerID()));
 					phoneField.setText(customer.getPhoneNumber());
 
-					pinField.setText(Integer.toString(customer.getPin()));
 					oweAmountField.setText(Double.toString(customer.getOweAmount()));
 					creditLabel.setText("Credit: " + customer.getCustomerCredit());
 					if(customer.getLanguage()!=null) {
 						languageField.setText(customer.getLanguage());
 					}
-					if(customer.getCarrier()!=null) {
-						carrier.setValue(customer.getCarrier());
+					
+					if(customer.getCurrentPlan()!=null) {
+						pinField.setText(Integer.toString(customer.getCurrentPlan().getPin()));
+						carrier.setValue(customer.getCurrentPlan().getCarrier());
+						plan.setValue(customer.getCurrentPlan().getPlanType());
+						simField.setText(customer.getCurrentPlan().getSim());
+						accountField.setText(customer.getCurrentPlan().getAccount());
+
 					}
+
+					if(customer.getNewPlan()!=null) {
+						newCarrier.setValue(customer.getNewPlan().getCarrier());
+						portDate.setValue(customer.getNewPlan().getPortdate());
+						newPlan.setValue(customer.getNewPlan().getPlanType());
+						newSimField.setText(customer.getNewPlan().getSim());
+						PUKField.setText(customer.getNewPlan().getPUK());
+					}
+							
+					if(customer.getPrePlan()!=null) {
+						preCarrier.setValue(customer.getPrePlan().getCarrier());
+					}
+					
+					
 					if(customer.getAction()!=null) {
 						actionBox.setValue(customer.getAction());
 					}
-					if(customer.getNewCarrier()!=null) {
-						newCarrier.setValue(customer.getCarrier());
-					}
-					if(customer.getPreCarrier()!=null) {
-						preCarrier.setValue(customer.getPreCarrier());
-					}
-					if(customer.getNewExpireDate() != null) {
-						newExpireDate.setValue(customer.getNewExpireDate());
-					}
+
 					if(customer.getExpireDate() != null) {
 						ExpireDate.setValue(customer.getExpireDate());
-					}
-					if(customer.getPortDate() != null) {
-						portDate.setValue(customer.getPortDate());
 					}
 					if(customer.getLTEdata()!=null) {
 						LTEField.setText(customer.getLTEdata());
 					}
-					if(customer.getNewPlan()!=null) {
-						newPlan.setValue(customer.getNewPlan());
-					}
-					if(customer.getPlan()!=null) {
-						plan.setValue(customer.getPlan());
-					}
-					if(customer.getNewsimcard()!=null) {
-						newSimField.setText(customer.getNewsimcard());
-					}
-					if(customer.getSimcard()!=null) {
-						simField.setText(customer.getSimcard());
-					}
-					if(customer.getPUK()!=null) {
-						PUKField.setText(customer.getPUK());
-					}
+
 					if(customer.getDevice()!=null) {
 						deviceField.setText(customer.getDevice());
 					}
@@ -201,9 +198,7 @@ public class CustomerUpdateController {
 					if(customer.getGroupTitle()!=null) {
 						groupTitle.setValue(customer.getGroupTitle());
 					}
-					if(customer.getAccount()!=null) {
-						accountField.setText(customer.getAccount());
-					}
+
 					if(customer.getStatus()!=null) {
 						status.setValue(customer.getStatus());
 					}
@@ -239,6 +234,7 @@ public class CustomerUpdateController {
 						lastUpdate.setText(customer.getLastUpdate().format(formatter));
 					}
 				}
+		
 			else warningLabel.setText("Customer does not exist.");
 			}
 	}
@@ -249,6 +245,7 @@ public class CustomerUpdateController {
 	}
 	public void submitButtonListener() {
 		//phone number must NotNull.
+		
 		if(phoneField.getText() ==null || phoneField.getText().length() != 10) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error Dialog");
@@ -270,60 +267,27 @@ public class CustomerUpdateController {
 					
 						customer.setPhoneNumber(phoneField.getText());
 						
-						if(!pinField.getText().isEmpty()) {
-							customer.setPin(Integer.parseInt(pinField.getText()));
-						}
 						if(languageField.getText()!=null) {
 							customer.setLanguage(languageField.getText());
 						}
 						if(actionBox.getValue()!=null) {
 							customer.setAction(actionBox.getValue());
 						}
-						if(carrier.getValue()!=null) {
-							customer.setCarrier(carrier.getValue());
-						}
-						if(newCarrier.getValue()!=null) {
-							customer.setNewCarrier(newCarrier.getValue());
-						}
-						if(preCarrier.getValue()!=null) {
-							customer.setPreCarrier(preCarrier.getValue());
-						}
-						if(newExpireDate.getValue() != null) {
-							customer.setNewExpireDate(newExpireDate.getValue());
-						}
+
 						if(ExpireDate.getValue() != null) {
 							customer.setExpireDate(ExpireDate.getValue());
 						}
-						if(portDate.getValue() != null) {
-							customer.setExpireDate(portDate.getValue());
-						}
+
 						if(LTEField.getText()!=null) {
 							customer.setLTEdata(LTEField.getText());
 						}
-						if(newPlan.getValue()!=null) {
-							customer.setNewPlan(newPlan.getValue());
-						}
-						if(plan.getValue()!=null) {
-							customer.setPlan(plan.getValue());
-						}
-						if(newSimField.getText()!=null) {
-							customer.setNewsimcard(newSimField.getText());
-						}
-						if(simField.getText()!=null) {
-							customer.setSimcard(simField.getText());
-						}
-						if(PUKField.getText()!=null) {
-							customer.setPUK(PUKField.getText());
-						}
+						
 						if(deviceField.getText()!=null) {
 							customer.setDevice(deviceField.getText());
 						}
 
 						if(groupTitle.getValue()!=null) {
 							customer.setGroupTitle(groupTitle.getValue());
-						}
-						if(accountField.getText()!=null) {
-							customer.setAccount(accountField.getText());
 						}
 						if(status.getValue()!=null) {
 							customer.setStatus(status.getValue());
@@ -355,7 +319,62 @@ public class CustomerUpdateController {
 						customer.setLastUpdate(LocalDateTime.now());
 						customer.setEmployee(employee);
 						
-						System.out.println(customer.getCustomerID());
+						if(planDataManipulater == null)
+							planDataManipulater = new PlanDataManipulater();
+						
+						if(newPlan.getValue()!=null || newSimField.getText()!=null || PUKField.getText()!=null
+								|| newCarrier.getValue()!=null || portDate.getValue() != null) {
+							Plan newplan = customer.getNewPlan();
+							if(newplan == null)
+								newplan = new Plan();
+							
+							newplan.setPlanType(newPlan.getValue());
+							newplan.setSim(newSimField.getText());
+							newplan.setPUK(PUKField.getText());
+							newplan.setCarrier(newCarrier.getValue());
+							newplan.setPortdate(portDate.getValue());
+
+							if(customer.getNewPlan()==null)
+								planDataManipulater.addPlan(newplan);
+							else planDataManipulater.updatePlan(newplan);
+							
+							customer.setNewPlan(newplan);
+						}
+						
+						if(plan.getValue()!=null || simField.getText()!=null || !pinField.getText().isEmpty()
+								|| accountField.getText()!=null || carrier.getValue()!=null) {
+							Plan currentPlan = customer.getCurrentPlan();
+							if(currentPlan == null)
+								currentPlan = new Plan();
+							
+							currentPlan.setCarrier(carrier.getValue());
+							currentPlan.setPlanType(plan.getValue());
+							currentPlan.setSim(simField.getText());
+							currentPlan.setPin(Integer.parseInt(pinField.getText()));
+							currentPlan.setAccount(accountField.getText());
+							currentPlan.setSim(simField.getText());
+
+							if(customer.getCurrentPlan() == null)
+								planDataManipulater.addPlan(currentPlan);
+							else planDataManipulater.updatePlan(currentPlan);
+							
+							customer.setCurrentPlan(currentPlan);
+						}
+
+
+						if(preCarrier.getValue()!=null) {
+							Plan prePlan = 	customer.getPrePlan();
+							if(prePlan == null)
+								prePlan = new Plan();
+							
+							prePlan.setCarrier(preCarrier.getValue());
+							
+							if(customer.getPrePlan() == null)
+								planDataManipulater.addPlan(prePlan);
+							else planDataManipulater.updatePlan(prePlan);
+							
+							customer.setPrePlan(prePlan);
+						}
 						
 						//update customer info
 						if(customerDataManipulater == null) {

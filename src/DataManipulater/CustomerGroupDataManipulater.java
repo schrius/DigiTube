@@ -33,7 +33,7 @@ public class CustomerGroupDataManipulater {
     		transaction = session.beginTransaction();
     		session.persist(customergroup);
     		transaction.commit();
-    		System.out.print("Registered Success!");
+    		System.out.print("New Group Save Success!");
     		return true;
     	}catch (HibernateException e) {
     		if (transaction!=null) transaction.rollback();
@@ -94,7 +94,7 @@ public class CustomerGroupDataManipulater {
         	transaction = session.beginTransaction();
                 session.update(customergroup);
             transaction.commit();
-    		System.out.print("Update Success!");
+    		System.out.print("Group Update Success!");
     		return true;
         } catch (HibernateException e) {
            if (transaction!=null) transaction.rollback();
@@ -127,7 +127,7 @@ public class CustomerGroupDataManipulater {
     
     public String closeSession() {
         session.close();
-        return "Session is Close.";
+        return "Customer Group Session is Close.";
     }
 }
 

@@ -33,7 +33,7 @@ public class OrderDataManipulater {
     		transaction = session.beginTransaction();
     		session.persist(order);
     		transaction.commit();
-    		System.out.print("Registered Success!");
+    		System.out.print("Order Save!");
     		return true;
     	}catch (HibernateException e) {
     		if (transaction!=null) transaction.rollback();
@@ -94,7 +94,7 @@ public class OrderDataManipulater {
         	transaction = session.beginTransaction();
                 session.update(order);
             transaction.commit();
-    		System.out.print("Update Success!");
+    		System.out.print("Order Update Success!");
     		return true;
         } catch (HibernateException e) {
            if (transaction!=null) transaction.rollback();
@@ -127,6 +127,6 @@ public class OrderDataManipulater {
     
     public String closeSession() {
         session.close();
-        return "Session is Close.";
+        return "Order Session is Close.";
     }
 }

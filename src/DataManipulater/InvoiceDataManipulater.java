@@ -32,8 +32,9 @@ public class InvoiceDataManipulater {
     	try {
     		transaction = session.beginTransaction();
     		session.persist(invoice);
+    		session.flush();
     		transaction.commit();
-    		System.out.print("Registered Success!");
+    		System.out.print("Invoice Save!");
     		return true;
     	}catch (HibernateException e) {
     		if (transaction!=null) transaction.rollback();
@@ -94,7 +95,7 @@ public class InvoiceDataManipulater {
         	transaction = session.beginTransaction();
                 session.update(invoice);
             transaction.commit();
-    		System.out.print("Update Success!");
+    		System.out.print("Invoice Update Success!");
     		return true;
         } catch (HibernateException e) {
            if (transaction!=null) transaction.rollback();
@@ -127,7 +128,7 @@ public class InvoiceDataManipulater {
     
     public String closeSession() {
         session.close();
-        return "Session is Close.";
+        return "Invoice Session is Close.";
     }
 }
 

@@ -11,13 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Invoice {
 	@Id
-	@SequenceGenerator(name="invoice_seq", sequenceName="invoice_id_seq", allocationSize=1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "invoice_seq")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="INVOICE_ID")
 	private long invoiceID;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "invoice", cascade = CascadeType.ALL)
@@ -30,6 +28,10 @@ public class Invoice {
 	private double serviceFee;
 	private double receiveCash;
 	private double returnBalance;
+	
+	@Column(length = 32)
+	private String paymentMethod;
+	
 	private LocalDateTime orderDate;
 	public Invoice() {
 
@@ -130,5 +132,14 @@ public class Invoice {
 	public void setOrderDate(LocalDateTime orderDate) {
 		this.orderDate = orderDate;
 	}
+
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+	
 	
 }

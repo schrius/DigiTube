@@ -7,17 +7,16 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import CustomerInfo.Customer;
 import CustomerInfo.CustomerGenerater;
 import DataManipulater.CustomerDataManipulater;
 import DataManipulater.CustomerGroupDataManipulater;
 import DataManipulater.InvoiceDataManipulater;
 import DataManipulater.OrderDataManipulater;
+import DataManipulater.PlanDataManipulater;
 import Employee.Employee;
 import Main.FixedElements;
-import Main.Plan;
-import Main.Product;
+import Main.TableViewGenerator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -31,12 +30,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -45,24 +42,28 @@ import javafx.stage.Stage;
 
 public class OrderController {
 
+	Stage stage;
 	Employee employee;
 	Customer customer;
-	OrderDataManipulater orderDataManipulater;
-	InvoiceDataManipulater invoiceDataManipulater;
-	CustomerGroupDataManipulater customerGroupDataManipulater;
-	CustomerDataManipulater customerDataManipulater;
-	CustomerGenerater customerGenerater;
-	
+	OrderDataManipulater orderDataManipulater = null;
+	InvoiceDataManipulater invoiceDataManipulater = null;
+	CustomerGroupDataManipulater customerGroupDataManipulater = null;
+	PlanDataManipulater planDataManipulater = null;
+	CustomerDataManipulater customerDataManipulater = null;
+	CustomerGenerater customerGenerater = null;
+
 	@FXML
 	OrderRightPaneController orderRightPaneController;
 	@FXML
 	GridPane orderRightPane;
 	
 	FXMLLoader	fxmlLoader;
-	private ObservableList<Orders> orderList;
+	
+	Invoice invoice;
 	private Orders order;
-	private Map<Orders, Service> serviceList;
-	private Map<Orders, LocalDate> 	expireDate;
+	
+	private ObservableList<Orders> orderList;
+	private Map<Orders, LocalDate> expireDateList;
 	private BigDecimal PSCS;
 	private BigDecimal NYTax;
 	private BigDecimal subtotal;
@@ -153,46 +154,39 @@ public class OrderController {
 		receiveAmount = new BigDecimal(0);
 		returnBalance = new BigDecimal(0);
 		
-		this.expireDate = new HashMap<>();
-		serviceList = new HashMap<Orders, Service>();
+		invoice = new Invoice();
+		this.expireDateList = new HashMap<>();
 		orderList = FXCollections.observableArrayList();
 	}
 	
 	public void processOrder() throws IOException{
-		order.setDescription(order.getStatus());
+		if(order.getCategories().equals(FixedElements.ACCESSORIES)){
+			order.setDescription(order.getProduct().getProductName());
+		}
+		else if(order.getCategories().equals(FixedElements.DEVICE)) {
+			order.setDescription(order.getProduct().getProductName());
+		}
+		else if(order.getCategories().equals(FixedElements.SERVICE)) {
+			order.setDescription(order.getService().getServiceType() + order.getService().getDevice());
+		}
+		else if(order.getCategories().equals(FixedElements.PAYBILL)) {
+			order.setDescription(order.getBill().getBillCarrier() + " " + order.getBill().getBillingAccount());
+		}
+		else if(order.getCategories().equals(FixedElements.REFILL)
+				|| order.getCategories().equals(FixedElements.ACTIVATION)) {
+			order.setDescription(order.getPlan().getCarrier() + " " + order.getPlan().getPlanType());
+		}
+		
 		orderList.add(order);
 
 		updateRightPane();
 		updateTable();
 		updateTotal();
 	}
-	
-	@SuppressWarnings("unchecked")
-	public void updateTable() throws IOException {	
-		TableColumn<Orders, Double> PriceColumn = new TableColumn<>("Price");
-		PriceColumn.setPrefWidth(50);
-		PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-		
-		TableColumn<Orders, Double> discountColumn = new TableColumn<>("Dis.");
-		discountColumn.setPrefWidth(50);
-		discountColumn.setCellValueFactory(new PropertyValueFactory<>("discount"));
-		
-		TableColumn<Orders, Integer> quantityColumn = new TableColumn<>("Qty");
-		quantityColumn.setPrefWidth(30);
-		quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-		
-		TableColumn<Orders, String> categoriesColumn = new TableColumn<>("Categories");
-		categoriesColumn.setMinWidth(100);
-		categoriesColumn.setCellValueFactory(new PropertyValueFactory<>("categories"));
-		
-		TableColumn<Orders, String> descriptionColumn = new TableColumn<>("Description");
-		descriptionColumn.setMinWidth(100);
-		descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-		
-		TableView<Orders> table = new TableView<>(orderList);
 
-		table.getColumns().addAll(categoriesColumn, descriptionColumn,quantityColumn ,PriceColumn, discountColumn);
-		orderTable = table;	
+	public void updateTable() throws IOException {	
+		TableViewGenerator tableViewGenerator = new TableViewGenerator();
+		orderTable = tableViewGenerator.getOrderTable(orderList);	
 		orderPane.setCenter(orderTable);
 	//	updateTotal();
 	}
@@ -237,21 +231,6 @@ public class OrderController {
 	public void removeTableItem(Orders removeOrder) {
 		if(orderTable.getItems().remove(removeOrder))
 			System.out.println("Removed");
-	//	if(removeOrder.getCategories().equals(FixedElements.SERVICE))
-	//		serviceList.remove(removeOrder);
-
-	}
-	
-	public void addService(String serviceType, String device, String contactInfo, java.time.LocalDate completeDate, 
-			double serviceFee) {
-		Service service = new Service();
-		service.setAcceptDate(LocalDate.now());
-		service.setCompleteDate(completeDate);
-		service.setServiceType(serviceType);
-		service.setDevice(device);
-		service.setServiceFee(serviceFee);
-		service.setContactInfo(contactInfo);
-		this.serviceList.put(order, service);
 	}
 	
 	public void processTransaction(TransactionEnum type) throws IOException {
@@ -260,14 +239,14 @@ public class OrderController {
 			updateRightPane();
 			break;
 		case REFILL:
-			gridPane  = FXMLLoader.load(getClass().getResource("../Refill/CarrierFX.fxml"));
+			gridPane  = FXMLLoader.load(getClass().getResource("../Mobile/CarrierFX.fxml"));
 			orderPane.setRight(gridPane);
 			order = new Orders();
 			order.setPlan(new Plan());
 			order.setCategories(FixedElements.REFILL);
 			break;
 		case ACTIVATION:
-			gridPane  = FXMLLoader.load(getClass().getResource("../Activation/ActivationCarrierFX.fxml"));
+			gridPane  = FXMLLoader.load(getClass().getResource("../Mobile/CarrierFX.fxml"));
 			orderPane.setRight(gridPane);
 			order = new Orders();
 			order.setPlan(new Plan());
@@ -277,28 +256,24 @@ public class OrderController {
 			gridPane  = FXMLLoader.load(getClass().getResource("./ServiceFX.fxml"));
 			orderPane.setRight(gridPane);
 			order = new Orders();
-			order.setService(new Service());
 			order.setCategories(FixedElements.SERVICE);
 			break;
 		case DEVICE:
 			gridPane  = FXMLLoader.load(getClass().getResource("./DeviceFX.fxml"));
 			orderPane.setRight(gridPane);
 			order = new Orders();
-			order.setProduct(new Product());
 			order.setCategories(FixedElements.DEVICE);
 			break;
 		case ACCESSORIES:
 			gridPane  = FXMLLoader.load(getClass().getResource("./AccessoriesFX.fxml"));
 			orderPane.setRight(gridPane);
 			order = new Orders();
-			order.setProduct(new Product());
 			order.setCategories(FixedElements.ACCESSORIES);
 			break;
 		case PAYBILL:
 			gridPane  = FXMLLoader.load(getClass().getResource("./PayBillFX.fxml"));
 			orderPane.setRight(gridPane);
 			order = new Orders();
-			order.setBill(new PayBill());
 			order.setCategories(FixedElements.PAYBILL);
 			break;
 		case CASH:
@@ -319,18 +294,83 @@ public class OrderController {
 	public void setCarrierPane(CarrierNum carrier) throws IOException {
 		switch(carrier) {
 		case LYCA:
-		planBox  = FXMLLoader.load(getClass().getResource("../Refill/LycaMobileFX.fxml"));
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/LycaMobileFX.fxml"));
 			order.getPlan().setCarrier(FixedElements.LYCA);
 			orderPane.setRight(planBox);
 		break;
 		case ULTRA:
-		planBox  = FXMLLoader.load(getClass().getResource("../Refill/UltraMobileFX.fxml"));
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/UltraMobileFX.fxml"));
 		order.getPlan().setCarrier(FixedElements.ULTRA);
 			orderPane.setRight(planBox);
 		break;
 		case SIMPLE:
-		planBox  = FXMLLoader.load(getClass().getResource("../Refill/SimpleMobileFX.fxml"));
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/SimpleMobileFX.fxml"));
 		order.getPlan().setCarrier(FixedElements.SIMPLE);
+			orderPane.setRight(planBox);
+		break;
+		case H2O:
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/H2OFX.fxml"));
+		order.getPlan().setCarrier(FixedElements.H2O);
+			orderPane.setRight(planBox);
+		break;
+		case FLEX:
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/FlexFX.fxml"));
+		order.getPlan().setCarrier(FixedElements.FLEX);
+			orderPane.setRight(planBox);
+		break;
+		case REDPOCKET:
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/RedPocketFX.fxml"));
+		order.getPlan().setCarrier(FixedElements.REDPOCKET);
+			orderPane.setRight(planBox);
+		break;
+		case ROK:
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/ROKFX.fxml"));
+		order.getPlan().setCarrier(FixedElements.ROK);
+			orderPane.setRight(planBox);
+		break;
+		case TMOBILE:
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/TMobileFX.fxml"));
+		order.getPlan().setCarrier(FixedElements.TM);
+			orderPane.setRight(planBox);
+		break;
+		case ATT:
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/ATTFX.fxml"));
+		order.getPlan().setCarrier(FixedElements.ATT);
+			orderPane.setRight(planBox);
+		break;
+		case TELCEL:
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/TELCELFX.fxml"));
+		order.getPlan().setCarrier(FixedElements.TELCEL);
+			orderPane.setRight(planBox);
+		break;
+		case GOSMART:
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/GOSmartFX.fxml"));
+		order.getPlan().setCarrier(FixedElements.GOSMART);
+			orderPane.setRight(planBox);
+		break;
+		case EASYGO:
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/EasyGoFX.fxml"));
+		order.getPlan().setCarrier(FixedElements.EASYGO);
+			orderPane.setRight(planBox);
+		break;
+		case NET10:
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/NET10FX.fxml"));
+		order.getPlan().setCarrier(FixedElements.NET10);
+			orderPane.setRight(planBox);
+		break;
+		case CT:
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/CTFX.fxml"));
+		order.getPlan().setCarrier(FixedElements.CT);
+			orderPane.setRight(planBox);
+		break;
+		case EOT:
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/EOTFX.fxml"));
+		order.getPlan().setCarrier(FixedElements.EOT);
+			orderPane.setRight(planBox);
+		break;
+		case OTHER:
+		planBox  = FXMLLoader.load(getClass().getResource("../Mobile/OtherFX.fxml"));
+		order.getPlan().setCarrier(FixedElements.OTHER);
 			orderPane.setRight(planBox);
 		break;
 		
@@ -356,22 +396,125 @@ public class OrderController {
 				}
 			});
 			break;
+		case 10:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(10, FixedElements.P$10);
+			else setRefillPane(10, FixedElements.P$10);
+			break;
+		case 15:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(15, FixedElements.P$15);
+			else setRefillPane(15, FixedElements.P$15);
+			break;
 		case 19:
-			setRefillPane(19, FixedElements.P$19);
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(19, FixedElements.P$19);
+			else setRefillPane(19, FixedElements.P$19);
+			break;
+		case 20:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(20, FixedElements.P$20);
+			else setRefillPane(20, FixedElements.P$20);
 			break;
 		case 23:
-			setRefillPane(23, FixedElements.P$23);
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(23, FixedElements.P$23);
+			else setRefillPane(23, FixedElements.P$23);
 			break;
 		case 25:
-			setRefillPane(25, FixedElements.P$25);
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(25, FixedElements.P$25);
+			else setRefillPane(25, FixedElements.P$25);
+			break;
+		case 29:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(29, FixedElements.P$29);
+			else setRefillPane(29, FixedElements.P$29);
+			break;
+		case 30:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(30, FixedElements.P$30);
+			else setRefillPane(30, FixedElements.P$30);
+			break;
+		case 34:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(34, FixedElements.P$34);
+			else setRefillPane(34, FixedElements.P$34);
+			break;
+		case 35:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(35, FixedElements.P$35);
+			else setRefillPane(35, FixedElements.P$35);
+			break;
+		case 39:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(39, FixedElements.P$39);
+			else setRefillPane(39, FixedElements.P$39);
+			break;
+		case 40:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(40, FixedElements.P$40);
+			else setRefillPane(40, FixedElements.P$40);
+			break;
+		case 45:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(45, FixedElements.P$45);
+			else setRefillPane(45, FixedElements.P$45);
+			break;
+		case 49:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(49, FixedElements.P$49);
+			else setRefillPane(49, FixedElements.P$49);
+			break;
+		case 50:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(50, FixedElements.P$50);
+			else setRefillPane(50, FixedElements.P$50);
+			break;
+		case 55:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(55, FixedElements.P$55);
+			else setRefillPane(55, FixedElements.P$55);
+			break;
+		case 60:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(60, FixedElements.P$60);
+			else setRefillPane(60, FixedElements.P$60);
+			break;
+		case 65:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(65, FixedElements.P$65);
+			else setRefillPane(65, FixedElements.P$65);
+			break;
+		case 70:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(70, FixedElements.P$70);
+			else setRefillPane(70, FixedElements.P$70);
+			break;
+		case 75:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(75, FixedElements.P$75);
+			else setRefillPane(75, FixedElements.P$75);
 			break;
 
 		default:
+			if(order.getCategories().equals(FixedElements.ACTIVATION))
+				setActivationPane(price, FixedElements.UNKNOWN);
+			else setRefillPane(price, FixedElements.UNKNOWN);
 			break;
 		}
 	}
 	public void setRefillPane(double price, String plan) throws IOException {
-		processBox  = FXMLLoader.load(getClass().getResource("../Refill/RefillFX.fxml"));
+		processBox  = FXMLLoader.load(getClass().getResource("../Mobile/RefillFX.fxml"));
+		order.getPlan().setPlanType(plan);
+		order.setPrice(price);
+		order.getPlan().setRegularPrice(price);
+		order.setRegularPrice(price);
+		orderPane.setRight(processBox);
+	}
+	
+	public void setActivationPane(double price, String plan) throws IOException {
+		processBox  = FXMLLoader.load(getClass().getResource("../Mobile/ActivationFX.fxml"));
 		order.getPlan().setPlanType(plan);
 		order.setPrice(price);
 		order.getPlan().setRegularPrice(price);
@@ -386,15 +529,15 @@ public class OrderController {
 		order.getPlan().setPhoneNumber(phoneNumber);
 		order.getPlan().setPUK(puk);
 		order.getPlan().setSim(sim);
+		order.getPlan().setPortdate(portdate);
 		order.setDescription(categories);
-		this.expireDate.put(order, portdate);
 		processOrder();
 	}
 	
 	public void processRefill(String phoneNumber, int quantity, LocalDate expiredate) throws IOException {
 		order.getPlan().setPhoneNumber(phoneNumber);
 		order.setQuantity(quantity);
-		this.expireDate.put(order, expiredate);
+		this.expireDateList.put(order, expiredate);
 		processOrder();
 	}
 	
@@ -469,26 +612,22 @@ public class OrderController {
 	public boolean completeOrder(String payment) throws IOException {
 		if(payment.equals(FixedElements.CASH)) {
 			if(receiveAmount.compareTo(total)>= 0) {
-/*
- * 				//if(orderDataManipulater == null) {
-				//	orderDataManipulater = new OrderDataManipulater();
-				//}
-				for(Orders order: orderList) {
-					order.setPaymentMethod(FixedElements.CASH);
-					orderDataManipulater.addOrder(order);
-				}
- */
 				generateInvoice();
 				initialize();
 				orderTable.getItems().clear();
 				return true;
 			}
 		}
+		else if(payment.equals(FixedElements.CREDIT)) {
+			
+		}
+		else if(payment.equals(FixedElements.UNPAID)){
+			
+		}
 		return false;
 	}
 	
 	public void generateInvoice() {
-		Invoice invoice = new Invoice();
 		if(invoiceDataManipulater == null)
 			invoiceDataManipulater = new InvoiceDataManipulater();
 		if(customerDataManipulater == null)
@@ -511,12 +650,13 @@ public class OrderController {
 				if(customer == null) {
 					customerGenerater = new CustomerGenerater();
 					customer = customerGenerater.generateCustomerRefill(orders, employee);
-					if(expireDate.get(orders)!=null)
-						customer.setExpireDate(expireDate.get(orders));
+					if(expireDateList.get(orders)!=null)
+						customer.setExpireDate(expireDateList.get(orders));
 					else customer.setExpireDate(LocalDate.now());
 					
 					customerGroupDataManipulater.addCustomerGroup(customer.getGroupNumber());
 					customerDataManipulater.addCustomer(customer);
+					orders.setCustomer(customer);
 				}
 				else {
 					customer.setCustomerCredit(customer.getCustomerCredit() + orders.getQuantity());
@@ -529,12 +669,10 @@ public class OrderController {
 				if(customer == null) {
 					customerGenerater = new CustomerGenerater();
 					customer = customerGenerater.generateCustomerActivation(orders, employee);
-					if(expireDate.get(orders)!=null)
-						customer.setPortDate(expireDate.get(orders));
-					else customer.setPortDate(LocalDate.now());
 					
 					customerGroupDataManipulater.addCustomerGroup(customer.getGroupNumber());
 					customerDataManipulater.addCustomer(customer);
+					orders.setCustomer(customer);
 				}
 				else {
 					customer.setCustomerCredit(customer.getCustomerCredit() + orders.getQuantity());
@@ -557,6 +695,13 @@ public class OrderController {
 			invoice.getOrder().add(orders);
 	}
 		invoiceDataManipulater.addInvoice(invoice);
+		for(Orders orders : orderList) {
+			if(orders.getCategories().equals(FixedElements.ACTIVATION)) {
+			Customer updateCustomer = orders.getCustomer();
+			updateCustomer.setNewPlan(orders.getPlan());
+			customerDataManipulater.updateCustomer(customer);
+			}
+		}
 	}
 	
 	public void searchButtonListener() throws IOException {
@@ -576,8 +721,15 @@ public class OrderController {
 			updateTable();
 		}
 	}
-
 	
+	public void closeOrderPane() {
+
+		if(invoiceDataManipulater!=null) {
+			System.out.println(invoiceDataManipulater.closeSession());
+		}
+		stage.close();
+	}
+
 	public void updateRightPane() throws IOException {
 		this.getOrderPane().setRight(orderRightPane);
 	}
@@ -630,11 +782,27 @@ public class OrderController {
 	}
 
 	public Map<Orders, LocalDate> getExpireDate() {
-		return expireDate;
+		return expireDateList;
 	}
 
 	public void setExpireDate(Map<Orders, LocalDate> expireDate) {
-		this.expireDate = expireDate;
+		this.expireDateList = expireDate;
+	}
+
+	public Invoice getInvoice() {
+		return invoice;
+	}
+
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
+	}
+
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 	
 }

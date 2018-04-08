@@ -2,16 +2,10 @@ package Employee;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-
 @Entity
 public class Employee {
 	@Id
-	@SequenceGenerator(name="employee_seq", sequenceName="employee_id_seq")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq")
 	@Column(name="EMPLOYEE_ID")
 	private int employeeID;
 	@Column(length = 32)

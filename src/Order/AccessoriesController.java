@@ -18,8 +18,6 @@ public class AccessoriesController {
 	@FXML
 	TextField priceField;
 	@FXML
-	TextField phoneField;
-	@FXML
 	Button cancelButton;
 	@FXML
 	Button submitButton;
@@ -33,8 +31,21 @@ public class AccessoriesController {
 	public void cancelButtonListener() throws IOException {
 		MainController.getOrderController().updateRightPane();
 	}
-	public void submitButtonListener() {
+	public void submitButtonListener() throws IOException {
+		Product product = new Product();
+		if(accessoriesBox.getValue().equals("Other"))
+			product.setProductName(productName.getText());
+		else product.setProductName(accessoriesBox.getValue());
+	
+		product.setDescription(description.getText());
+		product.setPrice(Double.parseDouble(priceField.getText()));
 		
+		MainController.getOrderController().getOrder().setQuantity(1);
+		MainController.getOrderController().getOrder().setRegularPrice(product.getPrice());
+		MainController.getOrderController().getOrder().setPrice(product.getPrice());
+		MainController.getOrderController().getOrder().setProduct(product);
+
+		MainController.getOrderController().processOrder();
 	}
 
 }

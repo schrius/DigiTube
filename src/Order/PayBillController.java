@@ -2,6 +2,7 @@ package Order;
 
 import java.io.IOException;
 
+import Main.FixedElements;
 import Main.MainController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -25,23 +26,33 @@ public class PayBillController {
 	Button cancelButton;
 	@FXML
 	Button submitButton;
-	@FXML
-	Button searchButton;
 	
 	@FXML
 	private void initialize() {
 		carrierBox.getItems().addAll("conEdison", "nationalGrid", "Verison", "Optimum", "Other");
-	}
-	
-	public void searchButtonListener() {
-		
 	}
 
 	public void cancelButtonListener() throws IOException {
 		MainController.getOrderController().updateRightPane();
 	}
 	
-	public void submitButtonListener() {
+	public void submitButtonListener() throws IOException {
+		Bill bill = new Bill();
+		if(carrierBox.getValue().equals("Other")) {
+			bill.setBillCarrier(otherCarrier.getText());
+		}else bill.setBillCarrier(carrierBox.getValue());
 		
+		bill.setBillAmount(Double.parseDouble(balanceField.getText()));
+		bill.setServiceFess(Double.parseDouble(serviceFeeField.getText()));
+		bill.setBillingAccount(accountField.getText());
+		bill.setContactInfo(phoneField.getText());
+		bill.setStatus(FixedElements.WAITING);
+		
+		MainController.getOrderController().getOrder().setQuantity(1);
+		MainController.getOrderController().getOrder().setRegularPrice(bill.getServiceFess() + bill.getBillAmount());
+		MainController.getOrderController().getOrder().setPrice(bill.getServiceFess() + bill.getBillAmount());
+		MainController.getOrderController().getOrder().setBill(bill);
+		
+		MainController.getOrderController().processOrder();
 	}
 }

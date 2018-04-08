@@ -5,21 +5,26 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Service {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "SERVICE_ID")
-	long serviceID;
-	double serviceFee;
-	String contactInfo;
-	String device;
-	String serviceType;
-	java.time.LocalDate acceptDate;
-	java.time.LocalDate completeDate;
-	String status;
+	private long serviceID;
+	private double serviceFee;
+	@Column(length = 32)
+	private String contactInfo;
+	@Column(length = 32)
+	private String device;
+	@Column(length = 32)
+	private String serviceType;
+	private java.time.LocalDate acceptDate;
+	private java.time.LocalDate completeDate;
+	@Column(length = 32)
+	private String status;
 	public Service() {
 
 	}

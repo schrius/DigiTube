@@ -2,6 +2,7 @@ package Main;
 
 import java.io.IOException;
 import java.time.LocalDate;
+
 import CustomerInfo.Customer;
 import CustomerInfo.CustomerUpdateController;
 import DataManipulater.CustomerDataManipulater;
@@ -158,6 +159,8 @@ public class MainController {
 		orderController.setEmployee(employee);
 		fxmlLoader.setController(orderController);
 		parent = fxmlLoader.load();
+		orderController.setStage(stage);
+		stage.setOnCloseRequest(e -> orderController.closeOrderPane());
 		stage.setScene(new Scene(parent));
 		stage.showAndWait();
 	}
