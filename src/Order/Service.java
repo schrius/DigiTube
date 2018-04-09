@@ -8,8 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import Main.TableEntry;
+
+
 @Entity
-public class Service {
+public class Service implements TableEntry {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "SERVICE_ID")

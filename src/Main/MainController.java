@@ -3,11 +3,17 @@ package Main;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import org.hibernate.sql.HSQLCaseFragment;
+
 import CustomerInfo.Customer;
 import CustomerInfo.CustomerUpdateController;
 import DataManipulater.CustomerDataManipulater;
+import DataManipulater.DataManipulater;
 import Employee.Employee;
+import Order.Bill;
 import Order.OrderController;
+import Order.Plan;
+import Order.Service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,15 +28,15 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 public class MainController {
+	
 	
 	private Employee employee;
 	static private OrderController orderController;
@@ -39,6 +45,7 @@ public class MainController {
 	private ObservableList<Tab> tabList;
 	private Tab tab;
 	private CustomerDataManipulater customerDataManipulater;
+	private DataManipulater dataManipulater = null;
 	
 	Parent parent;
 	
@@ -92,7 +99,7 @@ public class MainController {
 	@FXML
 	CheckBox refillBox;
 	@FXML
-	Button repairListButton;
+	Button serviceListButton;
 
 	@FXML
 	CheckBox swapFamilyBox;
@@ -100,7 +107,7 @@ public class MainController {
 	@FXML
 	Button toDoListButton;
 	@FXML
-	Button unlockListButton;
+	Button portListButton;
 	
 	@FXML
 	Button unpaidListButton;
@@ -120,14 +127,16 @@ public class MainController {
 	@FXML
 	TabPane tabPane;
 	@FXML
-	TableView<Customer> tableView;
+	TableView<? extends TableEntry> tableView;
 
 	@FXML
 	public void initialize() {
-		searchBox.getItems().addAll("Phone#", "CustomerID", "Account", "Carrier");
+		tabPane.setTabClosingPolicy(TabClosingPolicy.SELECTED_TAB);
+		searchBox.getItems().addAll("Phone#", "CustomerID", "BillAccount", "Carrier");
 		searchBox.getSelectionModel().selectFirst();
 		 currentDateLabel.setText(LocalDate.now().toString());
 		 customerDataManipulater = new CustomerDataManipulater();
+		 dataManipulater = new DataManipulater();
 		 orderController = new OrderController();
 	}
 	
@@ -141,8 +150,10 @@ public class MainController {
 			if(customer!=null) {
 				searchLabel.setText("");
 				customersList = FXCollections.observableArrayList();
+				
 				customersList.add(customer);
 				updateTableView();
+
 			}
 			else {
 				searchLabel.setText("Customer not exist.");
@@ -195,6 +206,90 @@ public class MainController {
 		});
 	}
 	
+	public void payBillListButtonListener() {
+		String hql = "FROM Bill b WHERE b.status= 'Waiting'";
+		ObservableList<Bill> billList;
+		billList = dataManipulater.BillwaitingList(hql);
+		
+		tableView = new TableViewGenerator().getBillTable(billList);
+		tab = new Tab("BillList");
+		tab.setClosable(true);
+		tab.setContent(tableView);
+		tabList = tabPane.getTabs();
+		tabList.add(tab);
+	}
+	
+	public void serviceListButtonListener() {
+		String hql = "FROM Service s WHERE s.status= 'Waiting'";
+		ObservableList<Service> serviceList;
+		serviceList = dataManipulater.serviceWaitingList(hql);
+		
+		tableView = new TableViewGenerator().getServiceTable(serviceList);
+		tab = new Tab("Service List");
+		tab.setClosable(true);
+		tab.setContent(tableView);
+		tabList = tabPane.getTabs();
+		tabList.add(tab);
+	}
+	
+	public void toDoListButtonListener() {
+		String hql = "FROM Customer c WHERE c.status = 'Waiting' AND c.expireDate = '" + LocalDate.now() + "'";
+		ObservableList<Customer> todoList= dataManipulater.customerList(hql);
+		
+		tableView = new TableViewGenerator().getToDoTable(todoList);
+		tab = new Tab("To-Do List");
+		tab.setClosable(true);
+		tab.setContent(tableView);
+		tabList = tabPane.getTabs();
+		tabList.add(tab);
+	}
+	public void portListButtonListener() {
+		String hql = "FROM Plan p WHERE p.portdate = '" + LocalDate.now() + "'";
+		ObservableList<Plan> portList= dataManipulater.planList(hql);
+		
+		tableView = new TableViewGenerator().getPortListTable(portList);
+		tab = new Tab("Port List");
+		tab.setClosable(true);
+		tab.setContent(tableView);
+		tabList = tabPane.getTabs();
+		tabList.add(tab);
+	}
+	
+	public void showListButtonListener() {
+		String hql = "FROM Customer c WHERE c.expireDate BETWEEN '";
+		if(beginDate.getValue()!=null)
+			hql = hql + beginDate.getValue() + "' AND '";
+		else hql = hql + LocalDate.now() + "' AND '";
+		
+		if(endDate.getValue()!=null) {
+			System.out.println(endDate.getValue());
+			hql = hql + endDate.getValue()+ "'";
+		}
+		else hql = hql + LocalDate.now() + "'";
+		
+		System.out.println(LocalDate.now());
+		
+		ObservableList<Customer> customerList= dataManipulater.customerList(hql);
+		tableView = new TableViewGenerator().getCustomerTable(customerList);
+		tab = new Tab("List");
+		tab.setClosable(true);
+		tab.setContent(tableView);
+		tabList = tabPane.getTabs();
+		tabList.add(tab);
+	}
+	
+	public void unpaidListButtonListener() {
+		String hql = "FROM Customer c WHERE c.oweAmount > 0";
+		ObservableList<Customer> unpaidList= dataManipulater.customerList(hql);
+		
+		tableView = new TableViewGenerator().getUnpaidTable(unpaidList);
+		tab = new Tab("Unpaid List");
+		tab.setClosable(true);
+		tab.setContent(tableView);
+		tabList = tabPane.getTabs();
+		tabList.add(tab);
+	}
+	
 	public void punchInButtonListener(){
 
 	}
@@ -218,32 +313,8 @@ public class MainController {
 		MainController.orderController = orderController;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void updateTableView() throws IOException {	
-		TableColumn<Customer, Long> IDColumn = new TableColumn<>("CustomerID");
-		IDColumn.setPrefWidth(80);
-		IDColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-		
-		TableColumn<Customer, String> accountColumn = new TableColumn<>("Account");
-		accountColumn.setPrefWidth(80);
-		accountColumn.setCellValueFactory(new PropertyValueFactory<>("account"));
-		
-		TableColumn<Customer, Integer> pinColumn = new TableColumn<>("PIN");
-		pinColumn.setPrefWidth(30);
-		pinColumn.setCellValueFactory(new PropertyValueFactory<>("pin"));
-		
-		TableColumn<Customer, String> actionColumn = new TableColumn<>("Action");
-		actionColumn.setMinWidth(80);
-		actionColumn.setCellValueFactory(new PropertyValueFactory<>("action"));
-		
-		TableColumn<Customer, Double> oweAmountColumn = new TableColumn<>("Owe");
-		oweAmountColumn.setMinWidth(50);
-		oweAmountColumn.setCellValueFactory(new PropertyValueFactory<>("oweAmount"));
-		
-		TableView<Customer> table = new TableView<>(customersList);
-
-		table.getColumns().addAll(IDColumn, accountColumn, pinColumn, actionColumn, oweAmountColumn);
-		tableView = table;	
+		tableView = new TableViewGenerator().getCustomerTable(customersList);
 		tab = new Tab("Customer");
 		tab.setClosable(true);
 		tab.setContent(tableView);

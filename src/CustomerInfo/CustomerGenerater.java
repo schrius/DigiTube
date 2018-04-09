@@ -38,7 +38,6 @@ public class CustomerGenerater {
 		customer.setGroupTitle(FixedElements.PRIME);
 		customer.setLastUpdate(LocalDateTime.now());
 		customer.setStatus(FixedElements.WAITING);
-		customer.setAction(orders.getDescription());
 		return customer;
 	}
 	

@@ -22,7 +22,7 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="toDoListButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="To-Do List">
+                  <Button fx:id="toDoListButton" mnemonicParsing="false" onAction="#toDoListButtonListener" prefHeight="50.0" prefWidth="100.0" text="To-Do List">
                      <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
@@ -30,10 +30,7 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="payBillListButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Pay Bill List">
-                     <HBox.margin>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </HBox.margin>
+                  <Button fx:id="portListButton" mnemonicParsing="false" onAction="#portListButtonListener" prefHeight="50.0" prefWidth="100.0" text="Port List">
                      <padding>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
@@ -75,7 +72,7 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </VBox.margin>
                   </HBox>
-                  <Button fx:id="showListButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Show List">
+                  <Button fx:id="showListButton" mnemonicParsing="false" onAction="#showListButtonListener" prefHeight="30.0" prefWidth="100.0" text="Show List">
                      <VBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </VBox.margin>
@@ -112,7 +109,15 @@
             </HBox>
             <HBox alignment="CENTER" layoutX="12.0" layoutY="294.0" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="repairListButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Repair List">
+                  <Button fx:id="payBillListButton" mnemonicParsing="false" onAction="#payBillListButtonListener" prefHeight="50.0" prefWidth="100.0" text="Pay Bill List">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="serviceListButton" mnemonicParsing="false" onAction="#serviceListButtonListener" prefHeight="50.0" prefWidth="100.0" text="Service List">
                      <padding>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
@@ -120,15 +125,7 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="unlockListButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Unlock List">
-                     <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="unpaidListButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Unpaid List">
+                  <Button fx:id="unpaidListButton" mnemonicParsing="false" onAction="#unpaidListButtonListener" prefHeight="50.0" prefWidth="100.0" text="Unpaid List">
                      <padding>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>

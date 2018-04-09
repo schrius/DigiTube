@@ -1,6 +1,6 @@
 package Main;
 
-public class PortList {
+public class PortList implements TableEntry{
 
 	String simcard;
 	String PUK;

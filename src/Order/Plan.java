@@ -9,9 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import Main.TableEntry;
+
 @Entity
 @Table(name="Plan")
-public class Plan {
+public class Plan implements TableEntry{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="PLAN_ID")
@@ -118,6 +120,5 @@ public class Plan {
 	public void setPortdate(LocalDate portdate) {
 		this.portdate = portdate;
 	}
-	
-	
+
 }

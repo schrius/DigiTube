@@ -12,8 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import Main.TableEntry;
+
 @Entity
-public class Invoice {
+public class Invoice implements TableEntry {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="INVOICE_ID")

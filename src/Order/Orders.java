@@ -15,10 +15,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import CustomerInfo.Customer;
 import Employee.Employee;
+import Main.TableEntry;
 
 @Entity
 @Table(name="Orders")
-public class Orders{
+public class Orders implements TableEntry{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ORDER_ID")

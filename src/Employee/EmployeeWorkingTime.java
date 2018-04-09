@@ -2,20 +2,33 @@ package Employee;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 public class EmployeeWorkingTime {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="time_id")
 	private long workingTimeID;
-	private long employeeID;
+	@ManyToOne
+	@JoinColumn(name="EMPLOYEE_ID", foreignKey = @ForeignKey(name = "EMPLOYEE_ID_FK"))
+	private Employee employee;
 	private LocalDateTime punchIn;
 	private LocalDateTime punchOut;
 	private double workingHour;
 	public EmployeeWorkingTime() {
 		super();
 	}
-	public EmployeeWorkingTime(long workingTimeID, long employeeID, LocalDateTime punchIn, LocalDateTime punchOut,
+	public EmployeeWorkingTime(long workingTimeID, Employee employee, LocalDateTime punchIn, LocalDateTime punchOut,
 			double workingHour) {
 		super();
 		this.workingTimeID = workingTimeID;
-		this.employeeID = employeeID;
+		this.employee = employee;
 		this.punchIn = punchIn;
 		this.punchOut = punchOut;
 		this.workingHour = workingHour;
@@ -26,11 +39,11 @@ public class EmployeeWorkingTime {
 	public void setWorkingTimeID(long workingTimeID) {
 		this.workingTimeID = workingTimeID;
 	}
-	public long getEmployeeID() {
-		return employeeID;
+	public Employee getEmployee() {
+		return employee;
 	}
-	public void setEmployeeID(long employeeID) {
-		this.employeeID = employeeID;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 	public LocalDateTime getPunchIn() {
 		return punchIn;

@@ -49,13 +49,13 @@ public class EmployeeLoginController {
 	@FXML
 	private void initialize() {
 		employeeDataManipulater = new EmployeeDataManipulater();
+		employeeRadioButton.setSelected(true);
 	}
 	
 	
 	public void loginListener() throws IOException, SQLException {
 		if(employeeRadioButton.isSelected()) {
 			if(usernameField.getText()!=null && passwordField.getText()!=null) {
-			//	employeeDataManipulater = new EmployeeDataManipulater();
 				employee = employeeDataManipulater.searchEmployee(Integer.parseInt(usernameField.getText()));
 				if(employee!=null && employee.getPassowrd().equals(passwordField.getText())) {
 					Stage stage = new Stage();
@@ -70,34 +70,10 @@ public class EmployeeLoginController {
 					stage.setScene(scene);
 					((Stage)loginButton.getScene().getWindow()).close();
 					stage.show();
+				}else {
+					wrongPassword.setText("User or Password is not match!");
 				}
-			}
+			}else wrongPassword.setText("User is not exist!");
 		}
-
-		
-		/*		if(username.getText()!=null && password.getText()!=null) {
-		String sql = "SELECT StudentID, Password FROM Student WHERE StudentID ='"
-				+ username.getText() + "'";
-		RegisterJDBC.excuteSQL(sql);
-
-		if(RegisterJDBC.result.next()) {
-		if((RegisterJDBC.result.getString("StudentID")).equals(username.getText())&&
-				(RegisterJDBC.result.getString("Password")).equals(password.getText())) {
-		//load student information after login
-			sql = "SELECT * FROM Student WHERE StudentID ='" + username.getText() + "'";
-			RegisterJDBC.excuteSQL(sql);
-			RegisterJDBC.result.next();
-
-		Stage stage = (Stage)loginButton.getScene().getWindow();
-		parent = FXMLLoader.load(getClass().getResource("StudentCenterFX.fxml"));
-		Scene scene = new Scene(parent);
-		stage.setScene(scene);
-		}else
-		wrongPassword.setText("User or Password is not match!");
-		}
-		else {
-			wrongPassword.setText("User does not exist.");
-		}
-		}*/
 	}
 }

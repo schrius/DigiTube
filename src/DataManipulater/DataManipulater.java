@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -372,6 +373,33 @@ public class DataManipulater {
 		return plan;
 	}
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public ObservableList<Plan> planList(String hql){
+        session = hibernateFactory.openSession();
+        ObservableList<Plan> planList = FXCollections.observableArrayList();
+        transaction = null;
+        Query<Plan> query = null;
+        try {
+           	transaction = session.beginTransaction();
+        	query = session.createQuery(hql);
+        	List<Plan> resultList = query.list();
+        	
+          for (Iterator iterator = resultList.iterator(); iterator.hasNext();){
+        	  Plan plan = (Plan) iterator.next(); 
+        	   planList.add(plan);
+            }
+           transaction.commit();
+           return planList;
+        } catch (HibernateException e) {
+           if (transaction!=null) transaction.rollback();
+           e.printStackTrace(); 
+        } finally {
+           session.close(); 
+        }
+        return planList;
+     }
+    
+    
     public ObservableList<Plan> listPlan( ){
         session = hibernateFactory.openSession();
         ObservableList<Plan> planList = FXCollections.observableArrayList();
@@ -551,6 +579,7 @@ public class DataManipulater {
 		}
 		return false;
 	}
+    
     public Service searchService(Long serviceID) {
         session = hibernateFactory.openSession();
         transaction = null;
@@ -569,6 +598,32 @@ public class DataManipulater {
         }
 		return service;
 	}
+    
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ObservableList<Service> serviceWaitingList(String hql){
+        session = hibernateFactory.openSession();
+        ObservableList<Service> serviceList = FXCollections.observableArrayList();
+        transaction = null;
+        Query<Service> query = null;
+        try {
+           	transaction = session.beginTransaction();
+        	query = session.createQuery(hql);
+        	List<Service> resultList = query.list();
+        	
+          for (Iterator iterator = resultList.iterator(); iterator.hasNext();){
+        	   Service service = (Service) iterator.next(); 
+        	   serviceList.add(service);
+            }
+           transaction.commit();
+           return serviceList;
+        } catch (HibernateException e) {
+           if (transaction!=null) transaction.rollback();
+           e.printStackTrace(); 
+        } finally {
+           session.close(); 
+        }
+        return serviceList;
+     }
     
     public ObservableList<Service> listService( ){
         session = hibernateFactory.openSession();
@@ -670,6 +725,33 @@ public class DataManipulater {
 		return customer;
 	}
     
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ObservableList<Customer> customerList(String hql){
+        session = hibernateFactory.openSession();
+        ObservableList<Customer> customerlist = FXCollections.observableArrayList();
+        transaction = null;
+        Query<Customer> query = null;
+        try {
+           	transaction = session.beginTransaction();
+        	query = session.createQuery(hql);
+        	List<Customer> resultList = query.list();
+        	
+          for (Iterator iterator = resultList.iterator(); iterator.hasNext();){
+        	  Customer customer = (Customer) iterator.next(); 
+        	   customerlist.add(customer);
+            }
+           transaction.commit();
+           return customerlist;
+        } catch (HibernateException e) {
+           if (transaction!=null) transaction.rollback();
+           e.printStackTrace(); 
+        } finally {
+           session.close(); 
+        }
+        return customerlist;
+     }
+
+    
     public ObservableList<Customer> listCustomer( ){
         session = hibernateFactory.openSession();
         ObservableList<Customer> customerList = FXCollections.observableArrayList();
@@ -732,6 +814,7 @@ public class DataManipulater {
            session.close(); 
         }
      }
+
     
     public boolean addBill(Bill bill) {
     	session = hibernateFactory.openSession();
@@ -769,6 +852,32 @@ public class DataManipulater {
         }
 		return bill;
 	}
+    
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ObservableList<Bill> BillwaitingList(String hql){
+        session = hibernateFactory.openSession();
+        ObservableList<Bill> billList = FXCollections.observableArrayList();
+        transaction = null;
+        Query<Bill> query = null;
+        try {
+           	transaction = session.beginTransaction();
+        	query = session.createQuery(hql);
+        	List<Bill> resultList = query.list();
+        	
+          for (Iterator iterator = resultList.iterator(); iterator.hasNext();){
+        	   Bill bill = (Bill) iterator.next(); 
+        	   billList.add(bill);
+            }
+           transaction.commit();
+           return billList;
+        } catch (HibernateException e) {
+           if (transaction!=null) transaction.rollback();
+           e.printStackTrace(); 
+        } finally {
+           session.close(); 
+        }
+        return billList;
+     }
     
     public ObservableList<Bill> listBill( ){
         session = hibernateFactory.openSession();

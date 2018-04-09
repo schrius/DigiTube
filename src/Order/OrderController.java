@@ -122,7 +122,7 @@ public class OrderController {
 	
 	@FXML
 	public void initialize() throws IOException {		
-		searchComboBox.getItems().addAll("Barcode","Product ID", "Invoice", "CustomerID");
+		searchComboBox.getItems().addAll("Barcode","Product ID", "Invoice", "CustomerID", "Order#");
 		searchComboBox.getSelectionModel().selectFirst();
 		quanityComboBox.getItems().addAll(1,2,3,4,5,6,7,8,9);
 		quanityComboBox.getSelectionModel().selectFirst();
@@ -205,7 +205,8 @@ public class OrderController {
 			if(currentOrder.getCategories().equals(FixedElements.REFILL)) {
 			PSCS = PSCS.add(new BigDecimal(currentOrder.getQuantity()*FixedElements.PSCSTAX));	
 			NYTax = NYTax.add(new BigDecimal(subtotal.doubleValue()*FixedElements.TAXRATE));
-				if(currentOrder.getPlan().getCarrier().equals("Ultra"))
+				if(currentOrder.getPlan().getCarrier().equals(FixedElements.ULTRA) ||
+						currentOrder.getPlan().getCarrier().equals(FixedElements.LYCA))
 					serviceFee.add(new BigDecimal(1.00));
 			}
 			NYTax = NYTax.setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -530,7 +531,7 @@ public class OrderController {
 		order.getPlan().setPUK(puk);
 		order.getPlan().setSim(sim);
 		order.getPlan().setPortdate(portdate);
-		order.setDescription(categories);
+	//	order.setDescription(categories);
 		processOrder();
 	}
 	
@@ -701,6 +702,12 @@ public class OrderController {
 			updateCustomer.setNewPlan(orders.getPlan());
 			customerDataManipulater.updateCustomer(customer);
 			}
+			if(orders.getCategories().equals(FixedElements.REFILL)) {
+			Customer updateCustomer = orders.getCustomer();
+			updateCustomer.setCurrentPlan(orders.getPlan());
+			customerDataManipulater.updateCustomer(customer);
+			}
+			
 		}
 	}
 	

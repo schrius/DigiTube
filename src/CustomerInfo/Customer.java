@@ -11,10 +11,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.ForeignKey;
 import Employee.Employee;
+import Main.TableEntry;
 import Order.Plan;
 @Entity
 @Table(name = "CUSTOMER")
-public class Customer {
+public class Customer implements TableEntry {
 	@Id
 	@Column(name = "CUSTOMER_ID")
 	private long customerID;

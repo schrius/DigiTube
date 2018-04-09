@@ -7,11 +7,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+
+import Main.TableEntry;
 import Order.Service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class ServiceDataManipulater {
+public class ServiceDataManipulater implements TableEntry{
 	SessionFactory hibernateFactory;
 	Session session;
     Transaction transaction;
