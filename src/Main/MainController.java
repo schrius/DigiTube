@@ -2,9 +2,6 @@ package Main;
 
 import java.io.IOException;
 import java.time.LocalDate;
-
-import org.hibernate.sql.HSQLCaseFragment;
-
 import CustomerInfo.Customer;
 import CustomerInfo.CustomerUpdateController;
 import DataManipulater.CustomerDataManipulater;
@@ -257,17 +254,13 @@ public class MainController {
 	
 	public void showListButtonListener() {
 		String hql = "FROM Customer c WHERE c.expireDate BETWEEN '";
-		if(beginDate.getValue()!=null)
+		if(beginDate.getValue()!=null) 
 			hql = hql + beginDate.getValue() + "' AND '";
 		else hql = hql + LocalDate.now() + "' AND '";
 		
-		if(endDate.getValue()!=null) {
-			System.out.println(endDate.getValue());
-			hql = hql + endDate.getValue()+ "'";
-		}
+		if(endDate.getValue()!=null) 
+			hql = hql + endDate.getValue() + "'";
 		else hql = hql + LocalDate.now() + "'";
-		
-		System.out.println(LocalDate.now());
 		
 		ObservableList<Customer> customerList= dataManipulater.customerList(hql);
 		tableView = new TableViewGenerator().getCustomerTable(customerList);

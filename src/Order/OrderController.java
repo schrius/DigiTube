@@ -9,11 +9,7 @@ import java.util.List;
 import java.util.Map;
 import CustomerInfo.Customer;
 import CustomerInfo.CustomerGenerater;
-import DataManipulater.CustomerDataManipulater;
-import DataManipulater.CustomerGroupDataManipulater;
-import DataManipulater.InvoiceDataManipulater;
-import DataManipulater.OrderDataManipulater;
-import DataManipulater.PlanDataManipulater;
+import DataManipulater.DataManipulater;
 import Employee.Employee;
 import Main.FixedElements;
 import Main.TableViewGenerator;
@@ -45,11 +41,7 @@ public class OrderController {
 	Stage stage;
 	Employee employee;
 	Customer customer;
-	OrderDataManipulater orderDataManipulater = null;
-	InvoiceDataManipulater invoiceDataManipulater = null;
-	CustomerGroupDataManipulater customerGroupDataManipulater = null;
-	PlanDataManipulater planDataManipulater = null;
-	CustomerDataManipulater customerDataManipulater = null;
+	DataManipulater dataManipulater = new DataManipulater();
 	CustomerGenerater customerGenerater = null;
 
 	@FXML
@@ -629,12 +621,6 @@ public class OrderController {
 	}
 	
 	public void generateInvoice() {
-		if(invoiceDataManipulater == null)
-			invoiceDataManipulater = new InvoiceDataManipulater();
-		if(customerDataManipulater == null)
-			customerDataManipulater = new CustomerDataManipulater();
-		if(customerGroupDataManipulater == null)
-			customerGroupDataManipulater = new CustomerGroupDataManipulater();
 		invoice.setOrderDate(LocalDateTime.now());
 		invoice.setDiscount(discount.doubleValue());
 		invoice.setNYTax(NYTax.doubleValue());
@@ -647,7 +633,7 @@ public class OrderController {
 			orders.setEmployee(employee);
 			orders.setInvoice(invoice);
 			if(orders.getCategories().equals(FixedElements.REFILL)) {
-				customer = customerDataManipulater.searchCustomer(Long.parseLong(orders.getPlan().getPhoneNumber()));
+				customer = dataManipulater.searchCustomer(Long.parseLong(orders.getPlan().getPhoneNumber()));
 				if(customer == null) {
 					customerGenerater = new CustomerGenerater();
 					customer = customerGenerater.generateCustomerRefill(orders, employee);
@@ -655,29 +641,37 @@ public class OrderController {
 						customer.setExpireDate(expireDateList.get(orders));
 					else customer.setExpireDate(LocalDate.now());
 					
-					customerGroupDataManipulater.addCustomerGroup(customer.getGroupNumber());
-					customerDataManipulater.addCustomer(customer);
+					//Set a predefine Plan
+					customer.setPrePlan(dataManipulater.searchPlan(1L));
+					customer.setNewPlan(dataManipulater.searchPlan(1L));
+					
+					dataManipulater.addCustomerGroup(customer.getGroupNumber());
+					dataManipulater.addCustomer(customer);
 					orders.setCustomer(customer);
 				}
 				else {
 					customer.setCustomerCredit(customer.getCustomerCredit() + orders.getQuantity());
-					customerDataManipulater.updateCustomer(customer);
+					dataManipulater.updateCustomer(customer);
 					orders.setCustomer(customer);
 				}
 			}
 			else if(orders.getCategories().equals(FixedElements.ACTIVATION)) {
-				customer = customerDataManipulater.searchCustomer(Long.parseLong(orders.getPlan().getPhoneNumber()));
+				customer = dataManipulater.searchCustomer(Long.parseLong(orders.getPlan().getPhoneNumber()));
 				if(customer == null) {
 					customerGenerater = new CustomerGenerater();
 					customer = customerGenerater.generateCustomerActivation(orders, employee);
 					
-					customerGroupDataManipulater.addCustomerGroup(customer.getGroupNumber());
-					customerDataManipulater.addCustomer(customer);
+					//Set a predefine Plan
+					customer.setPrePlan(dataManipulater.searchPlan(1L));
+					customer.setCurrentPlan(dataManipulater.searchPlan(1L));
+					
+					dataManipulater.addCustomerGroup(customer.getGroupNumber());
+					dataManipulater.addCustomer(customer);
 					orders.setCustomer(customer);
 				}
 				else {
 					customer.setCustomerCredit(customer.getCustomerCredit() + orders.getQuantity());
-					customerDataManipulater.updateCustomer(customer);
+					dataManipulater.updateCustomer(customer);
 					orders.setCustomer(customer);
 				}
 			}
@@ -695,17 +689,20 @@ public class OrderController {
 			}
 			invoice.getOrder().add(orders);
 	}
-		invoiceDataManipulater.addInvoice(invoice);
+		dataManipulater.addInvoice(invoice);
+		
 		for(Orders orders : orderList) {
 			if(orders.getCategories().equals(FixedElements.ACTIVATION)) {
 			Customer updateCustomer = orders.getCustomer();
 			updateCustomer.setNewPlan(orders.getPlan());
-			customerDataManipulater.updateCustomer(customer);
+			dataManipulater.updateCustomer(updateCustomer);
+			
 			}
 			if(orders.getCategories().equals(FixedElements.REFILL)) {
 			Customer updateCustomer = orders.getCustomer();
 			updateCustomer.setCurrentPlan(orders.getPlan());
-			customerDataManipulater.updateCustomer(customer);
+
+			dataManipulater.updateCustomer(updateCustomer);
 			}
 			
 		}
@@ -714,10 +711,7 @@ public class OrderController {
 	public void searchButtonListener() throws IOException {
 		String choice = searchComboBox.getValue();
 		if(choice.equals("Invoice")) {
-			if(invoiceDataManipulater==null) {
-				invoiceDataManipulater = new InvoiceDataManipulater();
-			}
-			Invoice invoice = invoiceDataManipulater.searchInvoice(Long.valueOf(searchField.getText()));
+			Invoice invoice = dataManipulater.searchInvoice(Long.valueOf(searchField.getText()));
 			
 			List<Orders> InvoiceOrderList = invoice.getOrder();
 			
@@ -731,8 +725,8 @@ public class OrderController {
 	
 	public void closeOrderPane() {
 
-		if(invoiceDataManipulater!=null) {
-			System.out.println(invoiceDataManipulater.closeSession());
+		if(dataManipulater!=null) {
+			System.out.println(dataManipulater.closeSession());
 		}
 		stage.close();
 	}

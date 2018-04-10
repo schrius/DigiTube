@@ -11,10 +11,11 @@ public class CustomerGenerater {
 
 	public CustomerGenerater() {
 		super();
-		customer = new Customer();
+
 	}
 
 	public Customer generateCustomerRefill(Orders orders, Employee employee) {
+		customer = new Customer();
 		customer.setPhoneNumber(orders.getPlan().getPhoneNumber());
 		customer.setCustomerID(Long.parseLong(orders.getPlan().getPhoneNumber()));
 		customer.setAction(FixedElements.REFILL);
@@ -25,9 +26,11 @@ public class CustomerGenerater {
 		customer.setGroupTitle(FixedElements.PRIME);
 		customer.setLastUpdate(LocalDateTime.now());
 		customer.setStatus(FixedElements.WAITING);
+
 		return customer;
 	}
 	public Customer generateCustomerActivation(Orders orders, Employee employee) {
+		customer = new Customer();
 		customer.setPhoneNumber(orders.getPlan().getPhoneNumber());
 		customer.setCustomerID(Long.parseLong(orders.getPlan().getPhoneNumber()));
 		customer.setAction(FixedElements.ACTIVATION);
@@ -38,6 +41,7 @@ public class CustomerGenerater {
 		customer.setGroupTitle(FixedElements.PRIME);
 		customer.setLastUpdate(LocalDateTime.now());
 		customer.setStatus(FixedElements.WAITING);
+	
 		return customer;
 	}
 	
