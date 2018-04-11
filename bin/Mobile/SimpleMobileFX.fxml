@@ -31,7 +31,7 @@
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="plan30Button" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="\$30 2G LTE">
+            <Button fx:id="plan30Button" mnemonicParsing="false" onAction="#plan30ButtonListener" prefHeight="50.0" prefWidth="100.0" text="\$30 2G LTE">
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
@@ -46,7 +46,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <Button fx:id="plan40Button" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="\$40 6G LTE">
+            <Button fx:id="plan40Button" mnemonicParsing="false" onAction="#plan40ButtonListener" prefHeight="50.0" prefWidth="100.0" text="\$40 6G LTE">
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
@@ -54,7 +54,7 @@
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="plan50Button" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="\$50 Unlimited">
+            <Button fx:id="plan50Button" mnemonicParsing="false" onAction="#plan50ButtonListener" prefHeight="50.0" prefWidth="100.0" text="\$50 Unlimited">
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
@@ -69,7 +69,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <Button fx:id="plan60Button" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="\$60 Unlimited Plus">
+            <Button fx:id="plan60Button" mnemonicParsing="false" onAction="#plan60ButtonListener" prefHeight="50.0" prefWidth="150.0" text="\$60 Unlimited Plus">
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>

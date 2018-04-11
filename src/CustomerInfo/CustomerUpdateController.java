@@ -2,9 +2,7 @@ package CustomerInfo;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import DataManipulater.CustomerDataManipulater;
-import DataManipulater.CustomerGroupDataManipulater;
-import DataManipulater.PlanDataManipulater;
+import DataManipulater.DataManipulater;
 import Employee.Employee;
 import Main.FixedElements;
 import Order.Plan;
@@ -23,9 +21,7 @@ public class CustomerUpdateController {
 	
 	Employee employee;
 	Customer customer;
-	CustomerDataManipulater customerDataManipulater;
-	CustomerGroupDataManipulater customerGroupDataManipulater;
-	PlanDataManipulater planDataManipulater;
+	DataManipulater dataManipulater;
 	
 	@FXML
 	TextField searchField;
@@ -128,6 +124,7 @@ public class CustomerUpdateController {
 		plan.getItems().addAll(FixedElements.PLAN);
 		state.getItems().addAll(FixedElements.STATES);
 		actionBox.getItems().addAll(FixedElements.ACTION);
+		dataManipulater = new DataManipulater();
 	}
 	
 	public void setEmployee(Employee employee) {
@@ -137,10 +134,10 @@ public class CustomerUpdateController {
 	//search customer info and display on the pane
 	public void searchButtonListener() {
 		if(searchField.getText().length() == 10) {
-			if(customerDataManipulater == null) {
-				customerDataManipulater = new CustomerDataManipulater();
+			if(dataManipulater == null) {
+				dataManipulater = new DataManipulater();
 			}
-			customer = customerDataManipulater.searchCustomer(Long.parseLong(searchField.getText()));
+			customer = dataManipulater.searchCustomer(Long.parseLong(searchField.getText()));
 			if(customer!=null) {
 					System.out.println(customer.getCustomerID());
 					warningLabel.setText("");
@@ -319,13 +316,10 @@ public class CustomerUpdateController {
 						customer.setLastUpdate(LocalDateTime.now());
 						customer.setEmployee(employee);
 						
-						if(planDataManipulater == null)
-							planDataManipulater = new PlanDataManipulater();
-						
 						if(newPlan.getValue()!=null || newSimField.getText()!=null || PUKField.getText()!=null
 								|| newCarrier.getValue()!=null || portDate.getValue() != null) {
 							Plan newplan = customer.getNewPlan();
-							if(newplan == null)
+							if(newplan.getPlanID() == 1)
 								newplan = new Plan();
 							
 							newplan.setPlanType(newPlan.getValue());
@@ -335,8 +329,8 @@ public class CustomerUpdateController {
 							newplan.setPortdate(portDate.getValue());
 
 							if(customer.getNewPlan()==null)
-								planDataManipulater.addPlan(newplan);
-							else planDataManipulater.updatePlan(newplan);
+								dataManipulater.addPlan(newplan);
+							else dataManipulater.updatePlan(newplan);
 							
 							customer.setNewPlan(newplan);
 						}
@@ -344,7 +338,7 @@ public class CustomerUpdateController {
 						if(plan.getValue()!=null || simField.getText()!=null || !pinField.getText().isEmpty()
 								|| accountField.getText()!=null || carrier.getValue()!=null) {
 							Plan currentPlan = customer.getCurrentPlan();
-							if(currentPlan == null)
+							if(currentPlan.getPlanID() == 1)
 								currentPlan = new Plan();
 							
 							currentPlan.setCarrier(carrier.getValue());
@@ -355,8 +349,8 @@ public class CustomerUpdateController {
 							currentPlan.setSim(simField.getText());
 
 							if(customer.getCurrentPlan() == null)
-								planDataManipulater.addPlan(currentPlan);
-							else planDataManipulater.updatePlan(currentPlan);
+								dataManipulater.addPlan(currentPlan);
+							else dataManipulater.updatePlan(currentPlan);
 							
 							customer.setCurrentPlan(currentPlan);
 						}
@@ -364,39 +358,24 @@ public class CustomerUpdateController {
 
 						if(preCarrier.getValue()!=null) {
 							Plan prePlan = 	customer.getPrePlan();
-							if(prePlan == null)
+							if(prePlan.getPlanID() == 1)
 								prePlan = new Plan();
 							
 							prePlan.setCarrier(preCarrier.getValue());
 							
 							if(customer.getPrePlan() == null)
-								planDataManipulater.addPlan(prePlan);
-							else planDataManipulater.updatePlan(prePlan);
+								dataManipulater.addPlan(prePlan);
+							else dataManipulater.updatePlan(prePlan);
 							
 							customer.setPrePlan(prePlan);
 						}
 						
 						//update customer info
-						if(customerDataManipulater == null) {
-							customerDataManipulater = new CustomerDataManipulater();
+						if(dataManipulater == null) {
+							dataManipulater = new DataManipulater();
 						}
-						if(customerDataManipulater.searchCustomer(customer.getCustomerID()) != null ) {
-							if(!groupNumber.getText().equals(Long.toString(customer.getGroupNumber().getGroupdID()))							){
-								CustomerGroup customerGroup = new CustomerGroup(Integer.parseInt(groupNumber.getText()),
-										Long.parseLong(phoneField.getText()), 
-										group.getValue());
-								customerGroupDataManipulater = new CustomerGroupDataManipulater();
-								if(customerGroupDataManipulater.searchCustomerGroup(customerGroup.getGroupdID())!=null)
-								customerGroupDataManipulater.updateCustomerGroup(customerGroup);
-								else customerGroupDataManipulater.addCustomerGroup(customerGroup);
-								customer.setGroupNumber(customerGroup);
-							}
-							else if(groupNumber.getText().equals(Long.toString(customer.getGroupNumber().getGroupdID()))
-									&& !group.getValue().equals(customer.getGroupNumber().getGroupPlan())) {
-								customer.getGroupNumber().setGroupPlan(group.getValue());
-								customerGroupDataManipulater.updateCustomerGroup(customer.getGroupNumber());
-							}
-							if(customerDataManipulater.updateCustomer(customer)) {
+						if(dataManipulater.searchCustomer(customer.getCustomerID()) != null ) {
+							if(dataManipulater.updateCustomer(customer)) {
 							Alert alertConfirm = new Alert(AlertType.INFORMATION);
 							alertConfirm.setTitle("Update Success!");
 							alertConfirm.setHeaderText(null);
@@ -410,17 +389,7 @@ public class CustomerUpdateController {
 							}
 						}
 						else {
-							CustomerGroup customerGroup;
-							if(!groupNumber.getText().isEmpty())
-								customerGroup = new CustomerGroup(Integer.parseInt(groupNumber.getText()),
-				    				customer.getCustomerID(), group.getValue());
-							else customerGroup = new CustomerGroup(customer.getCustomerID(),
-				    				customer.getCustomerID(), group.getValue());
-							if(customerGroupDataManipulater==null)
-								customerGroupDataManipulater = new CustomerGroupDataManipulater();
-							customerGroupDataManipulater.addCustomerGroup(customerGroup);
-							
-							if(customerDataManipulater.addCustomer(customer)) {
+							if(dataManipulater.addCustomer(customer)) {
 								Alert alertConfirm1 = new Alert(AlertType.INFORMATION);
 								alertConfirm1.setTitle("Add Success!");
 								alertConfirm1.setHeaderText(null);

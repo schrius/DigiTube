@@ -14,7 +14,7 @@
          <children>
             <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="orderButton" mnemonicParsing="false" onAction="#orderButtonListener" prefHeight="50.0" prefWidth="100.0" text="Order">
+                  <Button fx:id="orderButton" mnemonicParsing="false" onAction="#orderButtonListener" prefHeight="50.0" prefWidth="100.0" styleClass="primary" text="Order">
                      <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
@@ -22,7 +22,7 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="toDoListButton" mnemonicParsing="false" onAction="#toDoListButtonListener" prefHeight="50.0" prefWidth="100.0" text="To-Do List">
+                  <Button fx:id="toDoListButton" mnemonicParsing="false" onAction="#toDoListButtonListener" prefHeight="50.0" prefWidth="100.0" styleClass="middle" text="To-Do List">
                      <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
@@ -30,7 +30,7 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="portListButton" mnemonicParsing="false" onAction="#portListButtonListener" prefHeight="50.0" prefWidth="100.0" text="Port List">
+                  <Button fx:id="portListButton" mnemonicParsing="false" onAction="#portListButtonListener" prefHeight="50.0" prefWidth="100.0" styleClass="last" text="Port List">
                      <padding>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
@@ -109,7 +109,7 @@
             </HBox>
             <HBox alignment="CENTER" layoutX="12.0" layoutY="294.0" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="payBillListButton" mnemonicParsing="false" onAction="#payBillListButtonListener" prefHeight="50.0" prefWidth="100.0" text="Pay Bill List">
+                  <Button fx:id="payBillListButton" mnemonicParsing="false" onAction="#payBillListButtonListener" prefHeight="50.0" prefWidth="100.0" styleClass="first" text="Pay Bill List">
                      <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
@@ -117,7 +117,7 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="serviceListButton" mnemonicParsing="false" onAction="#serviceListButtonListener" prefHeight="50.0" prefWidth="100.0" text="Service List">
+                  <Button fx:id="serviceListButton" mnemonicParsing="false" onAction="#serviceListButtonListener" prefHeight="50.0" prefWidth="100.0" styleClass="middle" text="Service List">
                      <padding>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
@@ -125,7 +125,7 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="unpaidListButton" mnemonicParsing="false" onAction="#unpaidListButtonListener" prefHeight="50.0" prefWidth="100.0" text="Unpaid List">
+                  <Button fx:id="unpaidListButton" mnemonicParsing="false" onAction="#unpaidListButtonListener" prefHeight="50.0" prefWidth="100.0" styleClass="last" text="Unpaid List">
                      <padding>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
@@ -184,11 +184,12 @@
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="415.0" minWidth="10.0" prefWidth="300.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="70.0" minHeight="10.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="70.0" minHeight="10.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox prefHeight="80.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="1">
+            <HBox prefHeight="80.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="2">
                <children>
                   <Label prefWidth="50.0" text="Note:">
                      <font>
@@ -201,7 +202,7 @@
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="1">
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
@@ -209,21 +210,36 @@
                   <Label prefWidth="80.0" text="Operator:" />
                   <Label fx:id="nameLabel" alignment="CENTER" prefWidth="100.0" text="Jerry" />
                   <Label fx:id="currentDateLabel" prefWidth="200.0" text="Sunday, February 25, 2018" />
-                  <Button fx:id="updateStatusButton" mnemonicParsing="false" onAction="#updateStatusButtonListener" styleClass="warning" text="Update Status" />
                </children>
             </HBox>
-            <Button fx:id="updateButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#updateButtonListener" styleClass="info" text="Update Customer" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Button fx:id="updateOrderButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#updateOrderButtonListener" styleClass="info" text="Update Order" />
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                  <HBox alignment="CENTER" spacing="10.0">
                      <children>
                         <Button fx:id="punchInButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#punchInButtonListener" styleClass="success" text="Punch In" />
-                        <Button fx:id="punchOutButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#punchOutButtonListener" styleClass="warning" text="Punch Out" />
+                        <Button fx:id="punchOutButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#punchOutButtonListener" styleClass="danger" text="Punch Out" />
                      </children>
                   </HBox>
                </children>
             </VBox>
+            <HBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <Button fx:id="updateAccountButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#updateAccountButtonListener" styleClass="info" text="Update Account#/PIN" />
+                  <Button fx:id="updateStatusButton" mnemonicParsing="false" onAction="#updateStatusButtonListener" styleClass="warning" text="Update Status" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="10.0" GridPane.columnIndex="1">
+               <children>
+                  <Button fx:id="updateCustomerButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#updateCustomerButtonListener" styleClass="info" text="Update Customer" />
+                  <Button fx:id="updateOrderButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#updateOrderButtonListener" styleClass="info" text="Update Order" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Button fx:id="addGroupButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#addGroupButtonListener" styleClass="success" text="Add Group" />
+                  <Button fx:id="updateGroupButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#updateGroupButtonListener" styleClass="warning" text="Update Group" />
+               </children>
+            </HBox>
          </children>
       </GridPane>
    </bottom>

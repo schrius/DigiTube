@@ -13,6 +13,7 @@ import org.hibernate.cfg.Configuration;
 import CustomerInfo.Customer;
 import CustomerInfo.CustomerGroup;
 import Employee.Employee;
+import Employee.EmployeeWorkingTime;
 import Order.Bill;
 import Order.Invoice;
 import Order.Orders;
@@ -1041,6 +1042,113 @@ public class DataManipulater {
         } finally {
            session.close(); 
         }
+     }
+    
+    // time sheet generate
+    public boolean addWorkingTime(EmployeeWorkingTime workTime) {
+    	session = hibernateFactory.openSession();
+    	transaction = null;
+
+    	try {
+    		transaction = session.beginTransaction();
+    		session.persist(workTime);
+    		transaction.commit();
+    		System.out.print("Registered Success!");
+    		return true;
+    	}catch (HibernateException e) {
+    		if (transaction!=null) transaction.rollback();
+            e.printStackTrace(); 
+		}finally {
+			session.close();
+		}
+		return false;
+	}
+    public EmployeeWorkingTime searchWorkingTime(Integer timeID) {
+        session = hibernateFactory.openSession();
+        transaction = null;
+        EmployeeWorkingTime employee = null;
+        
+        try {
+         transaction = session.beginTransaction();
+         employee = (EmployeeWorkingTime)session.get(EmployeeWorkingTime.class, timeID);
+         transaction.commit();
+         return employee;
+        } catch (HibernateException e) {
+           if (transaction!=null) transaction.rollback();
+           e.printStackTrace(); 
+        } finally {
+           session.close(); 
+        }
+		return employee;
+	}
+    
+    public ObservableList<EmployeeWorkingTime> listWorkingTime( ){
+        session = hibernateFactory.openSession();
+        ObservableList<EmployeeWorkingTime> employees = FXCollections.observableArrayList();
+        transaction = null;
+        
+        try {
+        	transaction = session.beginTransaction();
+           @SuppressWarnings("rawtypes")
+		List employeeList = session.createQuery("FROM EmployeeWorkingTime").list(); 
+           for (@SuppressWarnings("rawtypes")
+		Iterator iterator = employeeList.iterator(); iterator.hasNext();){
+        	   EmployeeWorkingTime employee = (EmployeeWorkingTime) iterator.next(); 
+        	   employees.add(employee);
+            }
+           transaction.commit();
+           return employees;
+        } catch (HibernateException e) {
+           if (transaction!=null) transaction.rollback();
+           e.printStackTrace(); 
+        } finally {
+           session.close(); 
+        }
+        return employees;
+     }
+    
+    public boolean updateWorkingTime(EmployeeWorkingTime employee){
+        session = hibernateFactory.openSession();
+        transaction = null;
+        try {
+        	transaction = session.beginTransaction();
+                session.update(employee);
+            transaction.commit();
+    		System.out.print("Update Success!");
+    		return true;
+        } catch (HibernateException e) {
+           if (transaction!=null) transaction.rollback();
+           e.printStackTrace(); 
+        } finally {
+           session.close(); 
+        }
+        return transaction != null;
+     }
+    
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ObservableList<EmployeeWorkingTime> WorkingTimeList(String hql){
+        session = hibernateFactory.openSession();
+        ObservableList<EmployeeWorkingTime> list = FXCollections.observableArrayList();
+        transaction = null;
+        Query<EmployeeWorkingTime> query = null;
+        try {
+           	transaction = session.beginTransaction();
+        	query = session.createQuery(hql);
+        	List<EmployeeWorkingTime> resultList = query.list();
+        	
+          for (Iterator iterator = resultList.iterator(); iterator.hasNext();){
+        	  EmployeeWorkingTime item = (EmployeeWorkingTime) iterator.next(); 
+        	  list.add(item);
+            }
+           transaction.commit();
+           return list;
+        } catch (HibernateException e) {
+           if (transaction!=null) transaction.rollback();
+           e.printStackTrace(); 
+        } finally {
+           session.close(); 
+        }
+        return list;
      }
     
     public String closeSession() {

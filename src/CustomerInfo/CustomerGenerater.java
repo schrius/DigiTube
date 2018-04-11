@@ -21,8 +21,6 @@ public class CustomerGenerater {
 		customer.setAction(FixedElements.REFILL);
 		customer.setCustomerCredit(orders.getQuantity());
 		customer.setEmployee(employee);
-		customer.setGroupNumber(new CustomerGroup(Long.parseLong(orders.getPlan().getPhoneNumber()), 
-				Long.parseLong(orders.getPlan().getPhoneNumber()), FixedElements.NORMAL));
 		customer.setGroupTitle(FixedElements.PRIME);
 		customer.setLastUpdate(LocalDateTime.now());
 		customer.setStatus(FixedElements.WAITING);
@@ -36,8 +34,6 @@ public class CustomerGenerater {
 		customer.setAction(FixedElements.ACTIVATION);
 		customer.setCustomerCredit(orders.getQuantity());
 		customer.setEmployee(employee);
-		customer.setGroupNumber(new CustomerGroup(Long.parseLong(orders.getPlan().getPhoneNumber()), 
-				Long.parseLong(orders.getPlan().getPhoneNumber()), FixedElements.NORMAL));
 		customer.setGroupTitle(FixedElements.PRIME);
 		customer.setLastUpdate(LocalDateTime.now());
 		customer.setStatus(FixedElements.WAITING);

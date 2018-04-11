@@ -2,11 +2,15 @@ package Main;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 import CustomerInfo.Customer;
 import CustomerInfo.CustomerUpdateController;
 import DataManipulater.CustomerDataManipulater;
 import DataManipulater.DataManipulater;
 import Employee.Employee;
+import Employee.EmployeeWorkingTime;
 import Order.Bill;
 import Order.OrderController;
 import Order.Plan;
@@ -17,7 +21,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ComboBox;
@@ -34,8 +41,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 public class MainController {
 	
-	
+	Stage stage;
 	private Employee employee;
+	private EmployeeWorkingTime employeeWorkingTime = new EmployeeWorkingTime();
 	static private OrderController orderController;
 	private Customer customer;
 	private ObservableList<Customer> customersList;
@@ -110,7 +118,7 @@ public class MainController {
 	Button unpaidListButton;
 	
 	@FXML
-	Button updateButton;
+	Button updateCustomerButton;
 	@FXML
 	Button updateOrderButton;
 	@FXML
@@ -119,6 +127,13 @@ public class MainController {
 	Button punchInButton;
 	@FXML
 	Button punchOutButton;
+	@FXML
+	Button updateAccountButton;
+	@FXML
+	Button addGroupButton;
+	@FXML
+	Button updateGroupButton;
+	
 	
 	// center pane
 	@FXML
@@ -150,7 +165,6 @@ public class MainController {
 				
 				customersList.add(customer);
 				updateTableView();
-
 			}
 			else {
 				searchLabel.setText("Customer not exist.");
@@ -173,7 +187,7 @@ public class MainController {
 		stage.showAndWait();
 	}
 	
-	public void updateButtonListener() throws IOException {
+	public void updateCustomerButtonListener() throws IOException {
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../CustomerInfo/CustomerUpdateFX.fxml"));
@@ -284,11 +298,30 @@ public class MainController {
 	}
 	
 	public void punchInButtonListener(){
-
+		employeeWorkingTime.setEmployee(this.employee);
+		employeeWorkingTime.setPunchIn(LocalDateTime.now());
+		dataManipulater.addWorkingTime(employeeWorkingTime);
 	}
 	public void punchOutButtonListener(){
+		long minutes = ChronoUnit.MINUTES.between(employeeWorkingTime.getPunchIn(), LocalDateTime.now());
+		employeeWorkingTime.setPunchOut(LocalDateTime.now());
+		employeeWorkingTime.setWorkingHour(minutes);
 
+		dataManipulater.updateWorkingTime(employeeWorkingTime);
 	}
+	
+	public void updateGroupButtonListener() {
+		
+	}
+	
+	public void addGroupButtonListener() {
+		
+	}
+	
+	public void updateAccountButtonListener() {
+		
+	}
+	
 	
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
@@ -313,5 +346,25 @@ public class MainController {
 		tab.setContent(tableView);
 		tabList = tabPane.getTabs();
 		tabList.add(tab);
+	}
+	
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+
+	public void closeMain() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Confirmation Dialog");
+		alert.setHeaderText("Make Sure Punch Out, if you done for today.");
+		alert.setContentText("Are you sure to continue?");
+		alert.showAndWait().ifPresent(rs-> {
+			if(rs == ButtonType.OK) {
+					stage.close();
+			}
+		});
 	}
 }

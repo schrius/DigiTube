@@ -57,15 +57,17 @@ public class EmployeeLoginController {
 		if(employeeRadioButton.isSelected()) {
 			if(usernameField.getText()!=null && passwordField.getText()!=null) {
 				employee = employeeDataManipulater.searchEmployee(Integer.parseInt(usernameField.getText()));
+				
+				System.out.println(employee.getEmployeeID() + employee.getPassowrd());
 				if(employee!=null && employee.getPassowrd().equals(passwordField.getText())) {
 					Stage stage = new Stage();
 					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Main/MainFX.fxml"));
 					parent = (Parent)fxmlLoader.load();
 					MainController mainController = fxmlLoader.<MainController>getController();
 					mainController.setEmployee(employee);
-
 					Scene scene = new Scene(parent);
-					
+					mainController.setStage(stage);
+					stage.setOnCloseRequest(e -> mainController.closeMain());
 					stage.setTitle("Digital Mobile");
 					stage.setScene(scene);
 					((Stage)loginButton.getScene().getWindow()).close();

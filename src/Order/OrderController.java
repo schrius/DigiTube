@@ -725,9 +725,6 @@ public class OrderController {
 	
 	public void closeOrderPane() {
 
-		if(dataManipulater!=null) {
-			System.out.println(dataManipulater.closeSession());
-		}
 		stage.close();
 	}
 

@@ -1,8 +1,6 @@
 package Employee;
 
 import java.time.LocalDateTime;
-
-import javax.persistence.Column;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,19 +11,18 @@ import javax.persistence.ManyToOne;
 public class EmployeeWorkingTime {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="time_id")
 	private long workingTimeID;
 	@ManyToOne
 	@JoinColumn(name="EMPLOYEE_ID", foreignKey = @ForeignKey(name = "EMPLOYEE_ID_FK"))
 	private Employee employee;
 	private LocalDateTime punchIn;
 	private LocalDateTime punchOut;
-	private double workingHour;
+	private long workingHour;
 	public EmployeeWorkingTime() {
 		super();
 	}
 	public EmployeeWorkingTime(long workingTimeID, Employee employee, LocalDateTime punchIn, LocalDateTime punchOut,
-			double workingHour) {
+			long workingHour) {
 		super();
 		this.workingTimeID = workingTimeID;
 		this.employee = employee;
@@ -57,10 +54,10 @@ public class EmployeeWorkingTime {
 	public void setPunchOut(LocalDateTime punchOut) {
 		this.punchOut = punchOut;
 	}
-	public double getWorkingHour() {
+	public long getWorkingHour() {
 		return workingHour;
 	}
-	public void setWorkingHour(double workingHour) {
+	public void setWorkingHour(long workingHour) {
 		this.workingHour = workingHour;
 	}
 	

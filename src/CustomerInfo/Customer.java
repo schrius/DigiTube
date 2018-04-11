@@ -20,7 +20,7 @@ public class Customer implements TableEntry {
 	@Column(name = "CUSTOMER_ID")
 	private long customerID;
 	private double oweAmount;
-	@Column(name = "ACTION", length = 32)
+	@Column(length = 32)
 	private String action;
 	@Column(unique = true, nullable = false, length = 16)
 	private String phoneNumber;
@@ -28,7 +28,7 @@ public class Customer implements TableEntry {
 	private String language;
 	@Column(length = 16)
 	private String LTEdata;
-	
+
 	@ManyToOne
     @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "GROUP_ID_FK"))
 	private CustomerGroup groupNumber;
