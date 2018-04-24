@@ -24,12 +24,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class DataManipulater {
-	SessionFactory hibernateFactory;
-	Session session;
-    Transaction transaction;
+	static SessionFactory hibernateFactory = new Configuration().configure().buildSessionFactory();
+	static Session session;
+	static Transaction transaction;
     
     public DataManipulater() {
         try {
+        	if(hibernateFactory ==null)
     		hibernateFactory = new Configuration().configure().buildSessionFactory();
          } catch (Throwable ex) { 
             System.err.println("Failed to create sessionFactory object." + ex);

@@ -5,19 +5,81 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <Label text="Administrator Pane" BorderPane.alignment="CENTER" />
-   </top>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="superUser.ManagerController">
    <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox spacing="5.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="New Employee" />
-            <Button mnemonicParsing="false" text="Update Employee" />
-            <Button mnemonicParsing="false" text="New Product" />
-            <Button mnemonicParsing="false" text="Update Product" />
+            <Button fx:id="newEmployeeButton" mnemonicParsing="false" text="New Employee" />
+            <Button fx:id="updateEmployeeButton" mnemonicParsing="false" text="Update Employee" />
+            <Button fx:id="newProductButton" mnemonicParsing="false" text="New Product" />
+            <Button fx:id="updateProductButton" mnemonicParsing="false" text="Update Product" />
+            <Button fx:id="updateOrderButton" mnemonicParsing="false" text="Update Order" />
+            <Button fx:id="updateCustomerButton" mnemonicParsing="false" text="Update Customer" />
          </children>
       </VBox>
    </left>
+   <top>
+      <HBox alignment="CENTER" prefWidth="600.0" spacing="5.0" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+   <right>
+      <VBox spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <ComboBox fx:id="searchBox" prefWidth="150.0" />
+            <TextField fx:id="searchField" />
+            <Label text="Begin Date" />
+            <DatePicker fx:id="beginDate" prefWidth="120.0" />
+            <Label text="End Date" />
+            <DatePicker fx:id="endDate" prefWidth="120.0" />
+            <Button fx:id="showAndCalcuate" mnemonicParsing="false" onAction="#showAndCalcuateListener" text="Show And Calcuate" />
+         </children>
+      </VBox>
+   </right>
+   <bottom>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Working Hours:" />
+            <Label text="Hour Rate:" GridPane.rowIndex="1" />
+            <Label text="Gross Pay:" GridPane.rowIndex="2" />
+            <Label text="Sales:" GridPane.columnIndex="2" />
+            <Label text="Commission:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label text="Total Pay:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="hours" GridPane.columnIndex="1" />
+            <Label fx:id="payRate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="grossPay" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="sales" GridPane.columnIndex="3" />
+            <Label fx:id="commission" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label fx:id="totalPay" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label text="Total Sales:" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+            <Label text="Unpaid:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <Label text="Discount:" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <Label text="Cash:" GridPane.columnIndex="6" />
+            <Label text="Credit:" GridPane.columnIndex="4" />
+            <Label text="Refund:" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <Label fx:id="refund" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+            <Label fx:id="cash" GridPane.columnIndex="7" />
+            <Label fx:id="total" GridPane.columnIndex="7" GridPane.rowIndex="2" />
+            <Label fx:id="discount" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <Label fx:id="credit" GridPane.columnIndex="5" />
+            <Label fx:id="unpaid" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+   </bottom>
 </BorderPane>

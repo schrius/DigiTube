@@ -30,6 +30,7 @@ public class Invoice implements TableEntry {
 	private double serviceFee;
 	private double receiveCash;
 	private double returnBalance;
+	private double refund;
 	
 	@Column(length = 32)
 	private String paymentMethod;
@@ -142,6 +143,12 @@ public class Invoice implements TableEntry {
 	public void setPaymentMethod(String paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
-	
-	
+
+	public double getRefund() {
+		return refund;
+	}
+
+	public void setRefund(double refund) {
+		this.refund = refund;
+	}
 }

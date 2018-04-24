@@ -12,7 +12,6 @@
   		<property name="hibernate.connection.username">digitest</property>
  	    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 
- 	    
   	<mapping class="CustomerInfo.Customer"/>
     <mapping class="Order.Orders"/>
     <mapping class="Order.Service"/>
@@ -22,5 +21,6 @@
     <mapping class="Order.Product"/>
     <mapping class="CustomerInfo.CustomerGroup"/>
     <mapping class="Employee.Employee"/>
+    <mapping class="Employee.EmployeeWorkingTime"/>
  </session-factory>
 </hibernate-configuration>

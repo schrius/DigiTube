@@ -74,6 +74,10 @@ public class TableViewGenerator {
 		oweAmountColumn.setMinWidth(50);
 		oweAmountColumn.setCellValueFactory(new PropertyValueFactory<>("oweAmount"));
 		
+		TableColumn<Customer, Double> expireColumn = new TableColumn<>("ExpireDate");
+		expireColumn.setMinWidth(50);
+		expireColumn.setCellValueFactory(new PropertyValueFactory<>("expireDate"));
+		
 		TableColumn<Customer, String> newPlanColumn = new TableColumn<>("NewPlan");
 		newPlanColumn.setMinWidth(50);
 		newPlanColumn.setCellValueFactory(new PropertyValueFactory<>("newPlan"));
@@ -109,7 +113,7 @@ public class TableViewGenerator {
 		
 		TableView<Customer> customerTable = new TableView<>(customersList);
 
-		customerTable.getColumns().addAll(IDColumn, creditColumn, titleColumn, actionColumn, 
+		customerTable.getColumns().addAll(IDColumn, creditColumn, titleColumn, actionColumn, expireColumn,
 				oweAmountColumn, newPlanColumn, currentPlanColumn, prePlanColumn);
 		
 		return customerTable;

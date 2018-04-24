@@ -34,17 +34,12 @@
       <TextField fx:id="customerIDField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <TextField fx:id="deviceField" prefHeight="25.0" prefWidth="100.0" promptText="ex: IPhone" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Label text="Device:" GridPane.rowIndex="2" />
-      <Label text="New ExpireDate:" GridPane.rowIndex="3" />
-      <DatePicker fx:id="newExpireDate" promptText="3/14/2018" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <ComboBox fx:id="newCarrier" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <Label text="New Carrier:" GridPane.rowIndex="4" />
       <Label text="Group:" GridPane.rowIndex="5" />
-      <ComboBox fx:id="group" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <TextField fx:id="newSimField" prefHeight="25.0" prefWidth="100.0" promptText="ex: 890xxxxxxxxx" GridPane.columnIndex="1" GridPane.rowIndex="6" />
       <Label text="New Sim:" GridPane.rowIndex="6" />
       <TextField fx:id="PUKField" prefHeight="25.0" prefWidth="100.0" promptText="12345678" GridPane.columnIndex="1" GridPane.rowIndex="7" />
       <Label text="PUK:" GridPane.rowIndex="7" />
-      <ComboBox fx:id="newPlan" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
       <Label text="New Plan:" GridPane.rowIndex="8" />
       <TextField fx:id="firstnameField" prefHeight="25.0" prefWidth="100.0" promptText="ex: Jerry" GridPane.columnIndex="1" GridPane.rowIndex="9" />
       <Label text="FirstName:" GridPane.rowIndex="9" />
@@ -56,15 +51,14 @@
       <Label text="LTE Data:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
       <Label text="ExpireDate:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
       <DatePicker fx:id="ExpireDate" promptText="3/14/2018" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-      <ComboBox fx:id="carrier" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-      <TextField fx:id="groupNumber" prefHeight="25.0" prefWidth="100.0" promptText="ID" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+      <TextField fx:id="groupNumber" editable="false" prefHeight="25.0" prefWidth="100.0" promptText="ID" GridPane.columnIndex="3" GridPane.rowIndex="5" />
       <Label text="Group#:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
       <TextField fx:id="simField" prefHeight="25.0" prefWidth="100.0" promptText="ex: 890xxxxxxxxx" GridPane.columnIndex="3" GridPane.rowIndex="6" />
       <Label text="Sim:" GridPane.columnIndex="2" GridPane.rowIndex="6" />
       <TextField fx:id="accountField" prefHeight="25.0" prefWidth="100.0" promptText="1234567890" GridPane.columnIndex="3" GridPane.rowIndex="7" />
       <Label text="Account #:" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-      <Label text="Plan:" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-      <ComboBox fx:id="plan" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+      <Label text="Current Plan:" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+      <ComboBox fx:id="currentPlan" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
       <Label text="LastName:" GridPane.columnIndex="2" GridPane.rowIndex="9" />
       <TextField fx:id="lastNameField" prefHeight="25.0" prefWidth="100.0" promptText="ex: Taylor" GridPane.columnIndex="3" GridPane.rowIndex="9" />
       <Label text="State:" GridPane.columnIndex="2" GridPane.rowIndex="10" />
@@ -76,9 +70,7 @@
       <Label text="Price:" GridPane.columnIndex="4" GridPane.rowIndex="2" />
       <DatePicker fx:id="portDate" promptText="3/14/2018" GridPane.columnIndex="5" GridPane.rowIndex="3" />
       <Label text="PortDate:" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-      <ComboBox fx:id="preCarrier" prefWidth="150.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
       <Label text="Pre. Carrier:" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-      <ComboBox fx:id="groupTitle" prefWidth="150.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
       <Label text="Group Title:" GridPane.columnIndex="4" GridPane.rowIndex="5" />
       <ComboBox fx:id="status" prefWidth="150.0" GridPane.columnIndex="5" GridPane.rowIndex="6" />
       <Label text="Status:" GridPane.columnIndex="4" GridPane.rowIndex="6" />
@@ -111,7 +103,14 @@
       <Label fx:id="lastUpdate" GridPane.columnIndex="3" />
       <Label text="Update By:" GridPane.columnIndex="4" GridPane.rowIndex="11" />
       <Label fx:id="updateEmployee" GridPane.columnIndex="5" GridPane.rowIndex="11" />
-      <Label fx:id="creditLabel" text="Credit: " GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+      <Label fx:id="creditLabel" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
+      <Label text="Credit: " GridPane.rowIndex="3" />
+      <TextField fx:id="groupTitle" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+      <TextField fx:id="group" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <ComboBox fx:id="carrier" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <ComboBox fx:id="preCarrier" prefWidth="150.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+      <ComboBox fx:id="newPlan" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <ComboBox fx:id="newCarrier" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
    </children>
    <padding>
       <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />

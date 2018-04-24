@@ -9,34 +9,28 @@
 
 <GridPane alignment="CENTER" hgap="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" vgap="1.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Order.OrderUpdateController">
    <children>
-      <TextField fx:id="orderIDField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label text="Order ID:" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
       <TextField fx:id="regularPriceField" editable="false" prefHeight="25.0" prefWidth="100.0" promptText="1.99" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Label text="Regular Price:" GridPane.rowIndex="2" />
-      <Label text="Invoice#:" GridPane.rowIndex="3" />
-      <Label text="Categories:" GridPane.rowIndex="4" />
-      <Label text="Group:" GridPane.rowIndex="5" />
-      <ComboBox fx:id="groupBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <TextField fx:id="newSimField" prefHeight="25.0" prefWidth="100.0" promptText="ex: 890xxxxxxxxx" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      <Label text="New Sim:" GridPane.rowIndex="6" />
-      <Label text="PUK:" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+      <Label text="Invoice#:" GridPane.rowIndex="1" />
+      <Label text="Categories:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+      <TextField fx:id="newSimField" prefHeight="25.0" prefWidth="100.0" promptText="ex: 890xxxxxxxxx" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+      <Label text="Sim:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      <Label text="PUK:" GridPane.columnIndex="4" GridPane.rowIndex="5" />
       <Label text="Customer ID" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       <TextField fx:id="customerIDField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
       <TextField fx:id="priceField" editable="false" prefHeight="25.0" prefWidth="100.0" promptText="1.00" GridPane.columnIndex="3" GridPane.rowIndex="2" />
       <Label text="Sold Price:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
       <Label text="Order Date:" GridPane.rowIndex="7" />
-      <TextField fx:id="IMEIField" prefHeight="25.0" prefWidth="100.0" promptText="ex: 12345678" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-      <Label text="Carrier:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-      <TextField fx:id="PUKField" prefHeight="25.0" prefWidth="100.0" promptText="ex: 890xxxxxxxxx" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-      <Label text="IMEI:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-      <TextField fx:id="productIDField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-      <Label text="Product ID:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+      <TextField fx:id="billAccount" editable="false" prefHeight="25.0" prefWidth="100.0" promptText="ex: 12345678" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+      <Label text="Carrier:" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+      <TextField fx:id="PUKField" prefHeight="25.0" prefWidth="100.0" promptText="ex: 890xxxxxxxxx" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+      <Label text="Bill Account:" GridPane.columnIndex="4" GridPane.rowIndex="6" />
       <TextField fx:id="discountField" editable="false" prefHeight="25.0" prefWidth="100.0" promptText="0.99" GridPane.columnIndex="5" GridPane.rowIndex="2" />
       <Label text="Discount:" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-      <Label text="Phone# :" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-      <Label text="Serial #:" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-      <Label text="Plan:" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-      <Label text="Status:" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+      <Label text="Phone# :" GridPane.rowIndex="3" />
+      <Label text="Serial #:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <Label text="Plan:" GridPane.rowIndex="5" />
+      <Label text="Status:" GridPane.columnIndex="4" GridPane.rowIndex="7" />
       <TextField fx:id="descriptionField" prefHeight="25.0" prefWidth="100.0" promptText="ex: 5818 8th Ave" GridPane.columnIndex="3" GridPane.rowIndex="7" />
       <Label text="Description:" GridPane.columnIndex="2" GridPane.rowIndex="7" />
       <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" textFill="RED" GridPane.columnIndex="4" GridPane.rowIndex="8">
@@ -49,25 +43,33 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <TextField fx:id="invoiceField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <TextField fx:id="phoneField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-      <TextField fx:id="serialField" prefHeight="25.0" prefWidth="100.0" promptText="ex: 12345678" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-      <ComboBox fx:id="carrierBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+      <TextField fx:id="invoiceField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="phoneField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="serialField" editable="false" prefHeight="25.0" prefWidth="100.0" promptText="ex: 12345678" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <ComboBox fx:id="carrierBox" prefWidth="150.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
       <Label text="Quantity:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-      <TextField fx:id="employeeIDField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="7" />
-      <Label text="Employee ID:" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+      <TextField fx:id="employeeIDField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="5" />
+      <Label text="Employee ID:" GridPane.columnIndex="4" />
       <Label text="Payment Method:" GridPane.rowIndex="8" />
       <Label fx:id="lastUpdateLabel" GridPane.columnIndex="3" GridPane.rowIndex="8" />
       <Label text="Last Update:" GridPane.columnIndex="2" GridPane.rowIndex="8" />
       <TextField fx:id="quantityField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-      <TextField fx:id="planField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-      <TextField fx:id="statusField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+      <TextField fx:id="planField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <TextField fx:id="paymentField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
       <TextField fx:id="orderDateField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
       <TextField fx:id="searchField" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" />
       <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonListener" text="Search" GridPane.columnIndex="2" />
       <Label text="Order ID:" />
-      <TextField fx:id="categories" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <TextField fx:id="categories" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+      <Label text="Service:" GridPane.rowIndex="6" />
+      <TextField fx:id="serviceField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <ComboBox fx:id="statusBox" prefWidth="150.0" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+      <Label text="Device:" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+      <Label text="Product:" GridPane.rowIndex="4" />
+      <TextField fx:id="deviceField" editable="false" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+      <TextField fx:id="productName" editable="false" prefHeight="25.0" prefWidth="100.0" promptText="ex: 12345678" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label text="IMEI:" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+      <TextField fx:id="IMEI" editable="false" prefHeight="25.0" prefWidth="100.0" promptText="0.99" GridPane.columnIndex="5" GridPane.rowIndex="4" />
    </children>
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="9.0" prefWidth="80.0" />

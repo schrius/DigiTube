@@ -36,7 +36,7 @@ public class ActivationController {
 	public void initialize() {
 		quanityBox.getItems().addAll(1,2,3,4,5,6,7,8,9);
 		quanityBox.getSelectionModel().selectFirst();
-		categoriesBox.getItems().addAll(FixedElements.ACTIVATION, FixedElements.SWAP);
+		categoriesBox.getItems().addAll(FixedElements.ACTIVATION);
 		categoriesBox.getSelectionModel().selectFirst();
 	}
 	public void cancelButtonListener() throws IOException {

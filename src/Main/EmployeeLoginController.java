@@ -1,7 +1,7 @@
 package Main;
 
 /*
- * Student login controller handle for login.
+ * Main login controller.
  */
 import java.io.IOException;
 import java.sql.SQLException;
@@ -54,11 +54,10 @@ public class EmployeeLoginController {
 	
 	
 	public void loginListener() throws IOException, SQLException {
+		if(usernameField.getText()!=null && passwordField.getText()!=null) 
+			employee = employeeDataManipulater.searchEmployee(Integer.parseInt(usernameField.getText()));
+			
 		if(employeeRadioButton.isSelected()) {
-			if(usernameField.getText()!=null && passwordField.getText()!=null) {
-				employee = employeeDataManipulater.searchEmployee(Integer.parseInt(usernameField.getText()));
-				
-				System.out.println(employee.getEmployeeID() + employee.getPassowrd());
 				if(employee!=null && employee.getPassowrd().equals(passwordField.getText())) {
 					Stage stage = new Stage();
 					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Main/MainFX.fxml"));
@@ -72,10 +71,24 @@ public class EmployeeLoginController {
 					stage.setScene(scene);
 					((Stage)loginButton.getScene().getWindow()).close();
 					stage.show();
-				}else {
-					wrongPassword.setText("User or Password is not match!");
 				}
-			}else wrongPassword.setText("User is not exist!");
+				else wrongPassword.setText("User or Password is not match!");
+		}
+		else {
+			if(employee!=null && employee.getPassowrd().equals(passwordField.getText())) {
+				if(employee.getPosition().equals("Manager")) {
+				Stage stage = new Stage();
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../superUser/ManagerFX.fxml"));
+				parent = (Parent)fxmlLoader.load();
+				Scene scene = new Scene(parent);
+				stage.setTitle("Digital Mobile");
+				stage.setScene(scene);
+				stage.show();
+				}else wrongPassword.setText("Lack of privilege.");
+			}
+			else {
+				wrongPassword.setText("User or Password is not match!");
+			}
 		}
 	}
 }

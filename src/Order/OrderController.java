@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import CustomerInfo.Customer;
 import CustomerInfo.CustomerGenerater;
 import DataManipulater.DataManipulater;
@@ -19,6 +20,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.print.Printer;
+import javafx.print.PrinterJob;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -545,7 +548,7 @@ public class OrderController {
 	
 	public void removeItem(){
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation Dialog");
+		alert.setTitle("Confirmation");
 		alert.setHeaderText("Selected item will be removed.");
 		alert.setContentText("Are you sure to continue?");
 		alert.showAndWait().ifPresent(rs-> {
@@ -605,22 +608,32 @@ public class OrderController {
 	public boolean completeOrder(String payment) throws IOException {
 		if(payment.equals(FixedElements.CASH)) {
 			if(receiveAmount.compareTo(total)>= 0) {
-				generateInvoice();
+				generateInvoice(payment);
+			//	print();
 				initialize();
 				orderTable.getItems().clear();
 				return true;
 			}
 		}
 		else if(payment.equals(FixedElements.CREDIT)) {
-			
+			// unspecified function
+			generateInvoice(payment);
+		//	print();
+			initialize();
+			orderTable.getItems().clear();
+			return true;
 		}
 		else if(payment.equals(FixedElements.UNPAID)){
-			
+			generateInvoice(payment);
+		//	print();
+			initialize();
+			orderTable.getItems().clear();
+			return true;
 		}
 		return false;
 	}
 	
-	public void generateInvoice() {
+	public void generateInvoice(String payment) {
 		invoice.setOrderDate(LocalDateTime.now());
 		invoice.setDiscount(discount.doubleValue());
 		invoice.setNYTax(NYTax.doubleValue());
@@ -629,64 +642,95 @@ public class OrderController {
 		invoice.setServiceFee(serviceFee.doubleValue());
 		invoice.setReceiveCash(receiveAmount.doubleValue());
 		invoice.setReturnBalance(returnBalance.doubleValue());
+		if(payment.equals(FixedElements.CASH)) {
+			invoice.setPaymentMethod(FixedElements.CASH);
+		}
+		if(payment.equals(FixedElements.CREDIT)) {
+			invoice.setPaymentMethod(FixedElements.CREDIT);
+		}
+		if(payment.equals(FixedElements.UNPAID)) {
+			invoice.setPaymentMethod(FixedElements.UNPAID);
+			TextInputDialog dialog = new TextInputDialog();
+			Boolean complete = false;
+			while(!complete) {
+			dialog.setTitle("Unpaid Order");
+			dialog.setHeaderText("Unpaid amount will add to customer.");
+			dialog.setContentText("Enter Customer phone number:");
+			Optional<String> result = dialog.showAndWait();
+			if (result.isPresent()){
+			    if(result.get().length()==10) {
+			    	Customer customer = dataManipulater.searchCustomer(Long.parseLong(result.get()));
+			    	if(customer==null) {
+			    		Plan plan = dataManipulater.searchPlan(1L);
+			    		customer = new Customer();
+			    		customer.setGroupNumber(dataManipulater.searchCustomerGroup(100));
+			    		customer.setCustomerID(Long.parseLong(result.get()));
+			    		customer.setGroupTitle(FixedElements.NORMAL);
+			    		customer.setEmployee(employee);
+			    		customer.setNewPlan(plan);
+			    		customer.setPrePlan(plan);
+			    		customer.setCurrentPlan(plan);
+			    		customer.setAction(FixedElements.COMPLETE);
+			    		
+			    		customer.setOweAmount(total.doubleValue());
+			    		dataManipulater.addCustomer(customer);
+			    	}
+			    	else {
+			    		customer.setOweAmount(customer.getOweAmount() + total.doubleValue());
+			    		dataManipulater.updateCustomer(customer);
+			    	}
+			    }
+			}
+			}
+		}
+
 		for(Orders orders : orderList) {
 			orders.setEmployee(employee);
+			if(payment.equals(FixedElements.UNPAID))
+				orders.setStatus(FixedElements.UNPAID);
+			else orders.setStatus(FixedElements.COMPLETE);
 			orders.setInvoice(invoice);
-			if(orders.getCategories().equals(FixedElements.REFILL)) {
+			if(orders.getCategories().equals(FixedElements.REFILL) ||
+					orders.getCategories().equals(FixedElements.ACTIVATION)) {
 				customer = dataManipulater.searchCustomer(Long.parseLong(orders.getPlan().getPhoneNumber()));
 				if(customer == null) {
 					customerGenerater = new CustomerGenerater();
-					customer = customerGenerater.generateCustomerRefill(orders, employee);
+					customer = customerGenerater.generateCustomer(orders, employee);
 					if(expireDateList.get(orders)!=null)
 						customer.setExpireDate(expireDateList.get(orders));
 					else customer.setExpireDate(LocalDate.now());
-					
-					//Set a predefine Plan
-					customer.setPrePlan(dataManipulater.searchPlan(1L));
-					customer.setNewPlan(dataManipulater.searchPlan(1L));
-					
-					dataManipulater.addCustomerGroup(customer.getGroupNumber());
+
 					dataManipulater.addCustomer(customer);
 					orders.setCustomer(customer);
 				}
 				else {
 					customer.setCustomerCredit(customer.getCustomerCredit() + orders.getQuantity());
-					dataManipulater.updateCustomer(customer);
-					orders.setCustomer(customer);
-				}
-			}
-			else if(orders.getCategories().equals(FixedElements.ACTIVATION)) {
-				customer = dataManipulater.searchCustomer(Long.parseLong(orders.getPlan().getPhoneNumber()));
-				if(customer == null) {
-					customerGenerater = new CustomerGenerater();
-					customer = customerGenerater.generateCustomerActivation(orders, employee);
-					
-					//Set a predefine Plan
-					customer.setPrePlan(dataManipulater.searchPlan(1L));
-					customer.setCurrentPlan(dataManipulater.searchPlan(1L));
-					
-					dataManipulater.addCustomerGroup(customer.getGroupNumber());
-					dataManipulater.addCustomer(customer);
-					orders.setCustomer(customer);
-				}
-				else {
-					customer.setCustomerCredit(customer.getCustomerCredit() + orders.getQuantity());
+					if(orders.getCategories().equals(FixedElements.REFILL)) {
+						customer.setAction(FixedElements.REFILL);
+					}
+					if(orders.getCategories().equals(FixedElements.ACTIVATION)) {
+						customer.setAction(FixedElements.ACTIVATION);
+						customer.setNewPlan(orders.getPlan());
+					}
+					customer.setStatus(FixedElements.WAITING);
 					dataManipulater.updateCustomer(customer);
 					orders.setCustomer(customer);
 				}
 			}
 			else if(orders.getCategories().equals(FixedElements.SERVICE)) {
-				
+				// undefined function
 			}
 			else if(orders.getCategories().equals(FixedElements.PAYBILL)) {
-				
+				// undefined function
 			}
 			else if(orders.getCategories().equals(FixedElements.DEVICE)) {
-				
+				// undefined function
 			}
 			else if(orders.getCategories().equals(FixedElements.ACCESSORIES)) {
-				
+				// undefined function
 			}
+			if(invoice.getReceiveCash()>0)
+				invoice.setPaymentMethod(FixedElements.CASH);
 			invoice.getOrder().add(orders);
 	}
 		dataManipulater.addInvoice(invoice);
@@ -720,6 +764,90 @@ public class OrderController {
 				orderList.add(orders);
 			
 			updateTable();
+		}
+	}
+	
+	public void refund() {
+		Orders refundOrder = orderTable.getSelectionModel().getSelectedItem();
+		if(refundOrder == null) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Select Order!");
+			alert.setHeaderText("No Order is selected.");
+			alert.setContentText("Select order before processing refund.");
+			alert.showAndWait();
+		}
+		else {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Confirmation");
+			alert.setHeaderText("Selected item will be refunded.");
+			alert.setContentText("Are you sure to continue?");
+			alert.showAndWait().ifPresent(rs-> {
+				if(rs == ButtonType.OK) {
+		refundOrder.setStatus(FixedElements.REFUND);
+		refundOrder.getInvoice().setRefund(refundOrder.getInvoice().getRefund() + refundOrder.getPrice()*refundOrder.getQuantity());
+		refundOrder.setPrice(0);
+		if(refundOrder.getCategories().equals(FixedElements.REFILL)||refundOrder.getCategories().equals(FixedElements.ACTIVATION)) {
+			refundOrder.getCustomer().setCustomerCredit(refundOrder.getCustomer().getCustomerCredit() - refundOrder.getQuantity());
+			refundOrder.getCustomer().setStatus(FixedElements.REFUND);
+			refundOrder.getCustomer().setAction(FixedElements.CANCEL);
+		}
+		else if(refundOrder.getCategories().equals(FixedElements.SERVICE)) {
+			refundOrder.getService().setStatus(FixedElements.REFUND);
+		}
+		else if(refundOrder.getCategories().equals(FixedElements.PAYBILL)) {
+			refundOrder.getBill().setStatus(FixedElements.REFUND);
+		}
+
+		dataManipulater.updateOrder(refundOrder);
+		dataManipulater.updateInvoice(refundOrder.getInvoice());
+				}
+			});
+		}
+	}
+
+	public void print() throws IOException {
+		Printer defaultPrinter = Printer.getDefaultPrinter();
+
+		if(defaultPrinter!=null) {
+			PrinterJob job = PrinterJob.createPrinterJob(defaultPrinter);
+			if(job!=null) {
+				// wait for receipt design
+				if(orderList!=null && orderList.size() !=0) {
+					if(invoice!=null) {
+						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReceiptFX.fxml"));
+						ReceiptController receiptController = fxmlLoader.<ReceiptController>getController();
+						fxmlLoader.setController(receiptController);
+						parent = (Parent)fxmlLoader.load();
+						
+						receiptController.setInvoiceDate(new Label(LocalDateTime.now().toString()));
+						receiptController.setInvoiceNumber(new Label(Long.toString((invoice.getInvoiceID()))));
+						int row = 1;
+						for(Orders printorder : orderList) {
+							receiptController.getItemlist().add(new Label(printorder.getCategories()), 1, row);
+							receiptController.getItemlist().add(new Label(Double.toString(printorder.getPrice())), 2, row);
+							row++;
+						}
+						receiptController.getItemlist().add(new Label("ITEMS:"), 1, row);
+						receiptController.getItemlist().add(new Label(Integer.toString(orderList.size())), 2, row);
+						row++;
+						receiptController.getItemlist().add(new Label("Total:"), 1, row);
+						receiptController.getItemlist().add(new Label(Double.toString(invoice.getTotal())), 2, row);
+					}
+				}
+				
+				boolean printed = job.printPage(parent);
+				
+				if(printed) {
+					job.endJob();
+				}
+			}
+		}
+		else {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Printer Error");
+			alert.setHeaderText("No printer detected.");
+			alert.setContentText("Make sure printer is ON");
+			alert.showAndWait();
 		}
 	}
 	

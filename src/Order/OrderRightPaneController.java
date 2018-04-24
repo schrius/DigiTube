@@ -91,8 +91,9 @@ public class OrderRightPaneController {
 			paid = true;
 		}
 		public void refundButtonListener() {
-			
+			MainController.getOrderController().refund();
 		}
+		
 		public void unpaidButtonListener() {
 			MainController.getOrderController().receiveCash(new BigDecimal(0));
 
@@ -113,8 +114,8 @@ public class OrderRightPaneController {
 			MainController.getOrderController().changePrice();
 		}
 		
-		public void printButtonListener() {
-			
+		public void printButtonListener() throws IOException {
+				MainController.getOrderController().print();
 		}
 		public void cancelButtonListener() {
 			Stage stage = (Stage) cancelButton.getScene().getWindow();

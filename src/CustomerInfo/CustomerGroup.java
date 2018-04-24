@@ -1,67 +1,45 @@
 package CustomerInfo;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="CustomerGroup")
 public class CustomerGroup {
 	@Id
+	@Column(name = "Group_ID")
 	private long groupdID;
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "groupNumber")
-	private Set<Customer> customerGroup;
 	@OneToOne
+	@JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "Group_Parent_ID_FK"))
 	private Customer groupParent;
 	@Column(length = 16)
 	private String groupPlan;
-
-	public CustomerGroup() {
-		super();
-	}
 	
-	public CustomerGroup(long groupdID, Set<Customer> customerGroup, Customer groupParent, String groupPlan) {
-		super();
-		this.groupdID = groupdID;
-		this.customerGroup = customerGroup;
-		this.groupParent = groupParent;
-		this.groupPlan = groupPlan;
+	public CustomerGroup() {
 	}
-
-
 	public long getGroupdID() {
 		return groupdID;
 	}
-
 	public void setGroupdID(long groupdID) {
 		this.groupdID = groupdID;
 	}
-
-	public Set<Customer> getCustomerGroup() {
-		return customerGroup;
-	}
-
-	public void setCustomerGroup(Set<Customer> customerGroup) {
-		this.customerGroup = customerGroup;
-	}
-
 	public Customer getGroupParent() {
 		return groupParent;
 	}
-
 	public void setGroupParent(Customer groupParent) {
 		this.groupParent = groupParent;
 	}
-
 	public String getGroupPlan() {
 		return groupPlan;
 	}
-
 	public void setGroupPlan(String groupPlan) {
 		this.groupPlan = groupPlan;
 	}
+	
+
 }

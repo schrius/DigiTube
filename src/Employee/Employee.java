@@ -1,5 +1,7 @@
 package Employee;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,8 +17,7 @@ public class Employee {
 	@Column(length = 16)
 	private String phoneNumber;
 	private double salary;
-	@Column(length = 32)
-	private String Hiredate;
+	private LocalDate Hiredate;
 	private int hours;
 	@Column(length = 32)
 	private String position;
@@ -24,6 +25,14 @@ public class Employee {
 	private String SSN;
 	@Column(length = 32)
 	private String passowrd;
+	@Column(length = 32)
+	private String address;
+	@Column(length = 32)
+	private String city;
+	@Column(length = 32)
+	private String state;
+	@Column(length = 32)
+	private String zipcode;
 	public Employee() {
 
 	}
@@ -58,10 +67,10 @@ public class Employee {
 	public void setSalary(double salary) {
 		this.salary = salary;
 	}
-	public String getHiredate() {
+	public LocalDate getHiredate() {
 		return Hiredate;
 	}
-	public void setHiredate(String hiredate) {
+	public void setHiredate(LocalDate hiredate) {
 		Hiredate = hiredate;
 	}
 	public int getHours() {
@@ -89,6 +98,38 @@ public class Employee {
 
 	public void setPassowrd(String passowrd) {
 		this.passowrd = passowrd;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 }

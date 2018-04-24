@@ -1,23 +1,29 @@
 package Order;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+
+import DataManipulater.DataManipulater;
 import Main.FixedElements;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class OrderUpdateController {
+	DataManipulater datamanipulater = new DataManipulater();
+	Orders order = null;
+	
 	@FXML
 	TextField searchField;
 	@FXML
-	TextField orderIDField;
-	@FXML
 	TextField customerIDField;
 	@FXML
-	TextField productIDField;
+	TextField productName;
 	@FXML
 	TextField regularPriceField;
 	@FXML
@@ -29,9 +35,11 @@ public class OrderUpdateController {
 	@FXML
 	TextField phoneField;
 	@FXML
-	TextField IMEIField;
+	TextField billAccount;
 	@FXML
 	TextField serialField;
+	@FXML
+	TextField IMEI;
 	@FXML
 	TextField newSimField;
 	@FXML
@@ -46,13 +54,15 @@ public class OrderUpdateController {
 	@FXML
 	TextField categories;
 	@FXML
-	ComboBox<String> groupBox;
+	TextField deviceField;
+	@FXML
+	TextField serviceField;
 	@FXML
 	ComboBox<String> carrierBox;
 	@FXML
 	TextField planField;
 	@FXML
-	TextField statusField;
+	ComboBox<String> statusBox;
 	@FXML
 	TextField paymentField;
 	@FXML
@@ -68,12 +78,56 @@ public class OrderUpdateController {
 	Button searchButton;
 	@FXML
 	private void initialize() {
-		groupBox.getItems().addAll(FixedElements.GROUP);
+		statusBox.getItems().addAll(FixedElements.ORDERSTATUS);
 		carrierBox.getItems().addAll(FixedElements.CARRIERS);
 	}
 	
 	public void searchButtonListener() {
+		order = datamanipulater.searchOrder(Long.parseLong(searchField.getText()));
 		
+		if(order!=null) {
+			invoiceField.setText(Long.toString(order.getInvoice().getInvoiceID()));
+			if(order.getCustomer()!=null) {
+				customerIDField.setText(Long.toString(order.getCustomer().getCustomerID()));
+			}
+			categories.setText(order.getCategories());
+			regularPriceField.setText(Double.toString(order.getRegularPrice()));
+			priceField.setText(Double.toString(order.getPrice()));
+			discountField.setText(Double.toString(order.getDiscount()));
+			quanityField.setText(Integer.toString(order.getQuantity()));
+			statusBox.setValue(order.getStatus());
+			descriptionField.setText(order.getDescription());
+			employeeIDField.setText(Integer.toString(order.getEmployee().getEmployeeID()));
+			paymentField.setText(order.getInvoice().getPaymentMethod());
+			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			orderDateField.setText(order.getOrderDate().format(formatter));
+			
+			if(order.getCategories().equals(FixedElements.ACTIVATION)||order.getCategories().equals(FixedElements.REFILL)) {
+				carrierBox.setValue(order.getPlan().getCarrier());
+				planField.setText(order.getPlan().getPlanType());
+				if(order.getPlan().getSim()!=null) {
+					newSimField.setText(order.getPlan().getSim());
+				}
+				if(order.getPlan().getPUK()!=null) {
+					PUKField.setText(order.getPlan().getPUK());
+				}
+			}
+			else if(order.getCategories().equals(FixedElements.SERVICE)) {
+				serviceField.setText(order.getService().getServiceType());
+				deviceField.setText(order.getService().getDevice());
+			}
+			else if(order.getCategories().equals(FixedElements.PAYBILL)) {
+				billAccount.setText(order.getBill().getBillingAccount());
+			}
+			else{
+				productName.setText(order.getProduct().getProductName());
+				if(order.getProduct().getIMEI()!=null)
+					IMEI.setText(order.getProduct().getIMEI());
+				if(order.getProduct().getSerialNumber()!=null)
+					serialField.setText(order.getProduct().getSerialNumber());
+			}
+		}
 	}
 	
 	public void cancelButtonListener() throws IOException {
@@ -81,7 +135,24 @@ public class OrderUpdateController {
 		stage.close();
 	}
 	public void submitButtonListener() {
-		
+		if(order!=null) {
+			
+			if(order.getCategories().equals(FixedElements.ACTIVATION)||order.getCategories().equals(FixedElements.REFILL)) {
+				order.getPlan().setCarrier(carrierBox.getValue());
+
+				if(!newSimField.getText().equals(order.getPlan().getSim())) {
+					order.getPlan().setSim(newSimField.getText());
+				}
+				if(!PUKField.getText().equals(order.getPlan().getPUK())) {
+					order.getPlan().setPUK(PUKField.getText());
+				}
+			}
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Order Update!");
+			alert.setHeaderText("Order information update.");
+			alert.setContentText(null);
+			alert.showAndWait();
+		}
 	}
 
 }

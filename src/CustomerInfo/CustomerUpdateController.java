@@ -79,15 +79,15 @@ public class CustomerUpdateController {
 	@FXML
 	ComboBox<String> preCarrier;
 	@FXML
-	ComboBox<String> group;
+	TextField group;
 	@FXML
-	ComboBox<String> groupTitle;
+	TextField groupTitle;
 	@FXML
 	ComboBox<String> status;
 	@FXML
 	ComboBox<String> newPlan;
 	@FXML
-	ComboBox<String> plan;
+	ComboBox<String> currentPlan;
 	@FXML
 	ComboBox<String> state;
 	@FXML
@@ -117,11 +117,9 @@ public class CustomerUpdateController {
 		newCarrier.getItems().addAll(FixedElements.CARRIERS);
 		carrier.getItems().addAll(FixedElements.CARRIERS);
 		preCarrier.getItems().addAll(FixedElements.CARRIERS);
-		group.getItems().addAll(FixedElements.GROUP);
-		groupTitle.getItems().addAll(FixedElements.GROUPTITLE);
 		status.getItems().addAll(FixedElements.ACTIVATIONSTATUS);
 		newPlan.getItems().addAll(FixedElements.PLAN);
-		plan.getItems().addAll(FixedElements.PLAN);
+		currentPlan.getItems().addAll(FixedElements.PLAN);
 		state.getItems().addAll(FixedElements.STATES);
 		actionBox.getItems().addAll(FixedElements.ACTION);
 		dataManipulater = new DataManipulater();
@@ -139,13 +137,12 @@ public class CustomerUpdateController {
 			}
 			customer = dataManipulater.searchCustomer(Long.parseLong(searchField.getText()));
 			if(customer!=null) {
-					System.out.println(customer.getCustomerID());
 					warningLabel.setText("");
 					customerIDField.setText(Long.toString(customer.getCustomerID()));
 					phoneField.setText(customer.getPhoneNumber());
 
 					oweAmountField.setText(Double.toString(customer.getOweAmount()));
-					creditLabel.setText("Credit: " + customer.getCustomerCredit());
+					creditLabel.setText(Integer.toString(customer.getCustomerCredit()));
 					if(customer.getLanguage()!=null) {
 						languageField.setText(customer.getLanguage());
 					}
@@ -153,7 +150,7 @@ public class CustomerUpdateController {
 					if(customer.getCurrentPlan()!=null) {
 						pinField.setText(Integer.toString(customer.getCurrentPlan().getPin()));
 						carrier.setValue(customer.getCurrentPlan().getCarrier());
-						plan.setValue(customer.getCurrentPlan().getPlanType());
+						currentPlan.setValue(customer.getCurrentPlan().getPlanType());
 						simField.setText(customer.getCurrentPlan().getSim());
 						accountField.setText(customer.getCurrentPlan().getAccount());
 
@@ -187,13 +184,13 @@ public class CustomerUpdateController {
 						deviceField.setText(customer.getDevice());
 					}
 					if(customer.getGroupNumber().getGroupPlan()!=null) {
-						group.setValue(customer.getGroupNumber().getGroupPlan());
+						group.setText(customer.getGroupNumber().getGroupPlan());
 					}
 					if(customer.getGroupNumber()!=null) {
 						groupNumber.setText(Long.toString(customer.getGroupNumber().getGroupdID()));
 					}
 					if(customer.getGroupTitle()!=null) {
-						groupTitle.setValue(customer.getGroupTitle());
+						groupTitle.setText(customer.getGroupTitle());
 					}
 
 					if(customer.getStatus()!=null) {
@@ -261,7 +258,6 @@ public class CustomerUpdateController {
 						customer = new Customer();
 						customer.setCustomerID(Long.parseLong(phoneField.getText()));
 						}
-					
 						customer.setPhoneNumber(phoneField.getText());
 						
 						if(languageField.getText()!=null) {
@@ -283,9 +279,6 @@ public class CustomerUpdateController {
 							customer.setDevice(deviceField.getText());
 						}
 
-						if(groupTitle.getValue()!=null) {
-							customer.setGroupTitle(groupTitle.getValue());
-						}
 						if(status.getValue()!=null) {
 							customer.setStatus(status.getValue());
 						}
@@ -316,10 +309,13 @@ public class CustomerUpdateController {
 						customer.setLastUpdate(LocalDateTime.now());
 						customer.setEmployee(employee);
 						
-						if(newPlan.getValue()!=null || newSimField.getText()!=null || PUKField.getText()!=null
-								|| newCarrier.getValue()!=null || portDate.getValue() != null) {
+						if(!newPlan.getValue().equals(customer.getNewPlan().getPlanType())
+								|| !newSimField.getText().equals(customer.getNewPlan().getSim()) 
+								|| !PUKField.getText().equals(customer.getNewPlan().getPUK())
+								|| !newCarrier.getValue().equals(customer.getNewPlan().getCarrier()) 
+								|| !portDate.getValue().equals(customer.getNewPlan().getPortdate())) {
 							Plan newplan = customer.getNewPlan();
-							if(newplan.getPlanID() == 1)
+							if(newplan.getPlanID() == 1) {
 								newplan = new Plan();
 							
 							newplan.setPlanType(newPlan.getValue());
@@ -328,46 +324,43 @@ public class CustomerUpdateController {
 							newplan.setCarrier(newCarrier.getValue());
 							newplan.setPortdate(portDate.getValue());
 
-							if(customer.getNewPlan()==null)
 								dataManipulater.addPlan(newplan);
+								customer.setNewPlan(newplan);
+							}
 							else dataManipulater.updatePlan(newplan);
-							
-							customer.setNewPlan(newplan);
 						}
 						
-						if(plan.getValue()!=null || simField.getText()!=null || !pinField.getText().isEmpty()
-								|| accountField.getText()!=null || carrier.getValue()!=null) {
-							Plan currentPlan = customer.getCurrentPlan();
-							if(currentPlan.getPlanID() == 1)
-								currentPlan = new Plan();
+						if(!currentPlan.getValue().equals(customer.getCurrentPlan().getPlanType())
+								|| !simField.getText().equals(customer.getCurrentPlan().getSim())
+								|| !pinField.getText().equals(Integer.toString(customer.getCurrentPlan().getPin()))
+								|| !accountField.getText().equals(customer.getCurrentPlan().getAccount())
+								|| !carrier.getValue().equals(customer.getCurrentPlan().getCarrier())) {
+							Plan curPlan = customer.getCurrentPlan();
+							if(curPlan.getPlanID() == 1) {
+								curPlan = new Plan();
 							
-							currentPlan.setCarrier(carrier.getValue());
-							currentPlan.setPlanType(plan.getValue());
-							currentPlan.setSim(simField.getText());
-							currentPlan.setPin(Integer.parseInt(pinField.getText()));
-							currentPlan.setAccount(accountField.getText());
-							currentPlan.setSim(simField.getText());
-
-							if(customer.getCurrentPlan() == null)
-								dataManipulater.addPlan(currentPlan);
-							else dataManipulater.updatePlan(currentPlan);
+							curPlan.setCarrier(carrier.getValue());
+							curPlan.setPlanType(currentPlan.getValue());
+							curPlan.setSim(simField.getText());
+							curPlan.setPin(Integer.parseInt(pinField.getText()));
+							curPlan.setAccount(accountField.getText());
+							curPlan.setSim(simField.getText());
 							
-							customer.setCurrentPlan(currentPlan);
+							dataManipulater.addPlan(curPlan);	
+							customer.setCurrentPlan(curPlan);
+							}
+							else dataManipulater.updatePlan(curPlan);
 						}
 
-
-						if(preCarrier.getValue()!=null) {
+						if(!preCarrier.getValue().equals(customer.getPrePlan().getCarrier())) {
 							Plan prePlan = 	customer.getPrePlan();
-							if(prePlan.getPlanID() == 1)
+							if(prePlan.getPlanID() == 1) {
 								prePlan = new Plan();
-							
-							prePlan.setCarrier(preCarrier.getValue());
-							
-							if(customer.getPrePlan() == null)
+								prePlan.setCarrier(preCarrier.getValue());
 								dataManipulater.addPlan(prePlan);
+								customer.setPrePlan(prePlan);
+							}
 							else dataManipulater.updatePlan(prePlan);
-							
-							customer.setPrePlan(prePlan);
 						}
 						
 						//update customer info

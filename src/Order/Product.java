@@ -26,6 +26,7 @@ public class Product implements TableEntry{
 	private String IMEI;
 	@Column(length = 32)
 	private String serialNumber;
+	private double minPrice;
 
 	public Product() {
 	}
@@ -73,6 +74,22 @@ public class Product implements TableEntry{
 
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+
+	public double getRegularPrice() {
+		return regularPrice;
+	}
+
+	public void setRegularPrice(double regularPrice) {
+		this.regularPrice = regularPrice;
+	}
+
+	public double getMinPrice() {
+		return minPrice;
+	}
+
+	public void setMinPrice(double minPrice) {
+		this.minPrice = minPrice;
 	}
 	
 }

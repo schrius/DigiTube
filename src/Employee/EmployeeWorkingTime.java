@@ -1,25 +1,28 @@
 package Employee;
 
 import java.time.LocalDateTime;
+
+import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
+@Entity
 public class EmployeeWorkingTime {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long workingTimeID;
 	@ManyToOne
-	@JoinColumn(name="EMPLOYEE_ID", foreignKey = @ForeignKey(name = "EMPLOYEE_ID_FK"))
+	@JoinColumn(name="EMPLOYEE_ID", nullable=false, foreignKey = @ForeignKey(name = "EMPLOYEE_FK"))
 	private Employee employee;
 	private LocalDateTime punchIn;
 	private LocalDateTime punchOut;
 	private long workingHour;
+	
 	public EmployeeWorkingTime() {
-		super();
+
 	}
 	public EmployeeWorkingTime(long workingTimeID, Employee employee, LocalDateTime punchIn, LocalDateTime punchOut,
 			long workingHour) {

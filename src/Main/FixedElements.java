@@ -34,12 +34,12 @@ public class FixedElements {
 	
 	// group
 	final static public String NORMAL = "Normal";
-	final static public String SWAP = "Swap";
 	final static public String SWAPF = "Swap Family";
 	final static public String FLEXM = "Flex Mix";
+	final static public String FLEXF = "Flex Family";
 	final static public String GV = "GV";
 	final static public String GVF = "GV Family";
-	final static public String[] GROUP = {NORMAL, SWAP, SWAPF, FLEX, FLEXM, GV, GVF}; 
+	final static public String[] GROUP = {NORMAL, SWAPF, FLEX,FLEXF, FLEXM, GV, GVF}; 
 	
 	// group title
 	final static public String PRIME = "Prime";
@@ -84,8 +84,8 @@ public class FixedElements {
 	final static public String PORTERROR = "Port Error";
 	final static public String INCORRECTINFO = "Incorrect Info";
 	final static public String COMPLETE = "Complete";
-	final static public String CANCEL = "Port Canceled";
-	final static public String[] ACTIVATIONSTATUS = {WAITING, INPROGRESS, PORTERROR, INCORRECTINFO, COMPLETE, CANCEL}; 
+	final static public String CANCEL = "Cancel";
+	final static public String[] ACTIVATIONSTATUS = {WAITING, INPROGRESS, PORTERROR, INCORRECTINFO, COMPLETE, CANCEL, REFUND}; 
 	
 	// payment methods
 	final static public String CASH = "Cash";
@@ -94,7 +94,7 @@ public class FixedElements {
 	final static public String[] PAYMENTMETHOD = {CASH, CREDIT, BENEFIT, UNPAID};
 	
 	// action
-	final static public String[] ACTION = {REFILL, ACTIVATION, SWAP};
+	final static public String[] ACTION = {REFILL, ACTIVATION, CANCEL};
 	
 	// USA states
 	final public static String[] STATES = {"Alaska",

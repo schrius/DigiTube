@@ -46,10 +46,12 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" spacing="5.0">
                      <children>
-                        <CheckBox fx:id="refillBox" mnemonicParsing="false" text="Refill" />
-                        <CheckBox fx:id="Activation" layoutX="64.0" layoutY="12.0" mnemonicParsing="false" text="Activation" />
-                        <CheckBox fx:id="swapBox" mnemonicParsing="false" text="Swap" />
-                        <CheckBox fx:id="swapFamilyBox" mnemonicParsing="false" text="Swap Family" />
+                        <RadioButton fx:id="refillRadio" mnemonicParsing="false" text="Refill">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="actiongroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="ActivationRadio" mnemonicParsing="false" text="Activation" toggleGroup="$actiongroup" />
                      </children>
                      <padding>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
@@ -58,28 +60,53 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER" layoutX="10.0" layoutY="61.0" prefHeight="30.0" prefWidth="200.0" spacing="5.0">
+                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: blue; -fx-border-radius: 5; -fx-border-style: dashed;">
                      <children>
-                        <CheckBox fx:id="flexBox" mnemonicParsing="false" text="Flex" />
-                        <CheckBox fx:id="flexMixBox" mnemonicParsing="false" text="Flex Mix" />
-                        <CheckBox fx:id="GVBox" mnemonicParsing="false" text="GV" />
-                        <CheckBox fx:id="GVFamilyBox" mnemonicParsing="false" text="GV Family" />
+                        <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" spacing="5.0">
+                           <children>
+                              <RadioButton fx:id="swapFamilyRadio" mnemonicParsing="false" text="Swap Family">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="plangroup" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="flexRadio" mnemonicParsing="false" text="Flex" toggleGroup="$plangroup" />
+                              <RadioButton fx:id="flexMixRadio" mnemonicParsing="false" text="Flex Mix" toggleGroup="$plangroup" />
+                           </children>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" spacing="5.0">
+                           <children>
+                              <RadioButton fx:id="GVRadio" mnemonicParsing="false" text="GV" toggleGroup="$plangroup" />
+                              <RadioButton fx:id="GVFamilyRadio" mnemonicParsing="false" text="GV Family" toggleGroup="$plangroup" />
+                           </children>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearButtonListener" prefHeight="30.0" prefWidth="100.0" text="Clear Selection">
+                                 <padding>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </padding>
+                              </Button>
+                              <Button fx:id="showListButton" mnemonicParsing="false" onAction="#showListButtonListener" prefHeight="30.0" prefWidth="100.0" text="Show List">
+                                 <padding>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </padding>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </HBox>
                      </children>
-                     <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <Button fx:id="showListButton" mnemonicParsing="false" onAction="#showListButtonListener" prefHeight="30.0" prefWidth="100.0" text="Show List">
-                     <VBox.margin>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </padding>
-                  </Button>
+                  </VBox>
                </children>
             </VBox>
             <HBox alignment="CENTER" layoutX="12.0" layoutY="312.0" prefHeight="100.0" prefWidth="500.0">
@@ -224,13 +251,14 @@
             </VBox>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
+                  <Button fx:id="updateCustomerButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#updateCustomerButtonListener" styleClass="info" text="Update Customer" />
                   <Button fx:id="updateAccountButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#updateAccountButtonListener" styleClass="info" text="Update Account#/PIN" />
                   <Button fx:id="updateStatusButton" mnemonicParsing="false" onAction="#updateStatusButtonListener" styleClass="warning" text="Update Status" />
                </children>
             </HBox>
             <HBox alignment="CENTER" spacing="10.0" GridPane.columnIndex="1">
                <children>
-                  <Button fx:id="updateCustomerButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#updateCustomerButtonListener" styleClass="info" text="Update Customer" />
+                  <Button fx:id="paybackButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#paybackButtonListener" styleClass="info" text="Pay Back" />
                   <Button fx:id="updateOrderButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#updateOrderButtonListener" styleClass="info" text="Update Order" />
                </children>
             </HBox>
