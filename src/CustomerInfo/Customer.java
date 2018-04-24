@@ -2,6 +2,8 @@ package CustomerInfo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -30,7 +32,7 @@ public class Customer implements TableEntry {
 	private String LTEdata;
 
 	@ManyToOne
-    @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "GROUP_ID_FK"))
+    @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "Customer_GROUPID__FK"))
 	private CustomerGroup groupNumber;
 	@Column(length = 16)
 	private String groupTitle;
@@ -41,13 +43,13 @@ public class Customer implements TableEntry {
 	@Column(length = 32)
 	private LocalDate expireDate;
 
-	@OneToOne//(cascade = CascadeType.REFRESH)
+	@OneToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "NewPlan", foreignKey = @ForeignKey(name = "NewPlan_ID_FK"))
 	private Plan newPlan;
-	@OneToOne//(cascade = CascadeType.REFRESH)
+	@OneToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "currentPlan", foreignKey = @ForeignKey(name = "CurrentPlan_ID_FK"))
 	private Plan currentPlan;
-	@OneToOne//(cascade = CascadeType.REFRESH)
+	@OneToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "prePlan", foreignKey = @ForeignKey(name = "PrePlan_ID_FK"))
 	private Plan prePlan;
 	
