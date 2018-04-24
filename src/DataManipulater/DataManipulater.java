@@ -2,14 +2,12 @@ package DataManipulater;
 
 import java.util.Iterator;
 import java.util.List;
-
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
-import org.hibernate.Session;
+import org.hibernate.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-
 import CustomerInfo.Customer;
 import CustomerInfo.CustomerGroup;
 import Employee.Employee;
@@ -63,7 +61,7 @@ public class DataManipulater {
         
         try {
          transaction = session.beginTransaction();
-         employee = (Employee)session.get(Employee.class, employeeID);
+         employee = session.get(Employee.class, employeeID);
          transaction.commit();
          return employee;
         } catch (HibernateException e) {
@@ -125,7 +123,7 @@ public class DataManipulater {
         
         try {
         	transaction = session.beginTransaction();
-        	employee = (Employee)session.get(Employee.class, employeeID); 
+        	employee = session.get(Employee.class, employeeID); 
            if(employee!=null)
            session.delete(employee); 
            else return;
@@ -164,7 +162,7 @@ public class DataManipulater {
         
         try {
          transaction = session.beginTransaction();
-         invoice = (Invoice)session.get(Invoice.class, invoiceID);
+         invoice = session.get(Invoice.class, invoiceID);
          transaction.commit();
          return invoice;
         } catch (HibernateException e) {
@@ -226,7 +224,7 @@ public class DataManipulater {
         
         try {
         	transaction = session.beginTransaction();
-        	invoice = (Invoice)session.get(Invoice.class, invoiceID); 
+        	invoice = session.get(Invoice.class, invoiceID); 
            if(invoice!=null)
            session.delete(invoice); 
            else return;
@@ -264,7 +262,7 @@ public class DataManipulater {
         
         try {
          transaction = session.beginTransaction();
-         order = (Orders)session.get(Orders.class, orderID);
+         order = session.get(Orders.class, orderID);
          transaction.commit();
          return order;
         } catch (HibernateException e) {
@@ -326,7 +324,7 @@ public class DataManipulater {
         
         try {
         	transaction = session.beginTransaction();
-        	order = (Orders)session.get(Orders.class, orderID); 
+        	order = session.get(Orders.class, orderID); 
            if(order!=null)
            session.delete(order); 
            else return;
@@ -364,7 +362,7 @@ public class DataManipulater {
         
         try {
          transaction = session.beginTransaction();
-         plan = (Plan)session.get(Plan.class, planID);
+         plan = session.get(Plan.class, planID);
          transaction.commit();
          return plan;
         } catch (HibernateException e) {
@@ -453,7 +451,7 @@ public class DataManipulater {
         
         try {
         	transaction = session.beginTransaction();
-           plan = (Plan)session.get(Plan.class, PlanID); 
+           plan = session.get(Plan.class, PlanID); 
            if(plan!=null)
            session.delete(plan); 
            else return;
@@ -490,7 +488,7 @@ public class DataManipulater {
         
         try {
          transaction = session.beginTransaction();
-         product = (Product)session.get(Product.class, productID);
+         product = session.get(Product.class, productID);
          transaction.commit();
          return product;
         } catch (HibernateException e) {
@@ -552,7 +550,7 @@ public class DataManipulater {
         
         try {
         	transaction = session.beginTransaction();
-        	product = (Product)session.get(Product.class, productID); 
+        	product = session.get(Product.class, productID); 
            if(product!=null)
            session.delete(product); 
            else return;
@@ -590,7 +588,7 @@ public class DataManipulater {
         
         try {
          transaction = session.beginTransaction();
-         service = (Service)session.get(Service.class, serviceID);
+         service = session.get(Service.class, serviceID);
          transaction.commit();
          return service;
         } catch (HibernateException e) {
@@ -678,7 +676,7 @@ public class DataManipulater {
         
         try {
         	transaction = session.beginTransaction();
-           service = (Service)session.get(Service.class, ServiceID); 
+           service = session.get(Service.class, ServiceID); 
            if(service!=null)
            session.delete(service); 
            else return;
@@ -716,7 +714,7 @@ public class DataManipulater {
         
         try {
          transaction = session.beginTransaction();
-         customer = (Customer)session.get(Customer.class, customerID);
+         customer = session.get(Customer.class, customerID);
          transaction.commit();
          return customer;
         } catch (HibernateException e) {
@@ -805,7 +803,7 @@ public class DataManipulater {
         
         try {
         	transaction = session.beginTransaction();
-           customer = (Customer)session.get(Customer.class, CustomerID); 
+           customer = session.get(Customer.class, CustomerID); 
            if(customer!=null)
            session.delete(customer); 
            else return;
@@ -844,7 +842,7 @@ public class DataManipulater {
         
         try {
          transaction = session.beginTransaction();
-         bill = (Bill)session.get(Bill.class, billID);
+         bill = session.get(Bill.class, billID);
          transaction.commit();
          return bill;
         } catch (HibernateException e) {
@@ -932,7 +930,7 @@ public class DataManipulater {
         
         try {
         	transaction = session.beginTransaction();
-           bill = (Bill)session.get(Bill.class, BillID); 
+           bill = session.get(Bill.class, BillID); 
            if(bill!=null)
            session.delete(bill); 
            else return;
@@ -970,7 +968,7 @@ public class DataManipulater {
         
         try {
          transaction = session.beginTransaction();
-         customergroup = (CustomerGroup)session.get(CustomerGroup.class, customergroupID);
+         customergroup = session.get(CustomerGroup.class, customergroupID);
          transaction.commit();
          return customergroup;
         } catch (HibernateException e) {
@@ -1032,7 +1030,7 @@ public class DataManipulater {
         
         try {
         	transaction = session.beginTransaction();
-           customergroup = (CustomerGroup)session.get(CustomerGroup.class, CustomerGroupID); 
+           customergroup = session.get(CustomerGroup.class, CustomerGroupID); 
            if(customergroup!=null)
            session.delete(customergroup); 
            else return;
@@ -1071,7 +1069,7 @@ public class DataManipulater {
         
         try {
          transaction = session.beginTransaction();
-         employee = (EmployeeWorkingTime)session.get(EmployeeWorkingTime.class, timeID);
+         employee = session.get(EmployeeWorkingTime.class, timeID);
          transaction.commit();
          return employee;
         } catch (HibernateException e) {

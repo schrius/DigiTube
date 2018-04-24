@@ -5,7 +5,8 @@ package Main;
  */
 import java.io.IOException;
 import java.sql.SQLException;
-import DataManipulater.EmployeeDataManipulater;
+
+import DataManipulater.DataManipulater;
 import Employee.Employee;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +22,7 @@ import javafx.stage.Stage;
 
 
 public class EmployeeLoginController {
-	private EmployeeDataManipulater employeeDataManipulater;
+	private DataManipulater employeeDataManipulater;
 	private Employee employee;
 	Parent parent;
 	
@@ -48,7 +49,7 @@ public class EmployeeLoginController {
 	
 	@FXML
 	private void initialize() {
-		employeeDataManipulater = new EmployeeDataManipulater();
+		employeeDataManipulater = new DataManipulater();
 		employeeRadioButton.setSelected(true);
 	}
 	
