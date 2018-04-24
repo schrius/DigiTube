@@ -665,6 +665,7 @@ public class OrderController {
 			    		customer = new Customer();
 			    		customer.setGroupNumber(dataManipulater.searchCustomerGroup(100));
 			    		customer.setCustomerID(Long.parseLong(result.get()));
+			    		customer.setPhoneNumber(result.get());
 			    		customer.setGroupTitle(FixedElements.NORMAL);
 			    		customer.setEmployee(employee);
 			    		customer.setNewPlan(plan);

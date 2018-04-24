@@ -21,14 +21,8 @@ public class CustomerGenerater {
 		customer = new Customer();
 		
 		customer.setPrePlan(dataManipulater.searchPlan(1L));
-		if(orders.getCategories().equals(FixedElements.ACTIVATION)) {
-			customer.setCurrentPlan(dataManipulater.searchPlan(1L));
-			customer.setNewPlan(orders.getPlan());
-		}
-		else {
-			customer.setCurrentPlan(orders.getPlan());
-			customer.setNewPlan(dataManipulater.searchPlan(1L));
-		}
+		customer.setCurrentPlan(dataManipulater.searchPlan(1L));
+		customer.setNewPlan(dataManipulater.searchPlan(1L));
 
 		customer.setPhoneNumber(orders.getPlan().getPhoneNumber());
 		customer.setCustomerID(Long.parseLong(orders.getPlan().getPhoneNumber()));
