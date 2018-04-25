@@ -23,12 +23,12 @@ import Order.Unpaid;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class DataManipulater {
+public class DataManipulater2 {
 	static SessionFactory hibernateFactory = new Configuration().configure().buildSessionFactory();
 	static Session session;
 	static Transaction transaction;
     
-    public DataManipulater() {
+    public DataManipulater2() {
         try {
         	if(hibernateFactory ==null)
     		hibernateFactory = new Configuration().configure().buildSessionFactory();

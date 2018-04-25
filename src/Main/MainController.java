@@ -113,7 +113,6 @@ public class MainController {
 	Button toDoListButton;
 	@FXML
 	Button portListButton;
-	
 	@FXML
 	Button unpaidListButton;
 	
@@ -136,12 +135,10 @@ public class MainController {
 	@FXML
 	Button paybackButton;
 	
-	
 	@FXML
 	ToggleGroup plangroup;
 	@FXML
 	ToggleGroup actiongroup;
-
 	
 	// center pane
 	@FXML
@@ -432,7 +429,6 @@ public class MainController {
 		stage.showAndWait();
 	}
 	
-	
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 		 nameLabel.setText(employee.getFirstName());
@@ -473,8 +469,8 @@ public class MainController {
 			if (amount.isPresent()){
 			    paybackCustomer.setOweAmount(paybackCustomer.getOweAmount() - Double.parseDouble(amount.get()));
 			    dataManipulater.updateCustomer(paybackCustomer);
+				}
 			}
-		}
 		}
 	}
 	
@@ -488,7 +484,7 @@ public class MainController {
 
 	public void closeMain() {
 		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Confirmation Dialog");
+		alert.setTitle("Warning");
 		alert.setHeaderText("Make Sure Punch Out, if you done for today.");
 		alert.setContentText("You may not get pay if you did not.");
 		alert.showAndWait().ifPresent(rs-> {

@@ -1,5 +1,9 @@
 package CustomerInfo;
-
+/*
+ *  Customer information update controller allow employee to update customer information
+ *  To keep data consistent, most of data are not editable
+ *  Only information that does not relative to Plan and Service are editable
+ */
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import DataManipulater.DataManipulater;
@@ -29,7 +33,6 @@ public class CustomerUpdateController {
 	Button searchButton;
 	@FXML
 	Label warningLabel;
-	
 	@FXML
 	TextField customerIDField;
 	@FXML
@@ -99,14 +102,12 @@ public class CustomerUpdateController {
 	*/
 	@FXML
 	TextField oweAmountField;
-	
 	@FXML
 	Label creditLabel;
 	@FXML
 	Label lastUpdate;
 	@FXML
 	Label updateEmployee;
-	
 	@FXML
 	Button cancelButton;
 	@FXML
@@ -132,9 +133,6 @@ public class CustomerUpdateController {
 	//search customer info and display on the pane
 	public void searchButtonListener() {
 		if(searchField.getText().length() == 10) {
-			if(dataManipulater == null) {
-				dataManipulater = new DataManipulater();
-			}
 			customer = dataManipulater.searchCustomer(Long.parseLong(searchField.getText()));
 			if(customer!=null) {
 					warningLabel.setText("");
@@ -153,7 +151,6 @@ public class CustomerUpdateController {
 						currentPlan.setValue(customer.getCurrentPlan().getPlanType());
 						simField.setText(customer.getCurrentPlan().getSim());
 						accountField.setText(customer.getCurrentPlan().getAccount());
-
 					}
 
 					if(customer.getNewPlan()!=null) {
@@ -167,7 +164,6 @@ public class CustomerUpdateController {
 					if(customer.getPrePlan()!=null) {
 						preCarrier.setValue(customer.getPrePlan().getCarrier());
 					}
-					
 					
 					if(customer.getAction()!=null) {
 						actionBox.setValue(customer.getAction());
@@ -192,7 +188,6 @@ public class CustomerUpdateController {
 					if(customer.getGroupTitle()!=null) {
 						groupTitle.setText(customer.getGroupTitle());
 					}
-
 					if(customer.getStatus()!=null) {
 						status.setValue(customer.getStatus());
 					}
@@ -228,7 +223,6 @@ public class CustomerUpdateController {
 						lastUpdate.setText(customer.getLastUpdate().format(formatter));
 					}
 				}
-		
 			else warningLabel.setText("Customer does not exist.");
 			}
 	}
@@ -239,7 +233,6 @@ public class CustomerUpdateController {
 	}
 	public void submitButtonListener() {
 		//phone number must NotNull.
-		
 		if(phoneField.getText() ==null || phoneField.getText().length() != 10) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error Dialog");

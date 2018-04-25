@@ -1,5 +1,5 @@
 package Main;
-
+// Add new customer group
 import CustomerInfo.Customer;
 import CustomerInfo.CustomerGroup;
 import DataManipulater.DataManipulater;
@@ -35,6 +35,7 @@ public class AddCustomerGroupController {
 		DataManipulater dataManipulater = new DataManipulater();
 		CustomerGroup customerGroup = new CustomerGroup();
 		Customer parent = null;
+		if(groupNumberField.getText().length()>2 && groupNumberField.getText().length()<11) {
 		customerGroup.setGroupdID(Long.parseLong(groupNumberField.getText()));
 		customerGroup.setGroupPlan(groupPlanBox.getValue());
 		if(dataManipulater.searchCustomerGroup(customerGroup.getGroupdID())==null) {
@@ -56,10 +57,10 @@ public class AddCustomerGroupController {
 					dataManipulater.updateCustomer(parent);
 					dataManipulater.addCustomerGroup(customerGroup);
 				}
-
+				}
 			}
-		}
-		else warningLabel.setText("Group already exist! Try again!");
+			else warningLabel.setText("Group already exist! Try again!");
+		}else warningLabel.setText("Group ID must range from 3-10 digit.");
 	}
 	
 	public void cancelButtonListener() {

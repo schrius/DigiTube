@@ -15,14 +15,11 @@ public class DigitalMobile extends Application{
 			window = stage;
 			Parent parent;
 			try {
-				
-				parent = FXMLLoader.load(getClass().getResource("EmployeeLoginFX.fxml"));
+				parent = FXMLLoader.load(getClass().getResource("LoginFX.fxml"));
 				Scene scene = new Scene(parent);
-
 				window.setTitle("Digital Mobile");
 				window.setScene(scene);
 				window.show();
-
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -30,5 +27,4 @@ public class DigitalMobile extends Application{
 		public static void main(String[] args) {
 			launch(args);
 		}
-
 }

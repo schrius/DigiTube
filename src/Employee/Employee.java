@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import Main.TableEntry;
 @Entity
-public class Employee {
+public class Employee implements TableEntry{
 	@Id
 	@Column(name="EMPLOYEE_ID")
 	private int employeeID;

@@ -1,5 +1,5 @@
 package CustomerInfo;
-
+// Customer generator creates new customer with default information and information from order 
 import java.time.LocalDateTime;
 
 import DataManipulater.DataManipulater;
@@ -13,17 +13,14 @@ public class CustomerGenerater {
 	CustomerGroup customerGroup;
 	
 	public CustomerGenerater() {
-		super();
 
 	}
 	
 	public Customer generateCustomer(Orders orders, Employee employee) {
 		customer = new Customer();
-		
 		customer.setPrePlan(dataManipulater.searchPlan(1L));
 		customer.setCurrentPlan(dataManipulater.searchPlan(1L));
 		customer.setNewPlan(dataManipulater.searchPlan(1L));
-
 		customer.setPhoneNumber(orders.getPlan().getPhoneNumber());
 		customer.setCustomerID(Long.parseLong(orders.getPlan().getPhoneNumber()));
 		customer.setAction(orders.getCategories());
@@ -32,16 +29,7 @@ public class CustomerGenerater {
 		customer.setGroupTitle(FixedElements.PRIME);
 		customer.setLastUpdate(LocalDateTime.now());
 		customer.setStatus(FixedElements.WAITING);
-		
-		customerGroup = dataManipulater.searchCustomerGroup(100);
-		if(customerGroup ==null) {
-			customerGroup = new CustomerGroup();
-			customerGroup.setGroupdID(100);
-			customerGroup.setGroupParent(dataManipulater.searchCustomer(1000000000L));
-			customerGroup.setGroupPlan(FixedElements.NORMAL);
-			dataManipulater.addCustomerGroup(customerGroup);
-		}
-		
+		customerGroup = dataManipulater.searchCustomerGroup(1);
 		customer.setGroupNumber(customerGroup);
 
 		return customer;

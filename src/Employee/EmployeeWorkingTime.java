@@ -9,8 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import Main.TableEntry;
 @Entity
-public class EmployeeWorkingTime {
+public class EmployeeWorkingTime implements TableEntry{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long workingTimeID;
