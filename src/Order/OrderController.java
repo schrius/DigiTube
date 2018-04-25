@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 import CustomerInfo.Customer;
 import CustomerInfo.CustomerGenerater;
+import CustomerInfo.CustomerGroup;
 import DataManipulater.DataManipulater;
 import Employee.Employee;
 import Main.FixedElements;
@@ -44,7 +45,7 @@ public class OrderController {
 	Stage stage;
 	Employee employee;
 	Customer customer;
-	DataManipulater dataManipulater = new DataManipulater();
+	Customer unpaidCustomer;
 	CustomerGenerater customerGenerater = null;
 
 	@FXML
@@ -369,7 +370,6 @@ public class OrderController {
 		order.getPlan().setCarrier(FixedElements.OTHER);
 			orderPane.setRight(planBox);
 		break;
-		
 		default:
 			break;
 		}
@@ -605,6 +605,7 @@ public class OrderController {
 	}
 	
 	// complete order and store all order data into database.
+	// uncomment print() to enable printer
 	public boolean completeOrder(String payment) throws IOException {
 		if(payment.equals(FixedElements.CASH)) {
 			if(receiveAmount.compareTo(total)>= 0) {
@@ -616,7 +617,6 @@ public class OrderController {
 			}
 		}
 		else if(payment.equals(FixedElements.CREDIT)) {
-			// unspecified function
 			generateInvoice(payment);
 		//	print();
 			initialize();
@@ -659,26 +659,26 @@ public class OrderController {
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent()){
 			    if(result.get().length()==10) {
-			    	Customer customer = dataManipulater.searchCustomer(Long.parseLong(result.get()));
-			    	if(customer==null) {
-			    		Plan plan = dataManipulater.searchPlan(1L);
-			    		customer = new Customer();
-			    		customer.setGroupNumber(dataManipulater.searchCustomerGroup(100));
-			    		customer.setCustomerID(Long.parseLong(result.get()));
-			    		customer.setPhoneNumber(result.get());
-			    		customer.setGroupTitle(FixedElements.NORMAL);
-			    		customer.setEmployee(employee);
-			    		customer.setNewPlan(plan);
-			    		customer.setPrePlan(plan);
-			    		customer.setCurrentPlan(plan);
-			    		customer.setAction(FixedElements.COMPLETE);
+			    	unpaidCustomer = (Customer) DataManipulater.searchData(Long.parseLong(result.get()), Customer.class);
+			    	if(unpaidCustomer==null) {
+			    		Plan plan = (Plan) DataManipulater.searchData(1L, Plan.class);
+			    		unpaidCustomer = new Customer();
+			    		unpaidCustomer.setGroupNumber((CustomerGroup) DataManipulater.searchData(100L, CustomerGroup.class));
+			    		unpaidCustomer.setCustomerID(Long.parseLong(result.get()));
+			    		unpaidCustomer.setPhoneNumber(result.get());
+			    		unpaidCustomer.setGroupTitle(FixedElements.NORMAL);
+			    		unpaidCustomer.setEmployee(employee);
+			    		unpaidCustomer.setNewPlan(plan);
+			    		unpaidCustomer.setPrePlan(plan);
+			    		unpaidCustomer.setCurrentPlan(plan);
+			    		unpaidCustomer.setAction(FixedElements.COMPLETE);
 			    		
-			    		customer.setOweAmount(total.doubleValue());
-			    		dataManipulater.addCustomer(customer);
+			    		unpaidCustomer.setOweAmount(total.doubleValue());
+			    		DataManipulater.addData(unpaidCustomer);
 			    	}
 			    	else {
-			    		customer.setOweAmount(customer.getOweAmount() + total.doubleValue());
-			    		dataManipulater.updateCustomer(customer);
+			    		unpaidCustomer.setOweAmount(customer.getOweAmount() + total.doubleValue());
+			    		DataManipulater.updateData(unpaidCustomer);
 			    	}
 			    }
 			}
@@ -693,7 +693,7 @@ public class OrderController {
 			orders.setInvoice(invoice);
 			if(orders.getCategories().equals(FixedElements.REFILL) ||
 					orders.getCategories().equals(FixedElements.ACTIVATION)) {
-				customer = dataManipulater.searchCustomer(Long.parseLong(orders.getPlan().getPhoneNumber()));
+				customer = (Customer) DataManipulater.searchData(Long.parseLong(orders.getPlan().getPhoneNumber()), Customer.class);
 				if(customer == null) {
 					customerGenerater = new CustomerGenerater();
 					customer = customerGenerater.generateCustomer(orders, employee);
@@ -701,7 +701,7 @@ public class OrderController {
 						customer.setExpireDate(expireDateList.get(orders));
 					else customer.setExpireDate(LocalDate.now());
 
-					dataManipulater.addCustomer(customer);
+					DataManipulater.addData(customer);
 					orders.setCustomer(customer);
 				}
 				else {
@@ -714,49 +714,45 @@ public class OrderController {
 						customer.setNewPlan(orders.getPlan());
 					}
 					customer.setStatus(FixedElements.WAITING);
-					dataManipulater.updateCustomer(customer);
+					DataManipulater.updateData(customer);
 					orders.setCustomer(customer);
 				}
-			}
-			else if(orders.getCategories().equals(FixedElements.SERVICE)) {
-				// undefined function
-			}
-			else if(orders.getCategories().equals(FixedElements.PAYBILL)) {
-				// undefined function
-			}
-			else if(orders.getCategories().equals(FixedElements.DEVICE)) {
-				// undefined function
-			}
-			else if(orders.getCategories().equals(FixedElements.ACCESSORIES)) {
-				// undefined function
 			}
 			if(invoice.getReceiveCash()>0)
 				invoice.setPaymentMethod(FixedElements.CASH);
 			invoice.getOrder().add(orders);
 	}
-		dataManipulater.addInvoice(invoice);
+		DataManipulater.addData(invoice);
+		if(invoice.getPaymentMethod().equals(FixedElements.UNPAID)) {
+			Unpaid unpaid = new Unpaid();
+			unpaid.setCustomer(unpaidCustomer);
+			unpaid.setEmployee(employee);
+			unpaid.setInvoice(invoice);
+			unpaid.setLastUpdate(LocalDate.now());
+			unpaid.setOweamount(invoice.getTotal());
+			DataManipulater.addData(unpaid);
+		}
 		
 		for(Orders orders : orderList) {
 			if(orders.getCategories().equals(FixedElements.ACTIVATION)) {
 			Customer updateCustomer = orders.getCustomer();
 			updateCustomer.setNewPlan(orders.getPlan());
-			dataManipulater.updateCustomer(updateCustomer);
+			DataManipulater.updateData(updateCustomer);
 			
 			}
 			if(orders.getCategories().equals(FixedElements.REFILL)) {
 			Customer updateCustomer = orders.getCustomer();
 			updateCustomer.setCurrentPlan(orders.getPlan());
 
-			dataManipulater.updateCustomer(updateCustomer);
+			DataManipulater.updateData(updateCustomer);
 			}
-			
 		}
 	}
 	
 	public void searchButtonListener() throws IOException {
 		String choice = searchComboBox.getValue();
 		if(choice.equals("Invoice")) {
-			Invoice invoice = dataManipulater.searchInvoice(Long.valueOf(searchField.getText()));
+			Invoice invoice = (Invoice) DataManipulater.searchData(Long.valueOf(searchField.getText()), Invoice.class);
 			
 			List<Orders> InvoiceOrderList = invoice.getOrder();
 			
@@ -799,8 +795,8 @@ public class OrderController {
 			refundOrder.getBill().setStatus(FixedElements.REFUND);
 		}
 
-		dataManipulater.updateOrder(refundOrder);
-		dataManipulater.updateInvoice(refundOrder.getInvoice());
+		DataManipulater.updateData(refundOrder);
+		DataManipulater.updateData(refundOrder.getInvoice());
 				}
 			});
 		}

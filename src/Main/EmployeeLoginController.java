@@ -13,7 +13,6 @@ import CustomerInfo.CustomerGroup;
 import DataManipulater.DataManipulater;
 import Employee.Employee;
 import Order.Plan;
-import Order.Product;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,7 +26,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 public class EmployeeLoginController {
-	private DataManipulater dataManipulater;
 	private Employee employee;
 	Parent parent;
 
@@ -51,9 +49,9 @@ public class EmployeeLoginController {
 	// Initialize all essential data for new database.
 	@FXML
 	private void initialize() {
-		dataManipulater = new DataManipulater();
 		employeeRadioButton.setSelected(true);
-		if(dataManipulater.searchEmployee(100)==null) {
+		
+		if(DataManipulater.searchData(100L, Employee.class)==null) {
 			Employee init = new Employee();
 			init.setEmployeeID(100);
 			init.setHiredate(LocalDate.now());
@@ -62,9 +60,9 @@ public class EmployeeLoginController {
 			init.setFirstName("Admin");
 			init.setSalary(100);
 			init.setPassowrd("admin");
-			dataManipulater.addEmployee(init);
+			DataManipulater.addData(init);
 		}
-		if(dataManipulater.searchPlan(1L)==null) {
+		if(DataManipulater.searchData(1L, Plan.class)==null) {
 			Plan initplan = new Plan();
 			initplan.setPlanID(1L);
 			initplan.setAccount("N/A");
@@ -75,44 +73,41 @@ public class EmployeeLoginController {
 			initplan.setPlanType("Unspecified");
 			initplan.setRegularPrice(99);
 			initplan.setSim("Unspecified");
-			dataManipulater.addPlan(initplan);
+			DataManipulater.addData(initplan);
 		}
-		if(dataManipulater.searchCustomer(1L)==null) {
+		if(DataManipulater.searchData(1L, Customer.class)==null) {
 			Customer initCustomer = new Customer();
-			CustomerGroup customerGroup = dataManipulater.searchCustomerGroup(1);
+			CustomerGroup customerGroup = (CustomerGroup) DataManipulater.searchData(1L, CustomerGroup.class);
 			initCustomer.setCustomerID(1);
 			initCustomer.setAction("Unspecified");
 			initCustomer.setComment("Unspecified");
-			initCustomer.setCurrentPlan(dataManipulater.searchPlan(1L));
-			initCustomer.setPrePlan(dataManipulater.searchPlan(1L));
-			initCustomer.setNewPlan(dataManipulater.searchPlan(1L));
+			initCustomer.setCurrentPlan((Plan) DataManipulater.searchData(1L, Plan.class));
+			initCustomer.setPrePlan((Plan) DataManipulater.searchData(1L, Plan.class));
+			initCustomer.setNewPlan((Plan) DataManipulater.searchData(1L, Plan.class));
 			initCustomer.setCustomerCredit(0);
-			initCustomer.setEmployee(dataManipulater.searchEmployee(100));
+			initCustomer.setEmployee((Employee) DataManipulater.searchData(100L, Employee.class));
 			initCustomer.setFirstName("Administrator");
 			initCustomer.setGroupTitle("Admin");
 			initCustomer.setStatus("Unspecified");
 			initCustomer.setLTEdata("Unspecified");
 			initCustomer.setPhoneNumber("1000000000");
-			dataManipulater.addCustomer(initCustomer);
+			DataManipulater.addData(initCustomer);
 			if(customerGroup==null) {
 				customerGroup = new CustomerGroup();
 				customerGroup.setGroupdID(1L);
 				customerGroup.setGroupPlan("Normal");
 				customerGroup.setGroupParent(initCustomer);
-				dataManipulater.addCustomerGroup(customerGroup);
+				DataManipulater.addData(customerGroup);
 			}
 			initCustomer.setGroupNumber(customerGroup);
-			dataManipulater.updateCustomer(initCustomer);
+			DataManipulater.updateData(initCustomer);
 		}
-		Employee employee1 = new Employee();
-		System.out.println(employee1.getClass());
-		employee1 = (Employee) dataManipulater.searchData(100, employee1.getClass());
-		System.out.println(employee1.getEmployeeID());
+
 	}
 	// Employee login, start main system
 	public void loginListener() throws IOException, SQLException {
 		if(usernameField.getText()!=null && passwordField.getText()!=null) 
-			employee = dataManipulater.searchEmployee(Integer.parseInt(usernameField.getText()));
+			employee = (Employee) DataManipulater.searchData(Long.parseLong(usernameField.getText()), Employee.class);
 		// employee login
 		if(employeeRadioButton.isSelected()) {
 				if(employee!=null && employee.getPassowrd().equals(passwordField.getText())) {

@@ -21,13 +21,13 @@ public class EmployeeWorkingTime implements TableEntry{
 	private Employee employee;
 	private LocalDateTime punchIn;
 	private LocalDateTime punchOut;
-	private long workingHour;
+	private double workingHour;
 	
 	public EmployeeWorkingTime() {
 
 	}
 	public EmployeeWorkingTime(long workingTimeID, Employee employee, LocalDateTime punchIn, LocalDateTime punchOut,
-			long workingHour) {
+			double workingHour) {
 		super();
 		this.workingTimeID = workingTimeID;
 		this.employee = employee;
@@ -59,10 +59,10 @@ public class EmployeeWorkingTime implements TableEntry{
 	public void setPunchOut(LocalDateTime punchOut) {
 		this.punchOut = punchOut;
 	}
-	public long getWorkingHour() {
+	public double getWorkingHour() {
 		return workingHour;
 	}
-	public void setWorkingHour(long workingHour) {
+	public void setWorkingHour(double workingHour) {
 		this.workingHour = workingHour;
 	}
 	

@@ -33,8 +33,7 @@ public class UpdateAccountController {
 	}
 	
 	public void submitButtonListener() {
-		DataManipulater dataManipulater = new DataManipulater();
-		Customer customer = dataManipulater.searchCustomer(Long.parseLong(numberField.getText()));
+		Customer customer = (Customer) DataManipulater.searchData(Long.parseLong(numberField.getText()), Customer.class);
 		if(customer!=null) {
 			if(planBox.getValue().equals("CurrentPlan")) {
 				if(customer.getCurrentPlan().getPlanID() == 1) {
@@ -48,7 +47,7 @@ public class UpdateAccountController {
 					customer.getCurrentPlan().setAccount(accountField.getText());
 					customer.getCurrentPlan().setPin(Integer.parseInt(pinField.getText()));
 				}
-				dataManipulater.updateCustomer(customer);
+				DataManipulater.updateData(customer);
 			}
 			else {
 				if(customer.getPrePlan().getPlanID() == 1) {
@@ -62,7 +61,7 @@ public class UpdateAccountController {
 					customer.getPrePlan().setAccount(accountField.getText());
 					customer.getPrePlan().setPin(Integer.parseInt(pinField.getText()));
 				}
-				dataManipulater.updateCustomer(customer);
+				DataManipulater.updateData(customer);
 			}
 		}
 		else warningLabel.setText("Customer does not exist! Try again!");

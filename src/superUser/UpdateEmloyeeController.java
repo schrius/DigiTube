@@ -14,7 +14,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class UpdateEmloyeeController {
-	DataManipulater dataManipulater = new DataManipulater();
 	Employee employee = null;
 
 	@FXML
@@ -60,9 +59,9 @@ public class UpdateEmloyeeController {
 	}
 	
 	public void searchButtonListener() {
-		employee = dataManipulater.searchEmployee(Integer.parseInt(searchField.getText()));
+		employee = (Employee) DataManipulater.searchData(Long.parseLong(searchField.getText()), Employee.class);
 		if(employee!=null) {
-			id.setText(Integer.toString(employee.getEmployeeID()));
+			id.setText(Long.toString(employee.getEmployeeID()));
 			phone.setText(employee.getPhoneNumber());
 			firstName.setText(employee.getFirstName());
 			lastName.setText(employee.getLastName());
@@ -96,7 +95,7 @@ public class UpdateEmloyeeController {
 		employee.setState(state.getText());
 		employee.setZipcode(zipCode.getText());
 		
-		if(dataManipulater.updateEmployee(employee)){
+		if(DataManipulater.updateData(employee)){
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Update Employee!");
 		alert.setHeaderText("Employee information update.");

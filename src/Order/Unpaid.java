@@ -1,7 +1,6 @@
 package Order;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +21,7 @@ public class Unpaid implements TableEntry{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="Unpaid_ID")
-	private int unpaidid;
+	private long unpaidid;
 	private double oweamount;
 	@OneToOne
 	@JoinColumn(name="Invoice_ID", nullable=false)
@@ -34,13 +33,13 @@ public class Unpaid implements TableEntry{
 	@JoinColumn(name="EMPLOYEE_ID", foreignKey = @ForeignKey(name = "Unpaid_EMPLOYEE_ID_FK"))
 	private Employee employee;
 	
-	private LocalDateTime lastUpdate;
+	private LocalDate lastUpdate;
 
-	public int getUnpaidid() {
+	public long getUnpaidid() {
 		return unpaidid;
 	}
 
-	public void setUnpaidid(int unpaidid) {
+	public void setUnpaidid(long unpaidid) {
 		this.unpaidid = unpaidid;
 	}
 
@@ -68,11 +67,11 @@ public class Unpaid implements TableEntry{
 		this.employee = employee;
 	}
 
-	public LocalDateTime getLastUpdate() {
+	public LocalDate getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(LocalDateTime lastUpdate) {
+	public void setLastUpdate(LocalDate lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

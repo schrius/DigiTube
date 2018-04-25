@@ -10,7 +10,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class NewProductController {
-	DataManipulater dataManipulater = new DataManipulater();
 	Product product;
 
 	@FXML
@@ -41,7 +40,7 @@ public class NewProductController {
 		product.setMinPrice(Double.parseDouble(mininumPrice.getText()));
 		product.setRegularPrice(Double.parseDouble(price.getText()));
 		
-		if(dataManipulater.addProduct(product)){
+		if(DataManipulater.addData(product)){
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("New Product!");
 		alert.setHeaderText("New Product information update.");

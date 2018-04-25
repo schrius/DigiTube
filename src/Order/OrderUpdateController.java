@@ -15,7 +15,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class OrderUpdateController {
-	DataManipulater datamanipulater = new DataManipulater();
 	Orders order = null;
 	
 	@FXML
@@ -83,7 +82,7 @@ public class OrderUpdateController {
 	}
 	
 	public void searchButtonListener() {
-		order = datamanipulater.searchOrder(Long.parseLong(searchField.getText()));
+		order = (Orders) DataManipulater.searchData(Long.parseLong(searchField.getText()), Orders.class);
 		
 		if(order!=null) {
 			invoiceField.setText(Long.toString(order.getInvoice().getInvoiceID()));
@@ -97,7 +96,7 @@ public class OrderUpdateController {
 			quanityField.setText(Integer.toString(order.getQuantity()));
 			statusBox.setValue(order.getStatus());
 			descriptionField.setText(order.getDescription());
-			employeeIDField.setText(Integer.toString(order.getEmployee().getEmployeeID()));
+			employeeIDField.setText(Long.toString(order.getEmployee().getEmployeeID()));
 			paymentField.setText(order.getInvoice().getPaymentMethod());
 			
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

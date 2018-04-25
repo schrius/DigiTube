@@ -32,14 +32,13 @@ public class AddCustomerGroupController {
 	}
 	
 	public void submitButtonListener() {
-		DataManipulater dataManipulater = new DataManipulater();
 		CustomerGroup customerGroup = new CustomerGroup();
 		Customer parent = null;
 		if(groupNumberField.getText().length()>2 && groupNumberField.getText().length()<11) {
 		customerGroup.setGroupdID(Long.parseLong(groupNumberField.getText()));
 		customerGroup.setGroupPlan(groupPlanBox.getValue());
-		if(dataManipulater.searchCustomerGroup(customerGroup.getGroupdID())==null) {
-			parent = dataManipulater.searchCustomer(Long.parseLong(groupParentField.getText()));
+		if(DataManipulater.searchData(customerGroup.getGroupdID(), CustomerGroup.class)==null) {
+			parent = (Customer) DataManipulater.searchData(Long.parseLong(groupParentField.getText()), Customer.class);
 			if(parent==null) {
 				warningLabel.setText("Parent does not exist!");
 			}
@@ -54,8 +53,8 @@ public class AddCustomerGroupController {
 				else {
 					customerGroup.setGroupParent(parent);
 					parent.setGroupTitle(FixedElements.PARENT);
-					dataManipulater.updateCustomer(parent);
-					dataManipulater.addCustomerGroup(customerGroup);
+					DataManipulater.updateData(parent);
+					DataManipulater.addData(customerGroup);
 				}
 				}
 			}

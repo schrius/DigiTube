@@ -14,7 +14,7 @@ public class Product implements TableEntry{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="PRODUCT_ID")
-	private int productID;
+	private long productID;
 	@Column(length = 32)
 	private String productName;
 	@Column(length = 32)
@@ -31,10 +31,10 @@ public class Product implements TableEntry{
 	public Product() {
 	}
 
-	public int getProductID() {
+	public long getProductID() {
 		return productID;
 	}
-	public void setProductID(int productID) {
+	public void setProductID(long productID) {
 		this.productID = productID;
 	}
 	public String getDescription() {

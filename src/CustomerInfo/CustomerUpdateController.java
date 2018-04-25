@@ -25,7 +25,6 @@ public class CustomerUpdateController {
 	
 	Employee employee;
 	Customer customer;
-	DataManipulater dataManipulater;
 	
 	@FXML
 	TextField searchField;
@@ -123,7 +122,6 @@ public class CustomerUpdateController {
 		currentPlan.getItems().addAll(FixedElements.PLAN);
 		state.getItems().addAll(FixedElements.STATES);
 		actionBox.getItems().addAll(FixedElements.ACTION);
-		dataManipulater = new DataManipulater();
 	}
 	
 	public void setEmployee(Employee employee) {
@@ -133,7 +131,7 @@ public class CustomerUpdateController {
 	//search customer info and display on the pane
 	public void searchButtonListener() {
 		if(searchField.getText().length() == 10) {
-			customer = dataManipulater.searchCustomer(Long.parseLong(searchField.getText()));
+			customer = (Customer) DataManipulater.searchData(Long.parseLong(searchField.getText()), Customer.class);
 			if(customer!=null) {
 					warningLabel.setText("");
 					customerIDField.setText(Long.toString(customer.getCustomerID()));
@@ -317,10 +315,10 @@ public class CustomerUpdateController {
 							newplan.setCarrier(newCarrier.getValue());
 							newplan.setPortdate(portDate.getValue());
 
-								dataManipulater.addPlan(newplan);
+							DataManipulater.addData(newplan);
 								customer.setNewPlan(newplan);
 							}
-							else dataManipulater.updatePlan(newplan);
+							else DataManipulater.updateData(newplan);
 						}
 						
 						if(!currentPlan.getValue().equals(customer.getCurrentPlan().getPlanType())
@@ -339,10 +337,10 @@ public class CustomerUpdateController {
 							curPlan.setAccount(accountField.getText());
 							curPlan.setSim(simField.getText());
 							
-							dataManipulater.addPlan(curPlan);	
+							DataManipulater.addData(curPlan);	
 							customer.setCurrentPlan(curPlan);
 							}
-							else dataManipulater.updatePlan(curPlan);
+							else DataManipulater.updateData(curPlan);
 						}
 
 						if(!preCarrier.getValue().equals(customer.getPrePlan().getCarrier())) {
@@ -350,18 +348,15 @@ public class CustomerUpdateController {
 							if(prePlan.getPlanID() == 1) {
 								prePlan = new Plan();
 								prePlan.setCarrier(preCarrier.getValue());
-								dataManipulater.addPlan(prePlan);
+								DataManipulater.addData(prePlan);
 								customer.setPrePlan(prePlan);
 							}
-							else dataManipulater.updatePlan(prePlan);
+							else DataManipulater.updateData(prePlan);
 						}
 						
 						//update customer info
-						if(dataManipulater == null) {
-							dataManipulater = new DataManipulater();
-						}
-						if(dataManipulater.searchCustomer(customer.getCustomerID()) != null ) {
-							if(dataManipulater.updateCustomer(customer)) {
+						if(DataManipulater.searchData(customer.getCustomerID(), Customer.class) != null ) {
+							if(DataManipulater.updateData(customer)) {
 							Alert alertConfirm = new Alert(AlertType.INFORMATION);
 							alertConfirm.setTitle("Update Success!");
 							alertConfirm.setHeaderText(null);
@@ -375,7 +370,7 @@ public class CustomerUpdateController {
 							}
 						}
 						else {
-							if(dataManipulater.addCustomer(customer)) {
+							if(DataManipulater.addData(customer)) {
 								Alert alertConfirm1 = new Alert(AlertType.INFORMATION);
 								alertConfirm1.setTitle("Add Success!");
 								alertConfirm1.setHeaderText(null);

@@ -6,21 +6,17 @@ import DataManipulater.DataManipulater;
 import Employee.Employee;
 import Main.FixedElements;
 import Order.Orders;
+import Order.Plan;
 
 public class CustomerGenerater {
 	Customer customer;
-	DataManipulater dataManipulater = new DataManipulater();
 	CustomerGroup customerGroup;
-	
-	public CustomerGenerater() {
-
-	}
 	
 	public Customer generateCustomer(Orders orders, Employee employee) {
 		customer = new Customer();
-		customer.setPrePlan(dataManipulater.searchPlan(1L));
-		customer.setCurrentPlan(dataManipulater.searchPlan(1L));
-		customer.setNewPlan(dataManipulater.searchPlan(1L));
+		customer.setPrePlan((Plan) DataManipulater.searchData(1L, Plan.class));
+		customer.setCurrentPlan((Plan) DataManipulater.searchData(1L, Plan.class));
+		customer.setNewPlan((Plan) DataManipulater.searchData(1L, Plan.class));
 		customer.setPhoneNumber(orders.getPlan().getPhoneNumber());
 		customer.setCustomerID(Long.parseLong(orders.getPlan().getPhoneNumber()));
 		customer.setAction(orders.getCategories());
@@ -29,7 +25,7 @@ public class CustomerGenerater {
 		customer.setGroupTitle(FixedElements.PRIME);
 		customer.setLastUpdate(LocalDateTime.now());
 		customer.setStatus(FixedElements.WAITING);
-		customerGroup = dataManipulater.searchCustomerGroup(1);
+		customerGroup = (CustomerGroup) DataManipulater.searchData(1L, CustomerGroup.class);
 		customer.setGroupNumber(customerGroup);
 
 		return customer;

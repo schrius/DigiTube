@@ -1,13 +1,15 @@
 package superUser;
 
 import java.io.IOException;
-
+import java.time.LocalDate;
 import DataManipulater.DataManipulater;
 import Employee.Employee;
 import Employee.EmployeeWorkingTime;
 import Main.TableEntry;
+import Main.TableViewGenerator;
 import Order.Invoice;
 import Order.Orders;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,17 +20,19 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ManagerController {
-	DataManipulater dataManipulater;
 	Employee employee;
 	EmployeeWorkingTime worksheet;
 	Orders order;
 	Invoice invoice;
 	Parent parent;
 	
+	@FXML
+	BorderPane borderPane;
 	@FXML
 	ComboBox<String> searchBox;
 	@FXML
@@ -134,9 +138,22 @@ public class ManagerController {
 		stage.setScene(new Scene(parent));
 		stage.showAndWait();
 	}
-	public void showAndCalcuateListener() {
+	@SuppressWarnings("unchecked")
+	public void showAndCalcuateListener() {	
 		if(searchBox.getValue().equals("EmployeeID")) {
+			String hql = "FROM EmployeeWorkingTime e WHERE employee ="+ searchField.getText();
+					
+			if(beginDate.getValue()!=null) 
+				hql = hql + " AND c.expireDate BETWEEN '" + beginDate.getValue() + "' AND '";
+			else hql = hql + " AND c.expireDate BETWEEN '" + LocalDate.now() + "' AND '";
+					
+			if(endDate.getValue()!=null) 
+				hql = hql + endDate.getValue() + "'";
+			else hql = hql + LocalDate.now() + "'";
 			
+			ObservableList<EmployeeWorkingTime> worksheet= (ObservableList<EmployeeWorkingTime>) DataManipulater.ListData(hql);
+			table = new TableViewGenerator().getWorkSheetTable(worksheet);
+			borderPane.setCenter(table);
 		}
 	}
 

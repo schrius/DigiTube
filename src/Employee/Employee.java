@@ -11,7 +11,7 @@ import Main.TableEntry;
 public class Employee implements TableEntry{
 	@Id
 	@Column(name="EMPLOYEE_ID")
-	private int employeeID;
+	private long employeeID;
 	@Column(length = 32)
 	private String firstName;
 	@Column(length = 32)
@@ -39,10 +39,10 @@ public class Employee implements TableEntry{
 
 	}
 
-	public int getEmployeeID() {
+	public long getEmployeeID() {
 		return employeeID;
 	}
-	public void setEmployeeID(int employeeID) {
+	public void setEmployeeID(long employeeID) {
 		this.employeeID = employeeID;
 	}
 	public String getFirstName() {

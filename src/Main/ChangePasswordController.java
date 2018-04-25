@@ -29,14 +29,13 @@ public class ChangePasswordController {
 	Label warningLabel;
 	
 	public void submitButtonListener() {
-		DataManipulater dataManipulater = new DataManipulater();
-		Employee employee = dataManipulater.searchEmployee(Integer.parseInt(id.getText()));
+		Employee employee = (Employee) DataManipulater.searchData(Long.parseLong(id.getText()), Employee.class);
 
 		if(employee!=null) {
 			if(oldPassword.getText().equals(employee.getPassowrd())){
 				if(newPassword.getText().equals(confirmPassword.getText())) {
 					employee.setPassowrd(newPassword.getText());
-					dataManipulater.updateEmployee(employee);
+					DataManipulater.updateData(employee);
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Success!");
 					alert.setHeaderText("Your password has been updated.");

@@ -9,12 +9,12 @@
    <left>
       <VBox spacing="5.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="newEmployeeButton" mnemonicParsing="false" text="New Employee" />
-            <Button fx:id="updateEmployeeButton" mnemonicParsing="false" text="Update Employee" />
-            <Button fx:id="newProductButton" mnemonicParsing="false" text="New Product" />
-            <Button fx:id="updateProductButton" mnemonicParsing="false" text="Update Product" />
-            <Button fx:id="updateOrderButton" mnemonicParsing="false" text="Update Order" />
-            <Button fx:id="updateCustomerButton" mnemonicParsing="false" text="Update Customer" />
+            <Button fx:id="newEmployeeButton" mnemonicParsing="false" onAction="#newEmployeeButtonListener" text="New Employee" />
+            <Button fx:id="updateEmployeeButton" mnemonicParsing="false" onAction="#updateEmployeeButtonListener" text="Update Employee" />
+            <Button fx:id="newProductButton" mnemonicParsing="false" onAction="#newProductButtonListener" text="New Product" />
+            <Button fx:id="updateProductButton" mnemonicParsing="false" onAction="#updateProductButtonListener" text="Update Product" />
+            <Button fx:id="updateOrderButton" mnemonicParsing="false" onAction="#updateOrderButtonListener" text="Update Order" />
+            <Button fx:id="updateCustomerButton" mnemonicParsing="false" onAction="#updateCustomerButtonListener" text="Update Customer" />
          </children>
       </VBox>
    </left>
