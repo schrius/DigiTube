@@ -1,5 +1,5 @@
 package Main;
-
+// manage group members
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +16,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class GroupManageController {
-	DataManipulater dataManipulater = new DataManipulater();
 	@FXML
 	TextField groupNumberField;
 	@FXML
@@ -38,42 +37,57 @@ public class GroupManageController {
 	}
 	
 	public void submitButtonListener() {
-		Customer child = dataManipulater.searchCustomer(Long.parseLong(memberField.getText()));
 		long groupID = Long.parseLong(groupNumberField.getText());
-		CustomerGroup customerGroup = dataManipulater.searchCustomerGroup(groupID);
+		if(groupID>2 && groupID<11) {
+		if(memberField.getText().length()==10) {
+		Customer child = (Customer) DataManipulater.searchData(Long.parseLong(memberField.getText()), Customer.class);
+		CustomerGroup customerGroup = (CustomerGroup) DataManipulater.searchData(groupID, CustomerGroup.class);
 		
 		if(customerGroup!=null) {
 			if(child==null){
 				warningLabel.setText("Child does not exist!");
 			}
 			else {
+				if(!child.getGroupTitle().equals(FixedElements.PARENT)) {
 				child.setGroupNumber(customerGroup);
 				child.setGroupTitle(groupTitleBox.getValue());
-				dataManipulater.updateCustomer(child);
+				DataManipulater.updateData(child);
 				if(child.getGroupTitle().equals(FixedElements.PARENT)) {
+					Customer currentParent = (Customer) DataManipulater.searchData(customerGroup.getGroupParent().getCustomerID(), Customer.class);
 					customerGroup.setGroupParent(child);
-					Customer currentParent = dataManipulater.searchCustomer(customerGroup.getGroupParent().getCustomerID());
 					currentParent.setGroupTitle(FixedElements.CHILD);
-					dataManipulater.updateCustomer(currentParent);
-					dataManipulater.updateCustomerGroup(customerGroup);
+					DataManipulater.updateData(currentParent);
+					DataManipulater.updateData(customerGroup);
+					}
+				}
+				else {
+					warningLabel.setText("Child is a parent of " + child.getGroupNumber().getGroupdID());
 				}
 			}
 		}
 		else warningLabel.setText("Group does not exist! Try again!");
+		} else warningLabel.setText("Member id is 10 digits.");
+		}
+		else warningLabel.setText("Group ID must range 3-10 digit!");
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void removeButtonListener() {
-		Customer child = dataManipulater.searchCustomer(Long.parseLong(memberField.getText()));
-		CustomerGroup customerGroup = dataManipulater.searchCustomerGroup(100L);
+		long groupID = Long.parseLong(groupNumberField.getText());
+		if(memberField.getText().length()==10) {
+			if(groupID>2 && groupID<11) {
+		Customer child = (Customer) DataManipulater.searchData(Long.parseLong(memberField.getText()), Customer.class);
+		CustomerGroup customerGroup = (CustomerGroup) DataManipulater.searchData(1L, CustomerGroup.class);
 		
 		if(customerGroup!=null) {
 			if(child==null){
 				warningLabel.setText("Child does not exist!");
 			}
 			else {
+				if(customerGroup.getGroupdID() == child.getGroupNumber().getGroupdID()) {
 				if(child.getGroupTitle().equals(FixedElements.PARENT)) {
 					String hql = "FROM Customer WHERE group_id =" + child.getGroupNumber().getGroupdID();
-					ObservableList<Customer> children= dataManipulater.customerList(hql);
+					ObservableList<Customer> children= (ObservableList<Customer>) DataManipulater.ListData(hql);
 
 					List<String> choices = new ArrayList<>();
 					for(Customer customer : children) {
@@ -87,25 +101,26 @@ public class GroupManageController {
 					Optional<String> result = dialog.showAndWait();
 					
 					result.ifPresent(choice -> {
-					Customer newParent = dataManipulater.searchCustomer(Long.parseLong(choice));
-					CustomerGroup updateGroup = dataManipulater.searchCustomerGroup(newParent.getGroupNumber().getGroupdID());
+					Customer newParent = (Customer) DataManipulater.searchData(Long.parseLong(choice), Customer.class);
+					CustomerGroup updateGroup = (CustomerGroup) DataManipulater.searchData(newParent.getGroupNumber().getGroupdID(), CustomerGroup.class);
 					updateGroup.setGroupParent(newParent);
 					newParent.setGroupTitle(FixedElements.PARENT);
 					
-					dataManipulater.updateCustomer(newParent);
-					dataManipulater.updateCustomerGroup(updateGroup);
-					}
-					);
+					DataManipulater.updateData(newParent);
+					DataManipulater.updateData(updateGroup);
+					});
 				}
-				child.setGroupNumber(customerGroup);
+				child.setGroupNumber((CustomerGroup) DataManipulater.searchData(1L, CustomerGroup.class));
 				child.setGroupTitle(FixedElements.PRIME);
-				dataManipulater.updateCustomer(child);
+				DataManipulater.updateData(child);
+				} else warningLabel.setText("Customer belong to another group.");
 			}
+			}
+			else warningLabel.setText("Group does not exist! Try again!");
+		} else warningLabel.setText("Member id is 10 digits.");
 		}
-		else warningLabel.setText("Group does not exist! Try again!");
+		else warningLabel.setText("Group ID must range 3-10 digit!");
 	}
-		
-	
 	public void cancelButtonListener() {
 		Stage stage = (Stage) cancelButton.getScene().getWindow();
 		stage.close();

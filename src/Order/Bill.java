@@ -14,17 +14,17 @@ public class Bill implements TableEntry{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "BILL_ID")
-	long billID;
+	private long billID;
 	@Column(length = 32)
-	String billCarrier;
+	private String billCarrier;
 	@Column(length = 32)
-	String billingAccount;
-	double billAmount;
-	double serviceFess;
+	private String billingAccount;
+	private double billAmount;
+	private double serviceFess;
 	@Column(length = 32)
-	String contactInfo;
+	private String contactInfo;
 	@Column(length = 32)
-	String status;
+	private String status;
 
 	public Bill() {
 		

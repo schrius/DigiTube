@@ -16,7 +16,7 @@ import Employee.Employee;
 import Main.TableEntry;
 import Order.Plan;
 @Entity
-@Table(name = "CUSTOMER")
+@Table(name = "Customer")
 public class Customer implements TableEntry {
 	@Id
 	@Column(name = "CUSTOMER_ID")
@@ -36,8 +36,6 @@ public class Customer implements TableEntry {
 	private CustomerGroup groupNumber;
 	@Column(length = 16)
 	private String groupTitle;
-	
-	
 	@Column(length = 16)
 	private String status;
 	@Column(length = 32)
@@ -55,7 +53,6 @@ public class Customer implements TableEntry {
 	
 	@Column(length = 16)
 	private String device;
-
 	@Column(length = 32)
 	private String firstName;
 	@Column(length = 32)
@@ -281,5 +278,4 @@ public class Customer implements TableEntry {
 	public void setLastUpdate(LocalDateTime lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
-	
 }

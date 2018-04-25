@@ -13,7 +13,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class NewEmloyeeController {
-	DataManipulater dataManipulater = new DataManipulater();
 	Employee employee;
 
 	@FXML
@@ -68,7 +67,7 @@ public class NewEmloyeeController {
 		employee.setState(state.getText());
 		employee.setZipcode(zipCode.getText());
 		
-		if(dataManipulater.addEmployee(employee)){
+		if(DataManipulater.addData(employee)){
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("New Employee!");
 		alert.setHeaderText("New Employee information update.");

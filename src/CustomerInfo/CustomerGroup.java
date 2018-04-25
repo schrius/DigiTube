@@ -40,6 +40,4 @@ public class CustomerGroup {
 	public void setGroupPlan(String groupPlan) {
 		this.groupPlan = groupPlan;
 	}
-	
-
 }

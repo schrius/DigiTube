@@ -1,6 +1,7 @@
 package Main;
 
 import CustomerInfo.Customer;
+import Employee.EmployeeWorkingTime;
 import Order.Bill;
 import Order.Orders;
 import Order.Plan;
@@ -328,80 +329,29 @@ public class TableViewGenerator {
 		
 		return serviceTable;
 	}
-	
-	
 	@SuppressWarnings("unchecked")
-	public TableView<CustomerPropertyTable> getCustomerPropertyTable(ObservableList<Customer> customersList){
-		CustomerPropertyTable customerPropertyTable;
-		TableColumn<CustomerPropertyTable, String> phoneColumn = new TableColumn<>("Phone");
-		phoneColumn.setPrefWidth(80);
-		phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+	public TableView<EmployeeWorkingTime> getWorkSheetTable(ObservableList<EmployeeWorkingTime> list){
+		TableColumn<EmployeeWorkingTime, Double> idColumn = new TableColumn<>("Time ID");
+		idColumn.setPrefWidth(30);
+		idColumn.setCellValueFactory(new PropertyValueFactory<>("workingTimeID"));
 		
-		TableColumn<CustomerPropertyTable, String> actionColumn = new TableColumn<>("Action");
-		actionColumn.setMinWidth(80);
-		actionColumn.setCellValueFactory(new PropertyValueFactory<>("action"));
+		TableColumn<EmployeeWorkingTime, Double> PunchInColumn = new TableColumn<>("PunchIn");
+		PunchInColumn.setPrefWidth(120);
+		PunchInColumn.setCellValueFactory(new PropertyValueFactory<>("punchIn"));
 		
-		TableColumn<CustomerPropertyTable, Double> oweAmountColumn = new TableColumn<>("Owe");
-		oweAmountColumn.setMinWidth(50);
-		oweAmountColumn.setCellValueFactory(new PropertyValueFactory<>("oweAmount"));
+		TableColumn<EmployeeWorkingTime, Double> PunchOutColumn = new TableColumn<>("PunchOut");
+		PunchOutColumn.setPrefWidth(120);
+		PunchOutColumn.setCellValueFactory(new PropertyValueFactory<>("punchOut"));
 		
-		TableColumn<CustomerPropertyTable, Double> newPlanColumn = new TableColumn<>("newPlan");
-		newPlanColumn.setMinWidth(50);
-		newPlanColumn.setCellValueFactory(new PropertyValueFactory<>("newPlan"));
-		
-		TableColumn<CustomerPropertyTable, Double> newCarrierColumn = new TableColumn<>("NewCarrier");
-		newCarrierColumn.setMinWidth(50);
-		newCarrierColumn.setCellValueFactory(new PropertyValueFactory<>("newCarrier"));
-		
-		
-		ObservableList<CustomerPropertyTable>customersPropertyList = FXCollections.observableArrayList();
-		for(Customer customer: customersList) {
-			customerPropertyTable = new CustomerPropertyTable();
-			
-			System.out.println(customer.getAction());
+		TableColumn<EmployeeWorkingTime, Double> workingHourColumn = new TableColumn<>("Working Hours");
+		workingHourColumn.setPrefWidth(120);
+		workingHourColumn.setCellValueFactory(new PropertyValueFactory<>("workingHour"));
 
-			customerPropertyTable.setOweAmount(customer.getOweAmount());
-			customerPropertyTable.setAction(customer.getAction());
-			customerPropertyTable.setPhoneNumber(customer.getPhoneNumber());
-			customerPropertyTable.setGroupTitle(customer.getGroupTitle());
-			customerPropertyTable.setGroupNumber(customer.getGroupNumber().toString());
-			customerPropertyTable.setStatus(customer.getStatus());
-			customerPropertyTable.setCustomerCredit(customer.getCustomerCredit());
-			if(customer.getExpireDate()!=null)
-				customerPropertyTable.setExpireDate(customer.getExpireDate().toString());
-			if(customer.getNewPlan().getCarrier()!=null)
-				customerPropertyTable.setNewCarrier(customer.getNewPlan().getCarrier());
-			if(customer.getNewPlan().getPlanType()!=null)
-				customerPropertyTable.setNewPlan(customer.getNewPlan().getPlanType());
-			if(customer.getNewPlan().getSim()!=null)
-				customerPropertyTable.setSim(customer.getNewPlan().getSim());
-			if(customer.getNewPlan().getPUK()!=null)
-				customerPropertyTable.setPUK(customer.getNewPlan().getPUK());
-			
-			if(customer.getCurrentPlan()!=null) {
-			if(customer.getCurrentPlan().getCarrier()!=null)
-				customerPropertyTable.setCurrentCarrier(customer.getCurrentPlan().getCarrier());
-			if(customer.getCurrentPlan().getPlanType()!=null)
-				customerPropertyTable.setCurrentPlan(customer.getCurrentPlan().getPlanType());
-			if(customer.getCurrentPlan().getAccount()!=null)
-				customerPropertyTable.setCurrentPlan(customer.getCurrentPlan().getAccount());
+		
+		TableView<EmployeeWorkingTime> worksheet = new TableView<>(list);
 
-				customerPropertyTable.setPin(customer.getCurrentPlan().getPin());
-			}
-			if(customer.getPrePlan()!=null)
-			if(customer.getPrePlan().getCarrier()!=null)
-				customerPropertyTable.setPreCarrier(customer.getPrePlan().getCarrier());
-			if(customer.getOfferPrice()!=null)
-				customerPropertyTable.setOfferPrice(customer.getOfferPrice());
-			if(customer.getComment()!=null)
-				customerPropertyTable.setComment(customer.getComment());
-			
-			customersPropertyList.add(customerPropertyTable);
-		}	
+		worksheet.getColumns().addAll(idColumn, PunchInColumn, PunchOutColumn,workingHourColumn);
 		
-		TableView<CustomerPropertyTable> customerTable = new TableView<>(customersPropertyList);
-		customerTable.getColumns().addAll( phoneColumn, actionColumn, newPlanColumn ,newCarrierColumn);
-		
-		return customerTable;
+		return worksheet;
 	}
 }
