@@ -1,6 +1,10 @@
 package Main;
 
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -54,7 +58,6 @@ public class MainController {
 	private ObservableList<Customer> customersList;
 	private ObservableList<Tab> tabList;
 	private Tab tab;
-	
 	Parent parent;
 	
 	@FXML
@@ -152,11 +155,23 @@ public class MainController {
 	@FXML
 	public void initialize() {
 		tabPane.setTabClosingPolicy(TabClosingPolicy.SELECTED_TAB);
-		searchBox.getItems().addAll("Phone#", "GroupID", "BillAccount");
+		searchBox.getItems().addAll("Customer#", "GroupID", "Plan List");
 		searchBox.getSelectionModel().selectFirst();
 		 currentDateLabel.setText(LocalDate.now().toString());
 		 orderController = new OrderController();
-	}
+		 
+		 try {  
+	            Reader reader = new FileReader("note.txt");  
+	            int data = reader.read();  
+	            while (data != -1) {  
+	            	noteArea.appendText(Character.toString((char)data)); 
+	                data = reader.read();  
+	            }  
+	            reader.close();  
+	        } catch (Exception ex) {  
+	            System.out.println(ex.getMessage());  
+	        }        
+      }  
 	
 	public MainController() {
 		
@@ -164,14 +179,14 @@ public class MainController {
 	
 	@SuppressWarnings("unchecked")
 	public void searchButtonListener() throws IOException {
-		if(searchBox.getValue().equals("Phone#")) {
+		if(searchBox.getValue().equals("Customer#")) {
 			customer = (Customer) DataManipulater.searchData(Long.parseLong(searchField.getText()), Customer.class);
 			if(customer!=null) {
 				searchLabel.setText("");
 				customersList = FXCollections.observableArrayList();
-				
 				customersList.add(customer);
-				updateTableView();
+				tableView = new TableViewGenerator().getCustomerTable(customersList);
+				updateTableView(customer.getPhoneNumber());
 			}
 			else {
 				searchLabel.setText("Customer not exist.");
@@ -180,16 +195,21 @@ public class MainController {
 		else if(searchBox.getValue().equals("GroupID")) {
 			String hql = "FROM Customer c WHERE c.groupNumber=" + searchField.getText();
 			customersList = (ObservableList<Customer>) DataManipulater.ListData(hql);
-			updateTableView();
+			tableView = new TableViewGenerator().getCustomerTable(customersList);
+			updateTableView(searchField.getText());
+		}
+		else if(searchBox.getValue().equals("Plan List")) {
+			String hql = "FROM Plan p WHERE p.phoneNumber='" + searchField.getText() + "'";
+			ObservableList<Plan> planlist = (ObservableList<Plan>) DataManipulater.ListData(hql);
+			tableView = new TableViewGenerator().getPortListTable(planlist);
+			updateTableView(searchField.getText());
 		}
 	}
-	
 	
 	public void orderButtonListener() throws IOException {
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Order/OrderFX.fxml"));
-	//	orderController = new OrderController();
 		orderController.setEmployee(employee);
 		fxmlLoader.setController(orderController);
 		parent = fxmlLoader.load();
@@ -228,6 +248,9 @@ public class MainController {
 		dialog.showAndWait().ifPresent(status -> {
 			tableView = (TableView<? extends TableEntry>) tabPane.getSelectionModel().getSelectedItem().getContent();
 			
+			String selectedItem = tableView.getSelectionModel().getSelectedItem().getClass().getName();
+			
+			if(selectedItem.equals("CustomerInfo.Customer")) {
 			Customer customer = (Customer) tableView.getSelectionModel().getSelectedItem();
 			
 			if(status.equals(FixedElements.COMPLETE)) {
@@ -249,10 +272,9 @@ public class MainController {
 						    if(customer.getAction().equals(FixedElements.ACTIVATION)) {
 						    	customer.setCurrentPlan(customer.getNewPlan());
 						    	customer.setNewPlan((Plan) DataManipulater.searchData(1L, Plan.class));
-							    customer.setExpireDate(LocalDate.now().plusDays(Integer.parseInt(months)*29));
+							    customer.setExpireDate(LocalDate.now().plusDays(Integer.parseInt(months)*30-1));
 						    }
 						    else customer.setExpireDate(customer.getExpireDate().plusDays(Integer.parseInt(months)*30));
-						    DataManipulater.updateData(customer);
 						} else {
 						    alert.close();
 						}
@@ -262,74 +284,75 @@ public class MainController {
 					    if(customer.getAction().equals(FixedElements.ACTIVATION)) {
 					    	customer.setCurrentPlan(customer.getNewPlan());
 					    	customer.setNewPlan((Plan) DataManipulater.searchData(1L, Plan.class));
-						    customer.setExpireDate(LocalDate.now().plusDays(Integer.parseInt(months)*29));
+						    customer.setExpireDate(LocalDate.now().plusDays(Integer.parseInt(months)*30-1));
 					    }
 					    else customer.setExpireDate(customer.getExpireDate().plusDays(Integer.parseInt(months)*30));
-					    DataManipulater.updateData(customer);
 					}
 				});
 			}
 			else {
 				customer.setStatus(status);
 			}
+			DataManipulater.updateData(customer);
+			}
+			else if(selectedItem.equals("Order.Service")) {
+				Service service = (Service) tableView.getSelectionModel().getSelectedItem();
+				service.setStatus(status);
+				DataManipulater.updateData(service);
+			}
+			else if(selectedItem.equals("Order.Bill")) {
+				Bill bill = (Bill) tableView.getSelectionModel().getSelectedItem();
+				bill.setStatus(status);
+				DataManipulater.updateData(bill);
+			}
+			else if(selectedItem.equals("Order.Plan")) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText("Use to-do-list to complete refill/port");
+				alert.setContentText(null);
+				alert.showAndWait();
+			}
 		});
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void payBillListButtonListener() {
-		String hql = "FROM Bill b WHERE b.status= 'Waiting'";
+	public void payBillListButtonListener() throws IOException {
+		String hql = "FROM Bill b WHERE NOT b.status= 'Complete'";
 		ObservableList<Bill> billList;
 		billList = (ObservableList<Bill>) DataManipulater.ListData(hql);
 		
 		tableView = new TableViewGenerator().getBillTable(billList);
-		tab = new Tab("BillList");
-		tab.setClosable(true);
-		tab.setContent(tableView);
-		tabList = tabPane.getTabs();
-		tabList.add(tab);
+		updateTableView("Bill List");
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void serviceListButtonListener() {
-		String hql = "FROM Service s WHERE s.status= 'Waiting'";
-		ObservableList<Service> serviceList;
-		serviceList = (ObservableList<Service>) DataManipulater.ListData(hql);
+	public void serviceListButtonListener() throws IOException {
+		String hql = "FROM Service s WHERE NOT s.status= 'Complete'";
+		ObservableList<Service> serviceList = (ObservableList<Service>) DataManipulater.ListData(hql);
 		
 		tableView = new TableViewGenerator().getServiceTable(serviceList);
-		tab = new Tab("Service List");
-		tab.setClosable(true);
-		tab.setContent(tableView);
-		tabList = tabPane.getTabs();
-		tabList.add(tab);
+		updateTableView("Service List");
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void toDoListButtonListener() {
-		String hql = "FROM Customer c WHERE c.status = 'Waiting' AND c.expireDate = '" + LocalDate.now() + "'";
+	public void toDoListButtonListener() throws IOException {
+		String hql = "FROM Customer c WHERE c.status != 'Complete' AND c.customerCredit>0 AND c.expireDate <= '" + LocalDate.now() + "'";
 		ObservableList<Customer> todoList= (ObservableList<Customer>) DataManipulater.ListData(hql);
 		
 		tableView = new TableViewGenerator().getToDoTable(todoList);
-		tab = new Tab("To-Do List");
-		tab.setClosable(true);
-		tab.setContent(tableView);
-		tabList = tabPane.getTabs();
-		tabList.add(tab);
+		updateTableView("To-Do List");
 	}
 	@SuppressWarnings("unchecked")
-	public void portListButtonListener() {
+	public void portListButtonListener() throws IOException {
 		String hql = "FROM Plan p WHERE p.portdate = '" + LocalDate.now() + "'";
 		ObservableList<Plan> portList= (ObservableList<Plan>) DataManipulater.ListData(hql);
 		
 		tableView = new TableViewGenerator().getPortListTable(portList);
-		tab = new Tab("Port List");
-		tab.setClosable(true);
-		tab.setContent(tableView);
-		tabList = tabPane.getTabs();
-		tabList.add(tab);
+		updateTableView("Port List");
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void showListButtonListener() {
+	public void showListButtonListener() throws IOException {
 		String hql = "FROM Customer c ";
 		if(swapFamilyRadio.isSelected()||flexRadio.isSelected()||flexMixRadio.isSelected()||
 				GVRadio.isSelected()|| GVFamilyRadio.isSelected()) {
@@ -373,11 +396,7 @@ public class MainController {
 		
 		ObservableList<Customer> customerList= (ObservableList<Customer>) DataManipulater.ListData(hql);
 		tableView = new TableViewGenerator().getCustomerTable(customerList);
-		tab = new Tab("List");
-		tab.setClosable(true);
-		tab.setContent(tableView);
-		tabList = tabPane.getTabs();
-		tabList.add(tab);
+		updateTableView("Customer list");
 	}
 	
 	public void clearButtonListener() {
@@ -386,16 +405,12 @@ public class MainController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void unpaidListButtonListener() {
+	public void unpaidListButtonListener() throws IOException {
 		String hql = "FROM Customer c WHERE c.oweAmount > 0";
 		ObservableList<Customer> unpaidList= (ObservableList<Customer>) DataManipulater.ListData(hql);
 		
 		tableView = new TableViewGenerator().getUnpaidTable(unpaidList);
-		tab = new Tab("Unpaid List");
-		tab.setClosable(true);
-		tab.setContent(tableView);
-		tabList = tabPane.getTabs();
-		tabList.add(tab);
+		updateTableView("Unpaid list");
 	}
 	
 	public void punchInButtonListener(){
@@ -454,13 +469,13 @@ public class MainController {
 		MainController.orderController = orderController;
 	}
 
-	public void updateTableView() throws IOException {	
-		tableView = new TableViewGenerator().getCustomerTable(customersList);
-		tab = new Tab("Customer");
+	public void updateTableView(String tabTitle) throws IOException {	
+		tab = new Tab(tabTitle);
 		tab.setClosable(true);
 		tab.setContent(tableView);
 		tabList = tabPane.getTabs();
 		tabList.add(tab);
+		tabPane.getSelectionModel().select(tab);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -488,6 +503,7 @@ public class MainController {
 			    	payinvoice = unpaid.getInvoice();
 			    	if(unpaidAmount.doubleValue()<= Double.parseDouble(amount.get())) {
 			    		payinvoice.setPaymentMethod(FixedElements.COMPLETE);
+			    		payinvoice.setLastUpdate(LocalDateTime.now());
 			    		DataManipulater.updateData(payinvoice);
 			    	}
 			    }
@@ -525,8 +541,19 @@ public class MainController {
 		alert.setContentText("You may not get pay if you did not.");
 		alert.showAndWait().ifPresent(rs-> {
 			if(rs == ButtonType.OK) {
+				if(employeeWorkingTime.getPunchIn()!=null && employeeWorkingTime.getPunchOut()==null) {
+					punchOutButtonListener();
+				}
+				try{    
+					Writer w = new FileWriter("note.txt");  
+		            w.write(noteArea.getText());  
+		            w.close();  
+				}catch (Exception e) {
+					e.getMessage();
+				}
 					stage.close();
 			}
+				
 		});
 	}
 }

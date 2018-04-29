@@ -13,6 +13,7 @@ import CustomerInfo.CustomerGroup;
 import DataManipulater.DataManipulater;
 import Employee.Employee;
 import Order.Plan;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,6 +24,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class EmployeeLoginController {
@@ -102,7 +104,14 @@ public class EmployeeLoginController {
 			initCustomer.setGroupNumber(customerGroup);
 			DataManipulater.updateData(initCustomer);
 		}
-
+		// reset customer status
+		String hql = "FROM Customer c WHERE c.status = 'Complete' AND c.customerCredit>0 AND c.expireDate <= '" + LocalDate.now() + "'";
+		@SuppressWarnings("unchecked")
+		ObservableList<Customer> customerList = (ObservableList<Customer>) DataManipulater.ListData(hql);
+		for(Customer c : customerList) {
+			c.setStatus(FixedElements.WAITING);
+			DataManipulater.updateData(c);
+		}
 	}
 	// Employee login, start main system
 	public void loginListener() throws IOException, SQLException {
@@ -136,6 +145,7 @@ public class EmployeeLoginController {
 				Scene scene = new Scene(parent);
 				stage.setTitle("Digital Mobile");
 				stage.setScene(scene);
+				((Stage)loginButton.getScene().getWindow()).close();
 				stage.show();
 				}else wrongPassword.setText("Lack of privilege.");
 			}
@@ -146,6 +156,7 @@ public class EmployeeLoginController {
 	}
 	public void changePasswordListener() throws IOException {
 		Stage stage = new Stage();
+		stage.initModality(Modality.APPLICATION_MODAL);
 		parent = FXMLLoader.load(getClass().getResource("ChangePasswordFX.fxml"));
 		stage.setTitle("Change Password");
 		stage.setScene(new Scene(parent));

@@ -85,6 +85,7 @@ public class FixedElements {
 	final static public String INCORRECTINFO = "Incorrect Info";
 	final static public String COMPLETE = "Complete";
 	final static public String CANCEL = "Cancel";
+	final static public String INFORM = "Contact Customer";
 	final static public String[] ACTIVATIONSTATUS = {WAITING, INPROGRESS, PORTERROR, INCORRECTINFO, COMPLETE, CANCEL, REFUND}; 
 	
 	// payment methods
@@ -127,7 +128,7 @@ public class FixedElements {
             								"Mississippi",
             								"Montana",
             								"North Carolina",
-            								" North Dakota",
+            								"North Dakota",
             								"Nebraska",
             								"New Hampshire",
             								"New Jersey",

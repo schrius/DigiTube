@@ -41,7 +41,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class OrderController {
-
 	Stage stage;
 	Employee employee;
 	Customer customer;
@@ -52,11 +51,11 @@ public class OrderController {
 	OrderRightPaneController orderRightPaneController;
 	@FXML
 	GridPane orderRightPane;
-	
 	FXMLLoader	fxmlLoader;
 	
 	Invoice invoice;
 	private Orders order;
+	private boolean orderMode;
 	
 	private ObservableList<Orders> orderList;
 	private Map<Orders, LocalDate> expireDateList;
@@ -140,7 +139,10 @@ public class OrderController {
 		discountLabel.textProperty().bind(discountProperty);
 		returnBalanceLabel.textProperty().bind(returnBalanceProperty);
 		serviceFeeLabel.textProperty().bind(serviceFeeProperty);
-		
+		setUpOrder();
+	}
+	
+	public void setUpOrder() {
 		PSCS = new BigDecimal(0);
 		NYTax = new BigDecimal(0);
 		subtotal = new BigDecimal(0);
@@ -153,6 +155,7 @@ public class OrderController {
 		invoice = new Invoice();
 		this.expireDateList = new HashMap<>();
 		orderList = FXCollections.observableArrayList();
+		orderMode = true;
 	}
 	
 	public void processOrder() throws IOException{
@@ -172,7 +175,8 @@ public class OrderController {
 				|| order.getCategories().equals(FixedElements.ACTIVATION)) {
 			order.setDescription(order.getPlan().getCarrier() + " " + order.getPlan().getPlanType());
 		}
-		
+		order.setOrderDate(LocalDateTime.now());
+		order.setLastUpdate(LocalDateTime.now());
 		orderList.add(order);
 
 		updateRightPane();
@@ -184,7 +188,7 @@ public class OrderController {
 		TableViewGenerator tableViewGenerator = new TableViewGenerator();
 		orderTable = tableViewGenerator.getOrderTable(orderList);	
 		orderPane.setCenter(orderTable);
-	//	updateTotal();
+		updateTotal();
 	}
 	
 	public void updateTotal() throws IOException {
@@ -202,8 +206,8 @@ public class OrderController {
 			PSCS = PSCS.add(new BigDecimal(currentOrder.getQuantity()*FixedElements.PSCSTAX));	
 			NYTax = NYTax.add(new BigDecimal(subtotal.doubleValue()*FixedElements.TAXRATE));
 				if(currentOrder.getPlan().getCarrier().equals(FixedElements.ULTRA) ||
-						currentOrder.getPlan().getCarrier().equals(FixedElements.LYCA))
-					serviceFee.add(new BigDecimal(1.00));
+						currentOrder.getPlan().getCarrier().equals(FixedElements.LYCA)) 
+					serviceFee = serviceFee.add(new BigDecimal(currentOrder.getQuantity()));
 			}
 			NYTax = NYTax.setScale(2, BigDecimal.ROUND_HALF_UP);
 			subtotal = subtotal.setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -238,6 +242,10 @@ public class OrderController {
 		case REFILL:
 			gridPane  = FXMLLoader.load(getClass().getResource("../Mobile/CarrierFX.fxml"));
 			orderPane.setRight(gridPane);
+			if(!orderMode) {
+				setUpOrder();
+				orderMode = true;
+			}
 			order = new Orders();
 			order.setPlan(new Plan());
 			order.setCategories(FixedElements.REFILL);
@@ -245,6 +253,10 @@ public class OrderController {
 		case ACTIVATION:
 			gridPane  = FXMLLoader.load(getClass().getResource("../Mobile/CarrierFX.fxml"));
 			orderPane.setRight(gridPane);
+			if(!orderMode) {
+				setUpOrder();
+				orderMode = true;
+			}
 			order = new Orders();
 			order.setPlan(new Plan());
 			order.setCategories(FixedElements.ACTIVATION);
@@ -252,24 +264,40 @@ public class OrderController {
 		case SERIVCE:
 			gridPane  = FXMLLoader.load(getClass().getResource("./ServiceFX.fxml"));
 			orderPane.setRight(gridPane);
+			if(!orderMode) {
+				setUpOrder();
+				orderMode = true;
+			}
 			order = new Orders();
 			order.setCategories(FixedElements.SERVICE);
 			break;
 		case DEVICE:
 			gridPane  = FXMLLoader.load(getClass().getResource("./DeviceFX.fxml"));
 			orderPane.setRight(gridPane);
+			if(!orderMode) {
+				setUpOrder();
+				orderMode = true;
+			}
 			order = new Orders();
 			order.setCategories(FixedElements.DEVICE);
 			break;
 		case ACCESSORIES:
 			gridPane  = FXMLLoader.load(getClass().getResource("./AccessoriesFX.fxml"));
 			orderPane.setRight(gridPane);
+			if(!orderMode) {
+				setUpOrder();
+				orderMode = true;
+			}
 			order = new Orders();
 			order.setCategories(FixedElements.ACCESSORIES);
 			break;
 		case PAYBILL:
 			gridPane  = FXMLLoader.load(getClass().getResource("./PayBillFX.fxml"));
 			orderPane.setRight(gridPane);
+			if(!orderMode) {
+				setUpOrder();
+				orderMode = true;
+			}
 			order = new Orders();
 			order.setCategories(FixedElements.PAYBILL);
 			break;
@@ -526,7 +554,6 @@ public class OrderController {
 		order.getPlan().setPUK(puk);
 		order.getPlan().setSim(sim);
 		order.getPlan().setPortdate(portdate);
-	//	order.setDescription(categories);
 		processOrder();
 	}
 	
@@ -642,6 +669,7 @@ public class OrderController {
 		invoice.setServiceFee(serviceFee.doubleValue());
 		invoice.setReceiveCash(receiveAmount.doubleValue());
 		invoice.setReturnBalance(returnBalance.doubleValue());
+		invoice.setLastUpdate(LocalDateTime.now());
 		if(payment.equals(FixedElements.CASH)) {
 			invoice.setPaymentMethod(FixedElements.CASH);
 		}
@@ -680,6 +708,7 @@ public class OrderController {
 			    		unpaidCustomer.setOweAmount(customer.getOweAmount() + total.doubleValue());
 			    		DataManipulater.updateData(unpaidCustomer);
 			    	}
+			    	complete = true;
 			    }
 			}
 			}
@@ -705,16 +734,6 @@ public class OrderController {
 					orders.setCustomer(customer);
 				}
 				else {
-					customer.setCustomerCredit(customer.getCustomerCredit() + orders.getQuantity());
-					if(orders.getCategories().equals(FixedElements.REFILL)) {
-						customer.setAction(FixedElements.REFILL);
-					}
-					if(orders.getCategories().equals(FixedElements.ACTIVATION)) {
-						customer.setAction(FixedElements.ACTIVATION);
-						customer.setNewPlan(orders.getPlan());
-					}
-					customer.setStatus(FixedElements.WAITING);
-					DataManipulater.updateData(customer);
 					orders.setCustomer(customer);
 				}
 			}
@@ -737,23 +756,31 @@ public class OrderController {
 			if(orders.getCategories().equals(FixedElements.ACTIVATION)) {
 			Customer updateCustomer = orders.getCustomer();
 			updateCustomer.setNewPlan(orders.getPlan());
+			updateCustomer.setAction(FixedElements.ACTIVATION);
+			updateCustomer.setStatus(FixedElements.WAITING);
+			updateCustomer.setCustomerCredit(customer.getCustomerCredit() + orders.getQuantity());
 			DataManipulater.updateData(updateCustomer);
 			
 			}
 			if(orders.getCategories().equals(FixedElements.REFILL)) {
 			Customer updateCustomer = orders.getCustomer();
 			updateCustomer.setCurrentPlan(orders.getPlan());
-
+			updateCustomer.setAction(FixedElements.REFILL);
+			updateCustomer.setStatus(FixedElements.WAITING);
+			updateCustomer.setCustomerCredit(customer.getCustomerCredit() + orders.getQuantity());
 			DataManipulater.updateData(updateCustomer);
 			}
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void searchButtonListener() throws IOException {
 		String choice = searchComboBox.getValue();
+		String hql = "";
 		if(choice.equals("Invoice")) {
+			orderMode = false;
 			Invoice invoice = (Invoice) DataManipulater.searchData(Long.valueOf(searchField.getText()), Invoice.class);
-			
+			orderList = FXCollections.observableArrayList();
 			List<Orders> InvoiceOrderList = invoice.getOrder();
 			
 			orderList = FXCollections.observableArrayList();
@@ -762,9 +789,70 @@ public class OrderController {
 			
 			updateTable();
 		}
+		else if(choice.equals("Barcode")) {
+			//reset table
+			if(!orderMode) {
+				orderList = FXCollections.observableArrayList();
+				orderMode = true;
+			}
+			int quanity = quanityComboBox.getValue();
+			order = new Orders();
+			hql = "FROM Product WHERE barcode='" + searchField+"'";
+			ObservableList<Product> productList = (ObservableList<Product>) DataManipulater.ListData(hql);
+			for(Product newProduct : productList) {
+				order.setProduct(newProduct);
+				order.setRegularPrice(newProduct.getRegularPrice());
+				order.setPrice(newProduct.getPrice());
+				order.setCategories(FixedElements.ACCESSORIES);
+				order.setCustomer((Customer) DataManipulater.searchData(1L, Customer.class));
+				order.setEmployee(employee);
+				order.setOrderDate(LocalDateTime.now());
+				order.setLastUpdate(LocalDateTime.now());
+				order.setQuantity(quanity);
+				orderList.add(order);
+			}
+			updateTable();
+		}
+		else if(choice.equals("Product ID")) {
+			if(!orderMode) {
+				orderList = FXCollections.observableArrayList();
+				orderMode = true;
+			}
+			int quanity = quanityComboBox.getValue();
+			order = new Orders();
+			Product newProduct = (Product) DataManipulater.searchData(Long.parseLong(searchField.getText()), Product.class);
+				order.setProduct(newProduct);
+				order.setRegularPrice(newProduct.getRegularPrice());
+				order.setPrice(newProduct.getPrice());
+				order.setCategories(FixedElements.ACCESSORIES);
+				order.setCustomer((Customer) DataManipulater.searchData(1L, Customer.class));
+				order.setEmployee(employee);
+				order.setOrderDate(LocalDateTime.now());
+				order.setLastUpdate(LocalDateTime.now());
+				order.setQuantity(quanity);
+				orderList.add(order);
+				updateTable();
+			}
+		else if(choice.equals("CustomerID")) {
+			orderMode = false;
+			hql = "FROM Orders o WHERE o.customer =" + searchField.getText();
+				orderList = FXCollections.observableArrayList();
+				ObservableList<Orders> customerOrders = (ObservableList<Orders>) DataManipulater.ListData(hql);
+
+				for(Orders orders : customerOrders)
+					orderList.add(orders);
+				updateTable();
+		}
+		else if(choice.equals("Order#")) {
+			orderMode = false;
+			orderList = FXCollections.observableArrayList();
+			order = (Orders) DataManipulater.searchData(Long.parseLong(searchField.getText()), Orders.class);
+			updateTable();
+		}
 	}
 	
 	public void refund() {
+		if(!orderMode) {
 		Orders refundOrder = orderTable.getSelectionModel().getSelectedItem();
 		if(refundOrder == null) {
 			Alert alert = new Alert(AlertType.WARNING);
@@ -794,11 +882,12 @@ public class OrderController {
 		else if(refundOrder.getCategories().equals(FixedElements.PAYBILL)) {
 			refundOrder.getBill().setStatus(FixedElements.REFUND);
 		}
-
+		refundOrder.getInvoice().setLastUpdate(LocalDateTime.now());
 		DataManipulater.updateData(refundOrder);
 		DataManipulater.updateData(refundOrder.getInvoice());
 				}
 			});
+		}
 		}
 	}
 
@@ -849,7 +938,6 @@ public class OrderController {
 	}
 	
 	public void closeOrderPane() {
-
 		stage.close();
 	}
 
