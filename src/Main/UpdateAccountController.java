@@ -42,10 +42,12 @@ public class UpdateAccountController {
 					currentPlan.setAccount(accountField.getText());
 					currentPlan.setPin(Integer.parseInt(pinField.getText()));
 					customer.setCurrentPlan(currentPlan);
+					DataManipulater.addData(currentPlan);
 				}
 				else {
 					customer.getCurrentPlan().setAccount(accountField.getText());
 					customer.getCurrentPlan().setPin(Integer.parseInt(pinField.getText()));
+					DataManipulater.addData(customer.getCurrentPlan());
 				}
 				DataManipulater.updateData(customer);
 			}

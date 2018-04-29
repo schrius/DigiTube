@@ -1,14 +1,16 @@
 package Main;
 
+import java.time.LocalDateTime;
+
 import CustomerInfo.Customer;
 import Employee.EmployeeWorkingTime;
 import Order.Bill;
+import Order.Invoice;
 import Order.Orders;
 import Order.Plan;
 import Order.Service;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,7 +28,7 @@ public class TableViewGenerator {
 		PriceColumn.setPrefWidth(50);
 		PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 		
-		TableColumn<Orders, Double> regPriceColumn = new TableColumn<>("Price");
+		TableColumn<Orders, Double> regPriceColumn = new TableColumn<>("Reg.Price");
 		regPriceColumn.setPrefWidth(50);
 		regPriceColumn.setCellValueFactory(new PropertyValueFactory<>("regularPrice"));
 		
@@ -70,6 +72,14 @@ public class TableViewGenerator {
 		TableColumn<Customer, String> actionColumn = new TableColumn<>("Action");
 		actionColumn.setMinWidth(80);
 		actionColumn.setCellValueFactory(new PropertyValueFactory<>("action"));
+		
+		TableColumn<Customer, String> lteColumn = new TableColumn<>("LTE");
+		lteColumn.setMinWidth(80);
+		lteColumn.setCellValueFactory(new PropertyValueFactory<>("LTEdata"));
+		
+		TableColumn<Customer, String> priceColumn = new TableColumn<>("Price");
+		priceColumn.setMinWidth(80);
+		priceColumn.setCellValueFactory(new PropertyValueFactory<>("offerPrice"));
 		
 		TableColumn<Customer, Double> oweAmountColumn = new TableColumn<>("Owe");
 		oweAmountColumn.setMinWidth(50);
@@ -115,7 +125,7 @@ public class TableViewGenerator {
 		TableView<Customer> customerTable = new TableView<>(customersList);
 
 		customerTable.getColumns().addAll(IDColumn, creditColumn, titleColumn, actionColumn, expireColumn,
-				oweAmountColumn, newPlanColumn, currentPlanColumn, prePlanColumn);
+				lteColumn,priceColumn, oweAmountColumn, newPlanColumn, currentPlanColumn, prePlanColumn);
 		
 		return customerTable;
 	}
@@ -175,6 +185,17 @@ public class TableViewGenerator {
 		actionColumn.setPrefWidth(80);
 		actionColumn.setCellValueFactory(new PropertyValueFactory<>("action"));
 		
+		TableColumn<Customer, String> planColumn = new TableColumn<>("Plan");
+		planColumn.setMinWidth(50);
+		planColumn.setCellValueFactory(new PropertyValueFactory<>("Plan"));
+		
+		planColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Customer , String>, ObservableValue<String>>() {
+		    @Override
+		    public ObservableValue<String> call(TableColumn.CellDataFeatures<Customer , String> param) {
+		        return new SimpleObjectProperty<>(param.getValue().getCurrentPlan().getPlanType());
+		    }
+		});
+		
 		TableColumn<Customer, String> commentColumn = new TableColumn<>("Comment");
 		commentColumn.setPrefWidth(100);
 		commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
@@ -197,7 +218,7 @@ public class TableViewGenerator {
 		
 		TableView<Customer> unpaidTable = new TableView<>(unpaidList);
 
-		unpaidTable.getColumns().addAll(idColumn, titleColumn,creditColumn, expireDateColumn, actionColumn ,commentColumn ,languageColumn, LTEColumn,statusColumn);
+		unpaidTable.getColumns().addAll(idColumn, titleColumn,creditColumn, expireDateColumn, actionColumn , planColumn, commentColumn ,languageColumn, LTEColumn,statusColumn);
 		
 		return unpaidTable;
 	}
@@ -241,13 +262,9 @@ public class TableViewGenerator {
 		portdateColumn.setMinWidth(100);
 		portdateColumn.setCellValueFactory(new PropertyValueFactory<>("portdate"));
 		
-		TableColumn<Plan, String> statusColumn = new TableColumn<>("Status");
-		statusColumn.setMinWidth(80);
-		statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-		
 		TableView<Plan> portTable = new TableView<>(portList);
 
-		portTable.getColumns().addAll(idColumn,phoneColumn, carrierColumn, simColumn, PUKColumn, accountColumn,pinColumn ,planTypeColumn, portdateColumn,statusColumn);
+		portTable.getColumns().addAll(idColumn,phoneColumn, carrierColumn, simColumn, PUKColumn, accountColumn,pinColumn ,planTypeColumn, portdateColumn);
 		
 		return portTable;
 	}
@@ -331,15 +348,15 @@ public class TableViewGenerator {
 	}
 	@SuppressWarnings("unchecked")
 	public TableView<EmployeeWorkingTime> getWorkSheetTable(ObservableList<EmployeeWorkingTime> list){
-		TableColumn<EmployeeWorkingTime, Double> idColumn = new TableColumn<>("Time ID");
+		TableColumn<EmployeeWorkingTime, Long> idColumn = new TableColumn<>("Time ID");
 		idColumn.setPrefWidth(30);
 		idColumn.setCellValueFactory(new PropertyValueFactory<>("workingTimeID"));
 		
-		TableColumn<EmployeeWorkingTime, Double> PunchInColumn = new TableColumn<>("PunchIn");
+		TableColumn<EmployeeWorkingTime, LocalDateTime> PunchInColumn = new TableColumn<>("PunchIn");
 		PunchInColumn.setPrefWidth(120);
 		PunchInColumn.setCellValueFactory(new PropertyValueFactory<>("punchIn"));
 		
-		TableColumn<EmployeeWorkingTime, Double> PunchOutColumn = new TableColumn<>("PunchOut");
+		TableColumn<EmployeeWorkingTime, LocalDateTime> PunchOutColumn = new TableColumn<>("PunchOut");
 		PunchOutColumn.setPrefWidth(120);
 		PunchOutColumn.setCellValueFactory(new PropertyValueFactory<>("punchOut"));
 		
@@ -351,6 +368,43 @@ public class TableViewGenerator {
 		TableView<EmployeeWorkingTime> worksheet = new TableView<>(list);
 
 		worksheet.getColumns().addAll(idColumn, PunchInColumn, PunchOutColumn,workingHourColumn);
+		
+		return worksheet;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public TableView<Invoice> getInvoiceTable(ObservableList<Invoice> list){
+		TableColumn<Invoice, Long> idColumn = new TableColumn<>("Invoice ID");
+		idColumn.setPrefWidth(30);
+		idColumn.setCellValueFactory(new PropertyValueFactory<>("invoiceID"));
+		
+		TableColumn<Invoice, Double> subtotalColumn = new TableColumn<>("Subtatal");
+		subtotalColumn.setPrefWidth(120);
+		subtotalColumn.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
+		
+		TableColumn<Invoice, Double> PSCSColumn = new TableColumn<>("PSCS");
+		PSCSColumn.setPrefWidth(120);
+		PSCSColumn.setCellValueFactory(new PropertyValueFactory<>("PSCS"));
+		
+		TableColumn<Invoice, Double> taxColumn = new TableColumn<>("Tax");
+		taxColumn.setPrefWidth(120);
+		taxColumn.setCellValueFactory(new PropertyValueFactory<>("NYTax"));
+		
+		TableColumn<Invoice, Double> refundInColumn = new TableColumn<>("Refund");
+		refundInColumn.setPrefWidth(120);
+		refundInColumn.setCellValueFactory(new PropertyValueFactory<>("refund"));
+		
+		TableColumn<Invoice, Double> discountColumn = new TableColumn<>("Discount");
+		discountColumn.setPrefWidth(120);
+		discountColumn.setCellValueFactory(new PropertyValueFactory<>("discount"));
+		
+		TableColumn<Invoice, Double> totalColumn = new TableColumn<>("Total");
+		totalColumn.setPrefWidth(120);
+		totalColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
+
+		TableView<Invoice> worksheet = new TableView<>(list);
+
+		worksheet.getColumns().addAll(idColumn, subtotalColumn, PSCSColumn,taxColumn, refundInColumn,discountColumn,totalColumn);
 		
 		return worksheet;
 	}

@@ -20,7 +20,7 @@ public class CustomerGenerater {
 		customer.setPhoneNumber(orders.getPlan().getPhoneNumber());
 		customer.setCustomerID(Long.parseLong(orders.getPlan().getPhoneNumber()));
 		customer.setAction(orders.getCategories());
-		customer.setCustomerCredit(orders.getQuantity());
+		customer.setCustomerCredit(0);
 		customer.setEmployee(employee);
 		customer.setGroupTitle(FixedElements.PRIME);
 		customer.setLastUpdate(LocalDateTime.now());

@@ -6,9 +6,9 @@
 <hibernate-configuration>
  <session-factory >
         <property name="hbm2ddl.auto">update</property>
- 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+ 		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <property name="hibernate.connection.password">test</property>
-  		<property name="hibernate.connection.url">jdbc:mysql://localhost:3307/digitube</property>
+  		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/digitube</property>
   		<property name="hibernate.connection.username">digitest</property>
  	    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="hibernate.format_sql">true</property>
@@ -18,9 +18,12 @@
     <mapping class="Order.Bill"/>
     <mapping class="Order.Plan"/>
     <mapping class="Order.Product"/>
-     <mapping class="Order.Orders"/>
-     <mapping class="Order.Invoice"/>
+    <mapping class="Order.Orders"/>
+    <mapping class="Order.Invoice"/>
     <mapping class="CustomerInfo.CustomerGroup"/>
     <mapping class="Employee.Employee"/>
+    <mapping class="Employee.EmployeeWorkingTime"/>
+    <mapping class="Order.PayBack"/>
+    <mapping class="Order.Unpaid"/>
  </session-factory>
 </hibernate-configuration>

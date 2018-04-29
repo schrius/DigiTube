@@ -36,6 +36,8 @@ public class Invoice implements TableEntry {
 	private String paymentMethod;
 	
 	private LocalDateTime orderDate;
+	private LocalDateTime lastUpdate;
+	
 	public Invoice() {
 
 	}
@@ -151,4 +153,13 @@ public class Invoice implements TableEntry {
 	public void setRefund(double refund) {
 		this.refund = refund;
 	}
+
+	public LocalDateTime getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(LocalDateTime lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+	
 }
