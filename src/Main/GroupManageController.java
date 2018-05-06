@@ -1,5 +1,7 @@
 package Main;
-// manage group members
+/*
+ *  Manage group members controller
+ */
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,11 +10,13 @@ import CustomerInfo.CustomerGroup;
 import DataManipulater.DataManipulater;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class GroupManageController {
@@ -38,7 +42,7 @@ public class GroupManageController {
 	
 	public void submitButtonListener() {
 		long groupID = Long.parseLong(groupNumberField.getText());
-		if(groupID>2 && groupID<11) {
+		if(groupNumberField.getText().length()>2 && groupNumberField.getText().length()<11) {
 		if(memberField.getText().length()==10) {
 		Customer child = (Customer) DataManipulater.searchData(Long.parseLong(memberField.getText()), Customer.class);
 		CustomerGroup customerGroup = (CustomerGroup) DataManipulater.searchData(groupID, CustomerGroup.class);
@@ -52,12 +56,20 @@ public class GroupManageController {
 				child.setGroupNumber(customerGroup);
 				child.setGroupTitle(groupTitleBox.getValue());
 				DataManipulater.updateData(child);
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Group Added");
+				alert.setHeaderText("Success adding group member to " + customerGroup.getGroupdID());
+				alert.setContentText(null);
+				alert.showAndWait().ifPresent(status -> {
+					((Stage)submitButton.getScene().getWindow()).close();
+				});
 				if(child.getGroupTitle().equals(FixedElements.PARENT)) {
 					Customer currentParent = (Customer) DataManipulater.searchData(customerGroup.getGroupParent().getCustomerID(), Customer.class);
 					customerGroup.setGroupParent(child);
 					currentParent.setGroupTitle(FixedElements.CHILD);
 					DataManipulater.updateData(currentParent);
 					DataManipulater.updateData(customerGroup);
+
 					}
 				}
 				else {

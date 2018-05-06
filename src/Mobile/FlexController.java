@@ -1,5 +1,7 @@
 package Mobile;
-
+/*
+ * Ultra Mobile Flex plans controller
+ */
 import java.io.IOException;
 
 import Main.MainController;

@@ -1,5 +1,7 @@
 package Order;
-
+/*
+ * Controller for all order pane button, the pane defined within order controller
+ */
 import java.io.IOException;
 import java.math.BigDecimal;
 import Main.FixedElements;

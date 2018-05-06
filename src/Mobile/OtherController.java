@@ -1,5 +1,7 @@
 package Mobile;
-
+/*
+ * Controller for handling all carrier or plan that does not provide UI
+ */
 import java.io.IOException;
 import Main.MainController;
 import javafx.fxml.FXML;

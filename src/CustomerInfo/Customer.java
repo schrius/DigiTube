@@ -1,5 +1,7 @@
 package CustomerInfo;
-
+/*
+ * Customer persisten objects
+ */
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 

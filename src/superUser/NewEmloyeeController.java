@@ -1,5 +1,7 @@
 package superUser;
-
+/*
+ * Controller for adding new Employee
+ */
 import DataManipulater.DataManipulater;
 import Employee.Employee;
 import javafx.fxml.FXML;

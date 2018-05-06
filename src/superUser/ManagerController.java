@@ -1,5 +1,8 @@
 package superUser;
-
+/*
+ * Manager side controller 
+ * generate reports of employee and sales
+ */
 import java.io.IOException;
 import java.math.BigDecimal;
 import DataManipulater.DataManipulater;
@@ -140,7 +143,7 @@ public class ManagerController {
 	}
 	@SuppressWarnings("unchecked")
 	public void showAndCalcuateListener() {	
-		if(searchBox.getValue().equals("EmployeeID")) {
+		if(searchBox.getValue().equals("EmployeeID") && searchField.getText()!=null) {
 			employee = (Employee) DataManipulater.searchData(Long.parseLong(searchField.getText()), Employee.class);
 			if(employee!=null) {
 			String hql = "FROM EmployeeWorkingTime e WHERE e.employee ="+ searchField.getText();
@@ -181,12 +184,15 @@ public class ManagerController {
 			
 			borderPane.setCenter(table);
 		}
+		}
 		else if(searchBox.getValue().equals("Sales")) {
 			String hql = "FROM Invoice i WHERE ";
 			
 			if(beginDate.getValue()!=null && endDate.getValue()!=null) {
 				hql = hql + " i.lastUpdate BETWEEN '" + beginDate.getValue() 
 				+ "' AND '" + endDate.getValue() + "'";
+			}else {
+				hql = "FROM Invoice i";
 			}
 			ObservableList<Invoice> invoicelist= (ObservableList<Invoice>) DataManipulater.ListData(hql);
 			table = new TableViewGenerator().getInvoiceTable(invoicelist);
@@ -208,11 +214,20 @@ public class ManagerController {
 					refund = refund.add(new BigDecimal(invoice.getRefund()));
 					totalsales= totalsales.add(new BigDecimal(invoice.getTotal()));
 			}
+			byCredit = byCredit.setScale(2, BigDecimal.ROUND_HALF_UP);
+			byCash = byCash.setScale(2, BigDecimal.ROUND_HALF_UP);
+			unpaid = unpaid.setScale(2, BigDecimal.ROUND_HALF_UP);
+			discount = discount.setScale(2, BigDecimal.ROUND_HALF_UP);
+			refund = refund.setScale(2, BigDecimal.ROUND_HALF_UP);
+			totalsales = totalsales.setScale(2, BigDecimal.ROUND_HALF_UP);
 			
 			String paybackHQL = "FROM PayBack p WHERE ";
 			if(beginDate.getValue()!=null && endDate.getValue()!=null) {
-				paybackHQL = paybackHQL + " i.lastUpdate BETWEEN '" + beginDate.getValue() 
+				paybackHQL = paybackHQL + " p.lastUpdate BETWEEN '" + beginDate.getValue() 
 				+ "' AND '" + endDate.getValue() + "'";
+			}
+			else {
+				paybackHQL = "FROM PayBack";
 			}
 			ObservableList<PayBack> paybacklist= (ObservableList<PayBack>) DataManipulater.ListData(paybackHQL);
 			for(PayBack item : paybacklist) {
@@ -227,7 +242,6 @@ public class ManagerController {
 			total.setText(totalsales.toString());
 			
 			borderPane.setCenter(table);
-		}
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package CustomerInfo;
-// Customer generator creates new customer with default information and information from order 
+/*
+ *  Customer generator creates new customer with default information and information from order 
+ */
 import java.time.LocalDateTime;
 
 import DataManipulater.DataManipulater;

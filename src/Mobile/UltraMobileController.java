@@ -1,5 +1,7 @@
 package Mobile;
-
+/*
+ * Ultra Mobile plans controller
+ */
 import java.io.IOException;
 import Main.MainController;
 import javafx.fxml.FXML;

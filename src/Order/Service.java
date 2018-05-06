@@ -1,5 +1,7 @@
 package Order;
-
+/*
+ * Service persistent Object
+ */
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -9,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import Main.TableEntry;
-
 
 @Entity
 public class Service implements TableEntry {

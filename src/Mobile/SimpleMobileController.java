@@ -1,5 +1,7 @@
 package Mobile;
-
+/*
+ * Simple Mobile plans controller
+ */
 import java.io.IOException;
 
 import Main.MainController;

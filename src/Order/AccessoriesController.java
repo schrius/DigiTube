@@ -1,5 +1,7 @@
 package Order;
-
+/*
+ * Controller for accessories product input
+ */
 import java.io.IOException;
 
 import Main.MainController;

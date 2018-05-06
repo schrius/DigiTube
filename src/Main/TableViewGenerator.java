@@ -1,5 +1,7 @@
 package Main;
-
+/*
+ * Generate table view of orders, invoice, customer, bill, plan, work sheet, unpaid
+ */
 import java.time.LocalDateTime;
 
 import CustomerInfo.Customer;
@@ -73,13 +75,13 @@ public class TableViewGenerator {
 		actionColumn.setMinWidth(80);
 		actionColumn.setCellValueFactory(new PropertyValueFactory<>("action"));
 		
-		TableColumn<Customer, String> lteColumn = new TableColumn<>("LTE");
-		lteColumn.setMinWidth(80);
-		lteColumn.setCellValueFactory(new PropertyValueFactory<>("LTEdata"));
+	//	TableColumn<Customer, String> lteColumn = new TableColumn<>("LTE");
+	//	lteColumn.setMinWidth(80);
+	//	lteColumn.setCellValueFactory(new PropertyValueFactory<>("LTEdata"));
 		
-		TableColumn<Customer, String> priceColumn = new TableColumn<>("Price");
-		priceColumn.setMinWidth(80);
-		priceColumn.setCellValueFactory(new PropertyValueFactory<>("offerPrice"));
+	//	TableColumn<Customer, String> priceColumn = new TableColumn<>("Price");
+	//	priceColumn.setMinWidth(80);
+	//	priceColumn.setCellValueFactory(new PropertyValueFactory<>("offerPrice"));
 		
 		TableColumn<Customer, Double> oweAmountColumn = new TableColumn<>("Owe");
 		oweAmountColumn.setMinWidth(50);
@@ -125,7 +127,7 @@ public class TableViewGenerator {
 		TableView<Customer> customerTable = new TableView<>(customersList);
 
 		customerTable.getColumns().addAll(IDColumn, creditColumn, titleColumn, actionColumn, expireColumn,
-				lteColumn,priceColumn, oweAmountColumn, newPlanColumn, currentPlanColumn, prePlanColumn);
+				 oweAmountColumn, newPlanColumn, currentPlanColumn, prePlanColumn);
 		
 		return customerTable;
 	}

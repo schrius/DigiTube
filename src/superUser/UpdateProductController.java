@@ -1,5 +1,7 @@
 package superUser;
-
+/*
+ * Controller for updating product information
+ */
 import DataManipulater.DataManipulater;
 import Order.Product;
 import javafx.fxml.FXML;

@@ -1,5 +1,7 @@
 package superUser;
-
+/*
+ * Controller for adding product
+ */
 import DataManipulater.DataManipulater;
 import Order.Product;
 import javafx.fxml.FXML;

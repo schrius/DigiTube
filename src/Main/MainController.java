@@ -1,5 +1,8 @@
 package Main;
-
+/*
+ * Main function controller
+ * Launch order pane, update account, update customer information, generate lists of unpaid, to-do, port, services
+ */
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -111,7 +114,6 @@ public class MainController {
 	
 	@FXML
 	Button serviceListButton;
-
 	@FXML
 	RadioButton swapFamilyRadio;
 	// show associated lists items
@@ -122,6 +124,7 @@ public class MainController {
 	@FXML
 	Button unpaidListButton;
 	
+	// bottom pane
 	@FXML
 	Button updateCustomerButton;
 	@FXML
@@ -344,7 +347,7 @@ public class MainController {
 	}
 	@SuppressWarnings("unchecked")
 	public void portListButtonListener() throws IOException {
-		String hql = "FROM Plan p WHERE p.portdate = '" + LocalDate.now() + "'";
+		String hql = "FROM Plan p WHERE p.portdate < '" + LocalDate.now() + "' AND p.status = 'Waiting'";
 		ObservableList<Plan> portList= (ObservableList<Plan>) DataManipulater.ListData(hql);
 		
 		tableView = new TableViewGenerator().getPortListTable(portList);

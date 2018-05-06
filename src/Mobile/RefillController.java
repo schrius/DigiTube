@@ -1,5 +1,7 @@
 package Mobile;
-
+/*
+ * Refill pane controller
+ */
 import java.io.IOException;
 
 import Main.MainController;

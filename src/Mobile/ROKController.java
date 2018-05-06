@@ -1,5 +1,7 @@
 package Mobile;
-
+/*
+ * ROK Mobile plans controller
+ */
 import java.io.IOException;
 
 import Main.MainController;

@@ -1,5 +1,7 @@
 package Main;
-
+/*
+ * Final static elements for carriers, categories, tax rate, states, status, actions and plans
+ */
 public class FixedElements {
 	final static public double TAXRATE = 0.08875;
 	final static public double PSCSTAX = 1.2;

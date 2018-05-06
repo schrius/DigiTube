@@ -29,7 +29,7 @@ public class DataManipulater {
             throw new ExceptionInInitializerError(ex); 
          }
     }
-	// data generating 
+	// add new object to database
     public static boolean addData(Object object) {
         try {
         	if(hibernateFactory ==null)
@@ -55,6 +55,7 @@ public class DataManipulater {
 		}
 		return false;
 	}
+    // search existing object in the database
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	public static Object searchData(Long id, Class target) {
         try {
@@ -80,7 +81,7 @@ public class DataManipulater {
         }
 		return object;
 	}
-    
+    // update existing object in the database
     public static boolean updateData(Object object){
         try {
         	if(hibernateFactory ==null)
@@ -105,7 +106,7 @@ public class DataManipulater {
         }
         return transaction != null;
      }
-    
+    // search objects in the database and return an ObservableList
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static ObservableList<?> ListData(String hql){
         try {
@@ -138,7 +139,7 @@ public class DataManipulater {
         }
         return list;
      }
-	
+	// delete a request object from database
 	   @SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void deleteData(Integer id, Class target){
 	        try {

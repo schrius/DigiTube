@@ -1,5 +1,7 @@
 package Order;
-
+/*
+ * Service Plan persistent Object
+ */
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -33,6 +35,8 @@ public class Plan implements TableEntry{
 	private String account;
 	private int pin;
 	private LocalDate portdate;
+	@Column(length = 32)
+	private String status;
 
 	private double regularPrice;
 	

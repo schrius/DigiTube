@@ -1,5 +1,8 @@
 package Employee;
-
+/*
+ * Employee work sheet persistent object
+ * 
+ */
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;

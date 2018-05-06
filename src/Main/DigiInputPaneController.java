@@ -1,5 +1,7 @@
 package Main;
-
+/*
+ * Cash amount input pane controller
+ */
 import java.math.BigDecimal;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -52,9 +54,6 @@ public class DigiInputPaneController {
 		inputField.textProperty().bind(input);
 	}
 	
-	public void inputFieldListener() {
-		
-	}
 	public void eraseButtonListener() {
 		inputField.clear();
 	}

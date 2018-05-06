@@ -1,5 +1,7 @@
 package Order;
-
+/*
+ * Controller for paybill inputs
+ */
 import java.io.IOException;
 
 import Main.FixedElements;

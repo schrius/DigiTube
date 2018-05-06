@@ -1,5 +1,7 @@
 package Order;
-
+/*
+ * Order persistent object
+ */
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;

@@ -1,5 +1,8 @@
 package Main;
-
+/*
+ * Main function
+ * starting point
+ */
 import java.io.IOException;
 
 import javafx.application.Application;

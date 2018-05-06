@@ -1,5 +1,7 @@
 package Order;
-
+/*
+ * Controller for device product input
+ */
 import java.io.IOException;
 
 import Main.MainController;

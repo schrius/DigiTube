@@ -1,13 +1,13 @@
 package Order;
-
+/*
+ * Product persistent Object
+ */
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import Main.TableEntry;
-
 
 @Entity
 public class Product implements TableEntry{

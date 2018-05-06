@@ -1,7 +1,11 @@
 package Order;
-
+/*
+ * Controller for generating new order, compute subtal, tax, discount, service fee
+ * set up order information, generate order table view, refund order, print invoice
+ */
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -859,7 +863,10 @@ public class OrderController {
 			alert.setTitle("Select Order!");
 			alert.setHeaderText("No Order is selected.");
 			alert.setContentText("Select order before processing refund.");
-			alert.showAndWait();
+			alert.showAndWait().ifPresent( rs -> {
+				if(rs == ButtonType.OK)
+					alert.close();
+			});
 		}
 		else {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -869,7 +876,18 @@ public class OrderController {
 			alert.showAndWait().ifPresent(rs-> {
 				if(rs == ButtonType.OK) {
 		refundOrder.setStatus(FixedElements.REFUND);
-		refundOrder.getInvoice().setRefund(refundOrder.getInvoice().getRefund() + refundOrder.getPrice()*refundOrder.getQuantity());
+		BigDecimal refundAmount = new BigDecimal(refundOrder.getInvoice().getRefund());
+		if(refundOrder.getCategories().equals(FixedElements.REFILL)) {
+			refundAmount = refundAmount.add( new BigDecimal(FixedElements.PSCSTAX*refundOrder.getQuantity()));
+			refundAmount = refundAmount.add( new BigDecimal(FixedElements.TAXRATE*refundOrder.getQuantity()));
+				if(refundOrder.getPlan().getCarrier().equals(FixedElements.LYCA)
+				|| refundOrder.getPlan().getCarrier().equals(FixedElements.ULTRA)) {
+			refundAmount = refundAmount.add(new BigDecimal(1*refundOrder.getQuantity()));
+				}
+		}
+		refundAmount = refundAmount.add(new BigDecimal(refundOrder.getPrice()*refundOrder.getQuantity()));
+		refundAmount.setScale(2, RoundingMode.HALF_UP);
+		refundOrder.getInvoice().setRefund(refundAmount.doubleValue());
 		refundOrder.setPrice(0);
 		if(refundOrder.getCategories().equals(FixedElements.REFILL)||refundOrder.getCategories().equals(FixedElements.ACTIVATION)) {
 			refundOrder.getCustomer().setCustomerCredit(refundOrder.getCustomer().getCustomerCredit() - refundOrder.getQuantity());

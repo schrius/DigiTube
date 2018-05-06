@@ -1,5 +1,7 @@
 package Order;
-
+/*
+ * Unpaid persistent Object
+ */
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,10 +29,10 @@ public class Unpaid implements TableEntry{
 	@JoinColumn(name="Invoice_ID", nullable=false)
 	private Invoice invoice;
 	@ManyToOne
-	@JoinColumn(name="CUSTOMER_ID", foreignKey = @ForeignKey(name = "Unpaid_CUSTOMER_ID_FK"))
+	@JoinColumn(name="CUSTOMER_ID", foreignKey = @ForeignKey(name = "Unpaid_cutomer_ID_FK"))
 	private Customer customer;
 	@ManyToOne
-	@JoinColumn(name="EMPLOYEE_ID", foreignKey = @ForeignKey(name = "Unpaid_EMPLOYEE_ID_FK"))
+	@JoinColumn(name="EMPLOYEE_ID", foreignKey = @ForeignKey(name = "Unpaid_employee_ID_FK"))
 	private Employee employee;
 	
 	private LocalDate lastUpdate;
@@ -82,4 +84,5 @@ public class Unpaid implements TableEntry{
 	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
 	}
+	
 }

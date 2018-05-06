@@ -1,5 +1,7 @@
 package Order;
-
+/*
+ * PayBack persistent Object
+ */
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -82,4 +84,5 @@ public class PayBack implements TableEntry{
 	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
 	}
+	
 }

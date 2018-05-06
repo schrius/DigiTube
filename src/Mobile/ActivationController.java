@@ -1,5 +1,7 @@
 package Mobile;
-
+/*
+ * Activation controller handles all input from actionFX 
+ */
 import java.io.IOException;
 
 import Main.FixedElements;

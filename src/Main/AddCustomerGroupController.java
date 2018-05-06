@@ -1,5 +1,5 @@
 package Main;
-// Add new customer group
+// Controller for adding new customer group
 import CustomerInfo.Customer;
 import CustomerInfo.CustomerGroup;
 import DataManipulater.DataManipulater;
@@ -52,9 +52,17 @@ public class AddCustomerGroupController {
 				}
 				else {
 					customerGroup.setGroupParent(parent);
-					parent.setGroupTitle(FixedElements.PARENT);
-					DataManipulater.updateData(parent);
 					DataManipulater.addData(customerGroup);
+					parent.setGroupTitle(FixedElements.PARENT);
+					parent.setGroupNumber(customerGroup);
+					DataManipulater.updateData(parent);
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Group Added");
+					alert.setHeaderText("Success adding group!" + customerGroup.getGroupdID());
+					alert.setContentText(null);
+					alert.showAndWait().ifPresent(status -> {
+						((Stage)submitButton.getScene().getWindow()).close();
+					});
 				}
 				}
 			}

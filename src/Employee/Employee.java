@@ -1,5 +1,7 @@
 package Employee;
-
+/*
+ * Employee persistent object
+ */
 import java.time.LocalDate;
 
 import javax.persistence.Column;

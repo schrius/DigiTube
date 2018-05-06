@@ -1,5 +1,7 @@
 package Mobile;
-
+/*
+ * CT Mobile plans controller
+ */
 import java.io.IOException;
 
 import Main.MainController;
@@ -7,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 public class CTController {
-	// plans choice
 	@FXML
 	Button plan19Button;
 	@FXML

@@ -1,5 +1,7 @@
 package Mobile;
-
+/*
+ * AT&T controller
+ */
 import java.io.IOException;
 
 import Main.MainController;
@@ -8,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 public class ATTController {
-	// plans choice
 	@FXML
 	Button confirmButton;
 	@FXML

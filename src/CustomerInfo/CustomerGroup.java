@@ -1,5 +1,7 @@
 package CustomerInfo;
-
+/*
+ * Customer Group persistent object
+ */
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;

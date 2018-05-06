@@ -1,5 +1,7 @@
 package Mobile;
-
+/*
+ * Lyca Mobile plans controller
+ */
 import java.io.IOException;
 
 import Main.MainController;
